@@ -1,0 +1,213 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &184698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400260}
+  - 114: {fileID: 11421372}
+  m_Layer: 0
+  m_Name: TileManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400260
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184698}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.63028145, y: 10.041214, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11421372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f53ca9ceac27d0c4492fe4cd7c7d6be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaterTiles:
+  - {fileID: 126564, guid: 0ed281213c34650488521aeacbb029de, type: 2}
+  - {fileID: 146192, guid: 56d4f2e94df30984fbc2df4eb8275daf, type: 2}
+  - {fileID: 148518, guid: f7981f28c3b377d418d3cc1da1aaaa6e, type: 2}
+  WallTiles:
+  - {fileID: 151586, guid: 8f62773b3484bf246b5aa0eaa7cbf0c0, type: 2}
+  GroundTiles: []
+  FloorTiles:
+  - {fileID: 157428, guid: f69d96a34da78104e97bb84e5598f8f7, type: 2}
+  - {fileID: 116940, guid: 262438d7666e1a5429398184d4310712, type: 2}
+  - {fileID: 121232, guid: 645bec7e966cf6e42b1873bccc40cd30, type: 2}
+  - {fileID: 169470, guid: ed512c73cbf96b942be8ff54a20faa87, type: 2}
+  - {fileID: 185934, guid: 2c299a073f11a3249ad093f8dd7f0e98, type: 2}
+  - {fileID: 136410, guid: 26d1f768a3e30c84499523cddf10d951, type: 2}
+  - {fileID: 123006, guid: 55aba0898164ab044a6b578f707f0d06, type: 2}
+  - {fileID: 150680, guid: 0ccd4a352801eab49907b7f321572bcb, type: 2}
+  - {fileID: 112310, guid: a836f58fb7a90ef43894a4d34fe805dc, type: 2}
+  - {fileID: 179978, guid: 5306239e8d2e1ba4da310e49315d3b91, type: 2}
+  - {fileID: 113118, guid: 74be31e17dda1fd4cbe14f1af6b11cfb, type: 2}
+  - {fileID: 169976, guid: 811d2b5689b40be4095603c2d7af3c84, type: 2}
+  - {fileID: 163836, guid: d27e32e0e8b623d4aa3aef033c071b72, type: 2}
+  - {fileID: 100884, guid: 069b32e3679422d41bd478a1b931644b, type: 2}
+  - {fileID: 122246, guid: 2b932f0c5498601419a5659b32105767, type: 2}
+  - {fileID: 100808, guid: 36c836ee9eae9994aa8a148209b5a7e7, type: 2}
+  - {fileID: 172114, guid: 59075a74d39ecc64eb1078e15469c366, type: 2}
+  - {fileID: 125494, guid: 7e67a12762212504499c938fa2bb4370, type: 2}
+  - {fileID: 160350, guid: f7cb5c192dec2574395cc139e9e9f5ff, type: 2}
+  - {fileID: 118810, guid: f369e0c96abf2ce4e9a5b66c73a663ad, type: 2}
+  - {fileID: 166924, guid: 942e9c49e7f8ed14bb279637e96adc4b, type: 2}
+  - {fileID: 137214, guid: 55475e0a422262746b7d7ffec7dba323, type: 2}
+  - {fileID: 185206, guid: f3cffe47fce1ea6448b8db082a11bb62, type: 2}
+  - {fileID: 184872, guid: f62b754bc67ce9241ac104c3571e8d09, type: 2}
+  GrassTiles:
+  - {fileID: 140336, guid: fc9393b0644c5784d9f5e174083a29b2, type: 2}
+  Fog: {fileID: 156792, guid: ef0c622ce7d238f4d96a47701bc0993f, type: 2}
+  Gems:
+  - {fileID: 171270, guid: 49eda5fa039374a43b877b584e32fb49, type: 2}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: Gems.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: WallTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: WaterTiles.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: FloorTiles.Array.size
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: GrassTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 157428, guid: f69d96a34da78104e97bb84e5598f8f7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 116940, guid: 262438d7666e1a5429398184d4310712, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[2]
+      value: 
+      objectReference: {fileID: 121232, guid: 645bec7e966cf6e42b1873bccc40cd30, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[3]
+      value: 
+      objectReference: {fileID: 169470, guid: ed512c73cbf96b942be8ff54a20faa87, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[4]
+      value: 
+      objectReference: {fileID: 185934, guid: 2c299a073f11a3249ad093f8dd7f0e98, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[5]
+      value: 
+      objectReference: {fileID: 136410, guid: 26d1f768a3e30c84499523cddf10d951, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[6]
+      value: 
+      objectReference: {fileID: 123006, guid: 55aba0898164ab044a6b578f707f0d06, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[7]
+      value: 
+      objectReference: {fileID: 150680, guid: 0ccd4a352801eab49907b7f321572bcb, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[8]
+      value: 
+      objectReference: {fileID: 112310, guid: a836f58fb7a90ef43894a4d34fe805dc, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[9]
+      value: 
+      objectReference: {fileID: 179978, guid: 5306239e8d2e1ba4da310e49315d3b91, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[10]
+      value: 
+      objectReference: {fileID: 113118, guid: 74be31e17dda1fd4cbe14f1af6b11cfb, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[11]
+      value: 
+      objectReference: {fileID: 169976, guid: 811d2b5689b40be4095603c2d7af3c84, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[12]
+      value: 
+      objectReference: {fileID: 163836, guid: d27e32e0e8b623d4aa3aef033c071b72, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[13]
+      value: 
+      objectReference: {fileID: 100884, guid: 069b32e3679422d41bd478a1b931644b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[14]
+      value: 
+      objectReference: {fileID: 122246, guid: 2b932f0c5498601419a5659b32105767, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[15]
+      value: 
+      objectReference: {fileID: 100808, guid: 36c836ee9eae9994aa8a148209b5a7e7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[16]
+      value: 
+      objectReference: {fileID: 172114, guid: 59075a74d39ecc64eb1078e15469c366, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[17]
+      value: 
+      objectReference: {fileID: 125494, guid: 7e67a12762212504499c938fa2bb4370, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[18]
+      value: 
+      objectReference: {fileID: 160350, guid: f7cb5c192dec2574395cc139e9e9f5ff, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[19]
+      value: 
+      objectReference: {fileID: 118810, guid: f369e0c96abf2ce4e9a5b66c73a663ad, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[20]
+      value: 
+      objectReference: {fileID: 166924, guid: 942e9c49e7f8ed14bb279637e96adc4b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[21]
+      value: 
+      objectReference: {fileID: 137214, guid: 55475e0a422262746b7d7ffec7dba323, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[22]
+      value: 
+      objectReference: {fileID: 185206, guid: f3cffe47fce1ea6448b8db082a11bb62, type: 2}
+    - target: {fileID: 0}
+      propertyPath: GroundTiles.Array.data[23]
+      value: 
+      objectReference: {fileID: 184872, guid: f62b754bc67ce9241ac104c3571e8d09, type: 2}
+    - target: {fileID: 0}
+      propertyPath: Fog
+      value: 
+      objectReference: {fileID: 156792, guid: ef0c622ce7d238f4d96a47701bc0993f, type: 2}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 184698}
+  m_IsPrefabParent: 1
