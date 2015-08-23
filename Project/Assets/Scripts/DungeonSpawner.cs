@@ -606,7 +606,8 @@
         public Tile tile { get; set; }
         public RoomType roomType { get; set; }
         public Vector3 position { get; set; }
-        public byte BasicValue { get; set; } //0=empty--1=filled
+        public byte BasicValue { get; set; }
+        public byte ItemValue { get; set; }
         public MovingObject Entity { get; set; }
         public GameObject TileObject { get; set; }
         public Fog FogScript
@@ -652,10 +653,12 @@
     public class RawGrid
     {
         public byte BasicValue { get; set; } //0=empty--1=filled
+        public byte ItemValue { get; set; }
         public byte FloodValue { get; set; }
         public RawGrid()
         {
             BasicValue = 1;
+            ItemValue = 0;
             FloodValue = 0;
         }
     }

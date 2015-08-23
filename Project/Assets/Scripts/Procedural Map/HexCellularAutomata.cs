@@ -9,17 +9,19 @@
 
     public class HexCellularAutomata : ICellularAutomata
     {
+        #region private variables
         private Random _rnd;
+        private Grid[] _grid;
         private string _seed = null;
-        public GameObject BlackTile;
-        public Transform Player;
 
         private int _playerSpawn;
 
         private float _hexWidth;
         private float _hexHeight;
+        private Transform _boardHolder;
+        #endregion
 
-
+        #region Properties
         private int _mapWidth;
         public int MapWidth
         {
@@ -44,7 +46,6 @@
                 _mapHeight = value;
             }
         }
-        private int _percentage = 45;
         private int _size1D;
         public int Size1D
         {
@@ -53,6 +54,7 @@
                 return _size1D;
             }
         }
+        private int _percentage = 45;
         public int Percentage
         {
             get
@@ -64,8 +66,6 @@
                 _percentage = value;
             }
         }
-
-        private Transform _boardHolder;
         private RawGrid[] _map;
         public RawGrid[] Map
         {
@@ -74,7 +74,9 @@
                 return _map;
             }
         }
-        private Grid[] _grid;
+        #endregion
+
+
         public HexCellularAutomata(int width, int height, Random rnd)
         {
             _mapWidth = width;
@@ -95,6 +97,7 @@
             //renderer component attached to the Hex prefab is used to get the current width and height
             _hexWidth = HexTileManager.instance.Hex.GetComponent<Renderer>().bounds.size.x;
             _hexHeight = HexTileManager.instance.Hex.GetComponent<Renderer>().bounds.size.y;
+            Debug.Log(HexTileManager.instance.Hex.GetComponent<SpriteRenderer>().bounds.size);
         }
 
         public void ProcessCavern(int pass)
@@ -111,7 +114,7 @@
 
 
             //Spawn other cave elements:
-            SpawnWaterMultiple();
+            SpawnWaterLavaMultiple();
             //SpawnGrassMultiple();
             #region FloodCavern/Check for isolated caves
             if (!CheckFloodCavern())
@@ -134,9 +137,13 @@
 
             Debug.Log(CheckFloodCavern());
             #endregion
-
+            GetAccessibleIndexes();
+            SpawnNextLevelDoor();
+            SpawnMiningBlocks();
             //SaveToFile();
             ProcessBorders();
+
+
         }
 
         #region PlaceWalls Born/Death
@@ -267,11 +274,12 @@
                     {
                         _grid[index].status = Grid.Status.Revealed;
                         _grid[index].BasicValue = _map[index].BasicValue;
+                        _grid[index].ItemValue = _map[index].ItemValue;
                         switch (_map[index].BasicValue)
                         {
-                            case 0: _grid[index].tile = Grid.Tile.Floor; break;
-                            case 2: _grid[index].tile = Grid.Tile.Water; break;
-                            case 3: _grid[index].tile = Grid.Tile.Grass; break;
+                            case BasicValues.Ground: _grid[index].tile = Grid.Tile.Floor; break;
+                            case BasicValues.Water: _grid[index].tile = Grid.Tile.Water; break;
+                            case BasicValues.Grass: _grid[index].tile = Grid.Tile.Grass; break;
                         }
                         FillAdjacentWalls(x, y);
                     }
@@ -344,12 +352,12 @@
         Vector3 calcInitPos()
         {
             Vector3 initPos;
-            var xCenter = (_mapWidth) / 2f;
-            var zCenter = (_mapHeight) / 2f - 0.75f;
+            var xCenter = (_mapWidth) / 2f; //25
+            var zCenter = (_mapHeight) / 2f;// -0.75f;
             //Debug.Log("centers: " + xCenter + " " + zCenter);
             //Debug.Log("widths: " + hexWidth + " " + hexHeight);
             //the initial position will be in the left upper corner
-            initPos = new Vector3(xCenter * -_hexWidth + (_hexWidth / 2f), 0, zCenter * _hexHeight - _hexHeight / 2f);
+            initPos = new Vector3(xCenter * -_hexWidth + (_hexWidth / 2f), zCenter * _hexHeight - _hexHeight / 2f, 0); //Switched y and z
             //Debug.Log(initPos);
 
             return initPos;
@@ -368,8 +376,8 @@
 
             float x = initPos.x + offset + gridPos.x * _hexWidth;
             //Every new line is offset in z direction by 3/4 of the hexagon height
-            float z = initPos.z - gridPos.y * _hexHeight * 0.75f;
-            return new Vector3(x, 0, z);
+            float z = initPos.y - gridPos.y * _hexHeight * 0.75f; //init.z => y
+            return new Vector3(x, z, 0);
         }
 
         private bool IsWall(int x, int y)
@@ -402,6 +410,7 @@
 
         #region Flood fill algorithm
         private byte _floodValue = 0;
+        private int[] _validIndexes;
         private int[] _caves; //Storedcaverns
         private int[] _cavesRandomPoint;
         private void FloodCavern()
@@ -705,6 +714,30 @@
             for (int i = 0; i < _size1D; i++)
                 _map[i].FloodValue = 0;
         }
+
+        /// <summary>
+        /// Get only the valid indexes => Better for placing things on the map [not browsing 1 tiles]
+        /// </summary>
+        private void GetAccessibleIndexes()
+        {
+            int count = 0;
+            for (int i = 0; i < _size1D; i++)
+            {
+                if (_map[i].BasicValue != 1)
+                    count++;
+            }
+
+            _validIndexes = new int[count];
+            count = 0;
+            for (int i = 0; i < _size1D; i++)
+            {
+                if (_map[i].BasicValue != 1)
+                {
+                    _validIndexes[count] = i;
+                    count++;
+                }
+            }
+        }
         #endregion
 
         #region SpawnGrass
@@ -750,12 +783,13 @@
         }
         #endregion
 
-        #region SpawnWater
-        private void SpawnWaterMultiple()
+        #region SpawnWater/Lava
+        private void SpawnWaterLavaMultiple()
         {
             //Get a random number of water spots:
             int waterSpots = _rnd.Next(4, 15);
-            Debug.Log("OnSpawnWater: " + waterSpots);
+            int lavaSpots = _rnd.Next(3, 10);
+
             int sizeX;
             int sizeY;
             int posX;
@@ -764,6 +798,8 @@
 
             //Setup a random cellular automata for each spot:
             HexCellularAutomata[] water = new HexCellularAutomata[waterSpots];
+            HexCellularAutomata[] lava = new HexCellularAutomata[lavaSpots];
+            #region Water
             for (int i = 0; i < waterSpots; i++)
             {
                 //Get a random size for the cellular automata:
@@ -789,6 +825,67 @@
                     }
                 }
             }
+            #endregion
+            #region Lava
+            for (int i = 0; i < lavaSpots; i++)
+            {
+                //Get a random size for the cellular automata:
+                //sizeX = _rnd.Next(4, 11);
+                sizeY = _rnd.Next(5, 15);
+                sizeX = sizeY + _rnd.Next(1, 6);
+                lava[i] = new HexCellularAutomata(sizeX, sizeY, _rnd);
+                lava[i].RandomFillMap();
+                lava[i].PlaceWalls_1D5678_2D1(3);
+
+                //Select a random position for the water in the actual grid:
+                posX = _rnd.Next(0, _mapWidth - sizeX);
+                posY = _rnd.Next(0, _mapHeight - sizeY);
+                //Merge the water map and the current map:
+                for (int x = 0; x < lava[i]._mapWidth; x++)
+                {
+                    for (int y = 0; y < lava[i]._mapHeight; y++)
+                    {
+                        if (lava[i]._map[x + y * lava[i]._mapHeight].BasicValue == BasicValues.Ground)
+                        {
+                            _map[(posX + x) + (posY + y) * _mapHeight].BasicValue = BasicValues.Lava;
+                        }
+                    }
+                }
+            }
+            #endregion
+        }
+        #endregion
+
+        #region Spawn mining stuff
+        private void SpawnMiningBlocks()
+        {
+            if (_validIndexes == null)
+                return;
+            HexCellularAutomata miningAutomata = new HexCellularAutomata(_mapWidth, _mapHeight, _rnd);
+            miningAutomata.RandomFillMap();
+
+            miningAutomata.PlaceWalls_1D5678(1);
+            //miningAutomata.PlaceWalls_1D5678_2D12(2); //<= GOOD
+            miningAutomata.PlaceWalls_1D5678_2D1(1); //<= GOOD
+
+            for (int i = 0; i < _size1D; i++)
+            {
+                if (_map[i].BasicValue == 0)
+                {
+                    if (miningAutomata._map[i].BasicValue == 0)
+                        _map[i].ItemValue = ItemValues.MiningBlock;
+                }
+            }
+        }
+
+        #endregion
+        #region SpawnNextLevelAccess
+        public void SpawnNextLevelDoor()
+        {
+            int rndExit = _rnd.Next(0, _validIndexes.Length);
+            _map[_validIndexes[rndExit]].ItemValue = ItemValues.ExitDoor;
+            Debug.Log(rndExit + "=>> " + _map[_validIndexes[rndExit]].BasicValue);
+
         }
         #endregion
 
@@ -827,17 +924,14 @@
                 for (int y = 0; y < _mapHeight; y++)
                 {
                     GameObject toInstantiate = null;
-                    switch (Scene._grid[x + y * _mapHeight].tile)
+                    switch (Scene._grid[x + y * _mapHeight].BasicValue)
                     {
-                        case Grid.Tile.Floor:
-                            toInstantiate = HexTileManager.instance.GroundTiles[_rnd.Next(0, HexTileManager.instance.GroundTiles.Length)];
-                            break;
-                        case Grid.Tile.Wall:
-                            toInstantiate = HexTileManager.instance.WallTiles[_rnd.Next(0, HexTileManager.instance.WallTiles.Length)];
-                            break;
-                        case Grid.Tile.Water:
-                            toInstantiate = HexTileManager.instance.WaterTiles[_rnd.Next(0, HexTileManager.instance.WaterTiles.Length)];
-                            break;
+                        case BasicValues.Ground: toInstantiate = HexTileManager.instance.GroundTiles[_rnd.Next(0, HexTileManager.instance.GroundTiles.Length)]; break;
+                        case BasicValues.Wall:
+                            if (Scene._grid[x + y * _mapHeight].tile == Grid.Tile.Wall)
+                                toInstantiate = HexTileManager.instance.WallTiles[_rnd.Next(0, HexTileManager.instance.WallTiles.Length)]; break;
+                        case BasicValues.Water: toInstantiate = HexTileManager.instance.WaterTiles[_rnd.Next(0, HexTileManager.instance.WaterTiles.Length)]; break;
+                        case BasicValues.Lava: toInstantiate = HexTileManager.instance.LavaTiles[_rnd.Next(0, HexTileManager.instance.LavaTiles.Length)]; break;
                     }
                     if (toInstantiate != null)
                     {
@@ -846,11 +940,34 @@
                         GameObject fog = GameObject.Instantiate(TileManager.instance.Fog, Scene._grid[x + y * _mapHeight].position, Quaternion.identity) as GameObject;
                         fog.transform.SetParent(instance.transform);
                         instance.transform.SetParent(_boardHolder);
+                        instance.name = string.Format("_hex{0}_{1}", x, y);
                     }
                 }
             }
-            _boardHolder.transform.eulerAngles = new Vector3(-90, 0, 0);
+            //_boardHolder.transform.eulerAngles = new Vector3(-90, 0, 0);
+
+            PrintItems();
         }
-    }
+        private void PrintItems()
+        {
+            if (_validIndexes == null)
+                return;
+            GameObject instance = null;
+            for (int i = 0; i < _validIndexes.Length; i++)
+            {
+                GameObject toInstantiate = null;
+                switch (Scene._grid[_validIndexes[i]].ItemValue)
+                {
+                    case ItemValues.ExitDoor: toInstantiate = HexTileManager.instance.ExitDoor; break;
+                    case ItemValues.MiningBlock: toInstantiate = HexTileManager.instance.MiningBlock; break;
+                }
+                if (toInstantiate != null)
+                {
+                    instance = GameObject.Instantiate(toInstantiate, Scene._grid[_validIndexes[i]].position, Quaternion.identity) as GameObject;
+                    instance.transform.SetParent(Scene._grid[_validIndexes[i]].TileObject.transform);
+                }
+            }
+        }
         #endregion
+    }
 }

@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Loader.cs" />
      <Compile Include="Assets\Scripts\MovingObject.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
+     <Compile Include="Assets\Scripts\Procedural Map\BasicValues.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\CellularAutomata.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\HexCellularAutomata.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\ICellularAutomata.cs" />

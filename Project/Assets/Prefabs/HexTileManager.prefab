@@ -39,16 +39,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52bbaf09d13d5e14289266bdc155f271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hex: {fileID: 151176, guid: 34f40d2a897baf445999fed116790306, type: 2}
+  Hex: {fileID: 126908, guid: 02deb44a2bc343a4dadb224dc2cea581, type: 2}
   WaterTiles:
-  - {fileID: 151176, guid: 64543c3d08c418742899f94c2fb50427, type: 2}
+  - {fileID: 126908, guid: 627e784ec5a26fc4fa08075197d9fa7b, type: 2}
   WallTiles:
-  - {fileID: 151176, guid: 07a883b52f1afc848800284f7b1e63d0, type: 2}
+  - {fileID: 126908, guid: bdcc21aff03e85d479706af7f0f8b33c, type: 2}
+  LavaTiles:
+  - {fileID: 126908, guid: d253e5fcb859c1545869c8dbb07a707d, type: 2}
   GroundTiles:
-  - {fileID: 151176, guid: 34f40d2a897baf445999fed116790306, type: 2}
+  - {fileID: 126908, guid: 02deb44a2bc343a4dadb224dc2cea581, type: 2}
   FloorTiles: []
   GrassTiles: []
   Fog: {fileID: 0}
+  ExitDoor: {fileID: 126908, guid: f36028e39612cb842b6acb211ac3ce5d, type: 2}
+  MiningBlock: {fileID: 126908, guid: e5f8ec01b72657d4ab8631596555a3af, type: 2}
   Gems: []
 --- !u!1001 &100100000
 Prefab:

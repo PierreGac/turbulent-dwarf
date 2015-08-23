@@ -6,10 +6,15 @@ public class HexTileManager : MonoBehaviour
     public GameObject Hex;
     public GameObject[] WaterTiles;
     public GameObject[] WallTiles;
+    public GameObject[] LavaTiles;
     public GameObject[] GroundTiles;
     public GameObject[] FloorTiles;
     public GameObject[] GrassTiles;
     public GameObject Fog;
+
+
+    public GameObject ExitDoor;
+    public GameObject MiningBlock;
 
     #region Items
     public GameObject[] Gems;

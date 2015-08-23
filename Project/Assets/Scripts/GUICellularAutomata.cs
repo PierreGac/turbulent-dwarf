@@ -111,8 +111,8 @@
         {
             CheckIsLastGeneric();
             _hexAutomata.RandomFillMap();
-            _hexAutomata.ProcessCavern(4);
-            _hexAutomata.ProcessBorders();
+            _hexAutomata.ProcessCavern(3);
+            //_hexAutomata.ProcessBorders();
             _hexAutomata.PrintMap();
             //_automata.PlaceWalls_1B345678((int)Type4Pass.value);
             //_automata.ProcessBorders();
