@@ -119,6 +119,11 @@
             //_automata.PrintMap();
         }
 
+        public void PlayGame()
+        {
+
+        }
+
         public void OnType4PassChanged()
         {
             Type4Pass.transform.FindChild("Text").GetComponent<Text>().text = string.Format("Nombre de passes: {0}", Type4Pass.value);
