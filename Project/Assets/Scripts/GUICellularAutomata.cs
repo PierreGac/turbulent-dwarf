@@ -8,6 +8,7 @@
     {
         private bool _lastIsGeneric = true;
         private CellularAutomata _automata;
+        private HexCellularAutomata _hexAutomata;
         public DungeonSpawner DungeonSpawner;
 
 
@@ -25,6 +26,7 @@
         void Awake()
         {
             _automata = new CellularAutomata(100, 100, new System.Random());
+            _hexAutomata = new HexCellularAutomata(100, 100, new System.Random());
             _automata.Player = DungeonSpawner.Player;
 
             Height.text = "100";
@@ -108,9 +110,13 @@
         public void Type4()
         {
             CheckIsLastGeneric();
-            _automata.PlaceWalls_1B345678((int)Type4Pass.value);
-            _automata.ProcessBorders();
-            _automata.PrintMap();
+            _hexAutomata.RandomFillMap();
+            _hexAutomata.ProcessCavern(4);
+            _hexAutomata.ProcessBorders();
+            _hexAutomata.PrintMap();
+            //_automata.PlaceWalls_1B345678((int)Type4Pass.value);
+            //_automata.ProcessBorders();
+            //_automata.PrintMap();
         }
 
         public void OnType4PassChanged()
