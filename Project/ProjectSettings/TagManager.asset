@@ -8,7 +8,9 @@ TagManager:
   - Exit
   - Enemy
   - Soda
-  - Gem
+  - WalkableTile
+  - Money
+  - Inventory
   layers:
   - Default
   - TransparentFX
@@ -54,6 +56,9 @@ TagManager:
     locked: 0
   - name: Units
     uniqueID: 3393972251
+    locked: 0
+  - name: Block
+    uniqueID: 559832369
     locked: 0
   - name: Fog
     uniqueID: 2412024909

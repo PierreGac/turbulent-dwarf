@@ -121,7 +121,8 @@
 
         public void PlayGame()
         {
-
+            Scene.instance._automata = _hexAutomata;
+            Scene.SpawnScene();
         }
 
         public void OnType4PassChanged()

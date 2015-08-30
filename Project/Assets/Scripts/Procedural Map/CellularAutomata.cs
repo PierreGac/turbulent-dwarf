@@ -71,6 +71,7 @@
             }
         }
         private Grid[] _grid;
+        public Grid[] CompleteGrid { get { return _grid; } }
         public CellularAutomata(int width, int height, Random rnd)
         {
             _mapWidth = width;
@@ -83,6 +84,11 @@
         {
             _mapWidth = width;
             _mapHeight = height;
+        }
+
+        public List<Grid> GetSurroundingHexes(Grid hex)
+        {
+            return new List<Grid>();
         }
 
         public void ProcessCavern(int pass)
@@ -253,13 +259,13 @@
                     index = x + y * _mapHeight;
                     if (_map[index].BasicValue != 1)
                     {
-                        _grid[index].status = Grid.Status.Revealed;
+                        _grid[index].status = Status.Revealed;
                         _grid[index].BasicValue = _map[index].BasicValue;
                         switch (_map[index].BasicValue)
                         {
-                            case 0: _grid[index].tile = Grid.Tile.Floor; break;
-                            case 2: _grid[index].tile = Grid.Tile.Water; break;
-                            case 3: _grid[index].tile = Grid.Tile.Grass; break;
+                            case 0: _grid[index].tile = Tile.Floor; break;
+                            case 2: _grid[index].tile = Tile.Water; break;
+                            case 3: _grid[index].tile = Tile.Grass; break;
                         }
                         FillAdjacentWalls(x, y);
                     }
@@ -285,7 +291,7 @@
                     {
                         if (IsWall(iX, iY) && !IsOutOfBounds(iX, iY))
                         {
-                            _grid[iX + iY * _mapHeight].tile = Grid.Tile.Wall;
+                            _grid[iX + iY * _mapHeight].tile = Tile.Wall;
                         }
                     }
                 }
@@ -315,7 +321,7 @@
                 {
                     index = x + y * _mapHeight;
                     _map[index] = new RawGrid();
-                    _grid[index] = new Grid(new Vector3(x, y, 0f), Grid.Tile.Full);
+                    _grid[index] = new Grid(new Vector3(x, y, 0f), Tile.Full);
                     //Border
                     if (x == 0 || y == 0 || (x == _mapWidth - 1) || (y == _mapHeight - 1))
                     {
@@ -792,19 +798,19 @@
                     GameObject toInstantiate = null;
                     switch (Scene._grid[x + y * _mapHeight].tile)
                     {
-                        case Grid.Tile.Floor:
+                        case Tile.Floor:
                             toInstantiate = TileManager.instance.FloorTiles[_rnd.Next(0, TileManager.instance.FloorTiles.Length)];
                             break;
-                        case Grid.Tile.Water:
+                        case Tile.Water:
                             toInstantiate = TileManager.instance.WaterTiles[_rnd.Next(0, TileManager.instance.WaterTiles.Length)];
                             break;
-                        case Grid.Tile.Grass:
+                        case Tile.Grass:
                             toInstantiate = TileManager.instance.GrassTiles[_rnd.Next(0, TileManager.instance.GrassTiles.Length)];
                             break;
-                        case Grid.Tile.Wall:
+                        case Tile.Wall:
                             toInstantiate = TileManager.instance.WallTiles[_rnd.Next(0, TileManager.instance.WallTiles.Length)];
                             break;
-                        case Grid.Tile.Ground:
+                        case Tile.Ground:
                             toInstantiate = TileManager.instance.GroundTiles[_rnd.Next(0, TileManager.instance.GroundTiles.Length)];
                             break;
                     }

@@ -20,7 +20,7 @@ public class Fog : MonoBehaviour
     {
         _thisTransform = transform;
         _spriteRenderer = _thisTransform.GetComponent<SpriteRenderer>();
-        _spriteRenderer.enabled = false;
+        //_spriteRenderer.enabled = false;
     }
 
 
@@ -92,6 +92,12 @@ public class Fog : MonoBehaviour
 
     }
 
+    public static void UpdateFogPlayerSpawn(int index)
+    {
+        Scene._grid[index].FogScript.UpdateFogTile(TileFogState.Active);
+        Scene._grid[index].FogScript.State = TileFogState.Active;
+    }
+
     // Update is called once per frame
     public static void UpdateFog(int index, TileFogState state)
     {
@@ -112,11 +118,11 @@ public class Fog : MonoBehaviour
         iX = startX;
         iY = startY;
 
-        for (iX = startX; iX <= endX; iX++)
+        /*for (iX = startX; iX <= endX; iX++)
         {
             for (iY = startY; iY <= endY; iY++)
             {
-                if ((iX + iY * Scene.Height) < Scene._grid.Length && Scene._grid[iX + iY * Scene.Height].tile != Grid.Tile.Full)
+                if ((iX + iY * Scene.Height) < Scene._grid.Length && Scene._grid[iX + iY * Scene.Height].tile != Tile.Full)
                 {
                     if (Scene._grid[iX + iY * Scene.Height].FogScript.State != state)
                     {
@@ -125,8 +131,26 @@ public class Fog : MonoBehaviour
                     }
                 }
             }
+        }*/
+        foreach(Grid grid in Scene.GetSurroundingHexes(Scene._grid[index]))
+        {
+            if (grid.FogScript != null)
+            {
+                grid.FogScript.UpdateFogTile(state);
+                grid.FogScript.State = state;
+            }
         }
 
+        foreach (Grid grid in Scene.GetSurroundingHexes(Scene._grid[index], 2))
+        {
+            if (grid.FogScript != null)
+            {
+                grid.FogScript.UpdateFogTile(TileFogState.Revealed);
+                grid.FogScript.State = TileFogState.Revealed;
+            }
+        }
+
+        return;
 
         startX = x - 2;
         startY = y - 2;
@@ -142,7 +166,7 @@ public class Fog : MonoBehaviour
             {
                 if (iX == startX || iX == endX || iY == startY || iY == endY)
                 {
-                    if ((iX + iY * Scene.Height) < Scene._grid.Length && Scene._grid[iX + iY * Scene.Height].tile != Grid.Tile.Full)
+                    if ((iX + iY * Scene.Height) < Scene._grid.Length && Scene._grid[iX + iY * Scene.Height].tile != Tile.Full)
                     {
                         //if (Scene._grid[iX + iY * Scene.Height].FogScript.State != TileFogState.Revealed)
                         //{

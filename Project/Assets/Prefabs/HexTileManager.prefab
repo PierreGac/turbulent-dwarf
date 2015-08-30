@@ -53,7 +53,12 @@ MonoBehaviour:
   Fog: {fileID: 0}
   ExitDoor: {fileID: 126908, guid: f36028e39612cb842b6acb211ac3ce5d, type: 2}
   MiningBlock: {fileID: 126908, guid: e5f8ec01b72657d4ab8631596555a3af, type: 2}
-  Gems: []
+  Gems:
+  - {fileID: 171270, guid: 6cf8340ab6a3b0a41abe22f032468e15, type: 2}
+  - {fileID: 171270, guid: 5cf9180264f66c342a828d8bfc4ad0dd, type: 2}
+  - {fileID: 171270, guid: 19cde32aea0af6e4c8cabbf7e3a7016f, type: 2}
+  MoneyTiles:
+  - {fileID: 171270, guid: 49eda5fa039374a43b877b584e32fb49, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

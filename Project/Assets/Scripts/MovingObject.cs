@@ -4,6 +4,8 @@ using System.Collections;
 //The abstract keyword enables you to create classes and class members that are incomplete and must be implemented in a derived class.
 public abstract class MovingObject : MonoBehaviour
 {
+    private float TileWidth;
+    private float TileHeight;
     public float moveTime = 0.1f;           //Time it will take object to move, in seconds.
     public LayerMask blockingLayer;         //Layer on which collision will be checked.
 
@@ -16,6 +18,8 @@ public abstract class MovingObject : MonoBehaviour
     //Protected, virtual functions can be overridden by inheriting classes.
     protected virtual void Start()
     {
+        TileWidth = DungeonSpawner.HexCellularAutomata._hexWidth;
+        TileHeight = DungeonSpawner.HexCellularAutomata._hexHeight;
         //Get a component reference to this object's BoxCollider2D
         boxCollider = GetComponent<BoxCollider2D>();
 
@@ -35,7 +39,7 @@ public abstract class MovingObject : MonoBehaviour
         Vector2 start = transform.position;
 
         // Calculate end position based on the direction parameters passed in when calling Move.
-        Vector2 end = start + new Vector2(xDir, yDir);
+        Vector2 end = start + new Vector2(xDir * TileWidth, yDir * TileHeight);
 
         //Disable the boxCollider so that linecast doesn't hit this object's own collider.
         boxCollider.enabled = false;
@@ -66,7 +70,7 @@ public abstract class MovingObject : MonoBehaviour
         //Calculate the remaining distance to move based on the square magnitude of the difference between current position and end parameter. 
         //Square magnitude is used instead of magnitude because it's computationally cheaper.
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-        Scene._grid[(int)transform.position.x + (int)transform.position.y * Scene.Width].Entity = null;
+        Scene._grid[(int)(transform.position.x / TileWidth) + (int)(transform.position.y / TileHeight) * Scene.Width].Entity = null;
         /*if (this.tag == "Player")
             Fog.UpdateFog((int)transform.position.x + (int)transform.position.y * Scene.Width, DungeonSpawner.TileFogState.Revealed);*/
         //While that distance is greater than a very small amount (Epsilon, almost zero):
@@ -83,9 +87,9 @@ public abstract class MovingObject : MonoBehaviour
             //Return and loop until sqrRemainingDistance is close enough to zero to end the function
             yield return null;
         }
-        Scene._grid[(int)transform.position.x + (int)transform.position.y * Scene.Width].Entity = this;
+        Scene._grid[(int)(transform.position.x / TileWidth) + (int)(transform.position.y / TileHeight) * Scene.Width].Entity = this;
         if (this.tag == "Player")
-            Fog.UpdateFog((int)transform.position.x + (int)transform.position.y * Scene.Width, DungeonSpawner.TileFogState.Active);
+            Fog.UpdateFog((int)(transform.position.x / TileWidth) + (int)(transform.position.y / TileHeight) * Scene.Width, DungeonSpawner.TileFogState.Active);
     }
 
 

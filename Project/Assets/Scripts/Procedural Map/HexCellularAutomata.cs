@@ -12,15 +12,15 @@
         #region private variables
         private Random _rnd;
         private Grid[] _grid;
+        public Grid[] CompleteGrid { get { return _grid; } }
         private string _seed = null;
 
         private int _playerSpawn;
 
-        private float _hexWidth;
-        private float _hexHeight;
         private Transform _boardHolder;
         #endregion
-
+        public static float _hexWidth;
+        public static float _hexHeight;
         #region Properties
         private int _mapWidth;
         public int MapWidth
@@ -97,7 +97,97 @@
             //renderer component attached to the Hex prefab is used to get the current width and height
             _hexWidth = HexTileManager.instance.Hex.GetComponent<Renderer>().bounds.size.x;
             _hexHeight = HexTileManager.instance.Hex.GetComponent<Renderer>().bounds.size.y;
-            Debug.Log(HexTileManager.instance.Hex.GetComponent<SpriteRenderer>().bounds.size);
+        }
+
+        /// <summary>
+        /// Get the surrounding tiles of the hexagon parameter [Only visible hex]
+        /// </summary>
+        /// <param name="hexagon"></param>
+        /// <returns></returns>
+        public List<Grid> GetSurroundingHexes(Grid hexagon)
+        {
+            if (hexagon == null)
+                return new List<Grid>();
+            int x = hexagon.posX;
+            int y = hexagon.posY;
+            List<Grid> surroundingHexs = new List<Grid>();
+            #region LEFT SIDE
+            //Left upper sider
+            if (y % 2 != 0)
+            {
+                if (!IsOutOfBounds(x, y - 1))
+                {
+                    if (_grid[x + (y - 1) * _mapWidth].TileObject != null)
+                        surroundingHexs.Add(_grid[x + (y - 1) * _mapWidth]);
+                }
+            }
+            else if (!IsOutOfBounds(x - 1, y - 1))
+            {
+                if (_grid[(x - 1) + (y - 1) * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(_grid[(x - 1) + (y - 1) * _mapWidth]);
+            }
+
+
+            //Left tile
+            if (!IsOutOfBounds(x - 1, y))
+            {
+                if (_grid[(x - 1) + y * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(_grid[(x - 1) + y * _mapWidth]);
+            }
+            //Left down tile
+            if (y % 2 != 0)
+            {
+                if (!IsOutOfBounds(x, y + 1))
+                {
+                    if (_grid[x + (y + 1) * _mapWidth].TileObject != null)
+                        surroundingHexs.Add(_grid[x + (y + 1) * _mapWidth]);
+                }
+            }
+            else if (!IsOutOfBounds(x - 1, y + 1))
+            {
+                if (_grid[(x - 1) + (y + 1) * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(_grid[(x - 1) + (y + 1) * _mapWidth]);
+            }
+
+            #endregion
+            #region RIGHT SIDE
+            //Right down tile
+            if (y % 2 == 0)
+            {
+                if (!IsOutOfBounds(x, y + 1))
+                {
+                    if (_grid[x + (y + 1) * _mapWidth].TileObject != null)
+                        surroundingHexs.Add(_grid[x + (y + 1) * _mapWidth]);
+                }
+            }
+            else if (!IsOutOfBounds(x + 1, y + 1))
+            {
+                if (_grid[(x + 1) + (y + 1) * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(_grid[(x + 1) + (y + 1) * _mapWidth]);
+            }
+            //Right tile
+            if (!IsOutOfBounds(x + 1, y))
+            {
+                if (_grid[(x + 1) + y * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(_grid[(x + 1) + y * _mapWidth]);
+            }
+
+            if (y % 2 == 0)
+            {
+                if (!IsOutOfBounds(x, y - 1))
+                {
+                    if (_grid[x + (y - 1) * _mapWidth].TileObject != null)
+                        surroundingHexs.Add(_grid[x + (y - 1) * _mapWidth]);
+                }
+            }
+            else if (!IsOutOfBounds(x + 1, y - 1))
+            {
+                if (_grid[(x + 1) + (y - 1) * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(_grid[(x + 1) + (y - 1) * _mapWidth]);
+            }
+            #endregion
+
+            return surroundingHexs;
         }
 
         public void ProcessCavern(int pass)
@@ -272,14 +362,14 @@
                     index = x + y * _mapHeight;
                     if (_map[index].BasicValue != 1)
                     {
-                        _grid[index].status = Grid.Status.Revealed;
+                        _grid[index].status = Status.Revealed;
                         _grid[index].BasicValue = _map[index].BasicValue;
                         _grid[index].ItemValue = _map[index].ItemValue;
                         switch (_map[index].BasicValue)
                         {
-                            case BasicValues.Ground: _grid[index].tile = Grid.Tile.Floor; break;
-                            case BasicValues.Water: _grid[index].tile = Grid.Tile.Water; break;
-                            case BasicValues.Grass: _grid[index].tile = Grid.Tile.Grass; break;
+                            case BasicValues.Ground: _grid[index].tile = Tile.Floor; _grid[index].isWalkable = true; break;
+                            case BasicValues.Water: _grid[index].tile = Tile.Water; _grid[index].isWalkable = true; break;
+                            case BasicValues.Grass: _grid[index].tile = Tile.Grass; _grid[index].isWalkable = true; break;
                         }
                         FillAdjacentWalls(x, y);
                     }
@@ -305,7 +395,8 @@
                     {
                         if (IsWall(iX, iY) && !IsOutOfBounds(iX, iY))
                         {
-                            _grid[iX + iY * _mapHeight].tile = Grid.Tile.Wall;
+                            _grid[iX + iY * _mapHeight].tile = Tile.Wall;
+                            //_grid[iX + iY * _mapHeight].BasicValue = BasicValues.Wall;
                         }
                     }
                 }
@@ -336,10 +427,12 @@
                 {
                     index = x + y * _mapHeight;
                     _map[index] = new RawGrid();
-                    _grid[index] = new Grid(calcWorldCoord(new Vector2(x, y)), Grid.Tile.Full);
+                    _grid[index] = new Grid(calcWorldCoord(new Vector2(x, y)), Tile.Full);
+                    _grid[index].posX = x;
+                    _grid[index].posY = y;
                     //Border
                     if (x == 0 || y == 0 || (x == _mapWidth - 1) || (y == _mapHeight - 1))
-                        _map[index].BasicValue = 1;
+                        _map[index].BasicValue = BasicValues.Wall;
                     // Inside
                     else
                         _map[index].BasicValue = GetRandomTileStatus(_percentage);
@@ -884,6 +977,7 @@
         {
             int rndExit = _rnd.Next(0, _validIndexes.Length);
             _map[_validIndexes[rndExit]].ItemValue = ItemValues.ExitDoor;
+            _grid[_validIndexes[rndExit]].isWalkable = true;
             Debug.Log(rndExit + "=>> " + _map[_validIndexes[rndExit]].BasicValue);
 
         }
@@ -928,7 +1022,7 @@
                     {
                         case BasicValues.Ground: toInstantiate = HexTileManager.instance.GroundTiles[_rnd.Next(0, HexTileManager.instance.GroundTiles.Length)]; break;
                         case BasicValues.Wall:
-                            if (Scene._grid[x + y * _mapHeight].tile == Grid.Tile.Wall)
+                            if (Scene._grid[x + y * _mapHeight].tile == Tile.Wall)
                                 toInstantiate = HexTileManager.instance.WallTiles[_rnd.Next(0, HexTileManager.instance.WallTiles.Length)]; break;
                         case BasicValues.Water: toInstantiate = HexTileManager.instance.WaterTiles[_rnd.Next(0, HexTileManager.instance.WaterTiles.Length)]; break;
                         case BasicValues.Lava: toInstantiate = HexTileManager.instance.LavaTiles[_rnd.Next(0, HexTileManager.instance.LavaTiles.Length)]; break;
@@ -959,11 +1053,12 @@
                 switch (Scene._grid[_validIndexes[i]].ItemValue)
                 {
                     case ItemValues.ExitDoor: toInstantiate = HexTileManager.instance.ExitDoor; break;
-                    case ItemValues.MiningBlock: toInstantiate = HexTileManager.instance.MiningBlock; break;
+                    case ItemValues.MiningBlock: toInstantiate = HexTileManager.instance.MiningBlock; Scene._grid[_validIndexes[i]].isWalkable = false; break;
                 }
                 if (toInstantiate != null)
                 {
                     instance = GameObject.Instantiate(toInstantiate, Scene._grid[_validIndexes[i]].position, Quaternion.identity) as GameObject;
+                    Scene._grid[_validIndexes[i]].TileItem = instance;
                     instance.transform.SetParent(Scene._grid[_validIndexes[i]].TileObject.transform);
                 }
             }

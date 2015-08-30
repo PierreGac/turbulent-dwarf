@@ -103,20 +103,20 @@
                     GameObject toInstantiate = null;
                     if (x == -1 || x == MapWidth || y == -1 || y == MapHeight)
                         toInstantiate = WallSprites[Random.Range(0, WallSprites.Length)];
-                    else if (_grid[x + y * MapHeight].status == Grid.Status.Revealed)
+                    else if (_grid[x + y * MapHeight].status == Status.Revealed)
                     {
                         switch (_grid[x + y * MapHeight].tile)
                         {
-                            case Grid.Tile.Floor:
+                            case Tile.Floor:
                                 toInstantiate = FloorSprites[Random.Range(0, FloorSprites.Length)];
                                 break;
-                            case Grid.Tile.Wall:
+                            case Tile.Wall:
                                 toInstantiate = WallSprites[Random.Range(0, WallSprites.Length)];
                                 break;
-                            case Grid.Tile.Door:
+                            case Tile.Door:
                                 toInstantiate = FloorSprites[Random.Range(0, FloorSprites.Length)];
                                 break;
-                            case Grid.Tile.Ground:
+                            case Tile.Ground:
                                 toInstantiate = FloorSprites[Random.Range(0, FloorSprites.Length)];
                                 break;
                         }
@@ -137,11 +137,11 @@
                 for (int y = 0; y < MapHeight; y++)
                 {
                     GameObject toInstantiate = null;
-                    if (_grid[x + y * MapHeight].tile == Grid.Tile.Wall && _grid[x + y * MapHeight].status == Grid.Status.Undisclosed)
+                    if (_grid[x + y * MapHeight].tile == Tile.Wall && _grid[x + y * MapHeight].status == Status.Undisclosed)
                     {
                         toInstantiate = WallSprites[Random.Range(0, WallSprites.Length)];
                     }
-                    else if (_grid[x + y * MapHeight].status == Grid.Status.Undisclosed)
+                    else if (_grid[x + y * MapHeight].status == Status.Undisclosed)
                     {
                         toInstantiate = BlackTile;
                     }
@@ -168,7 +168,7 @@
                 {
                     for (int y = (int)pos.y; y <= (pos.y + height); y++)
                     {
-                        if (_grid[x + y * MapHeight].status != Grid.Status.Undisclosed)
+                        if (_grid[x + y * MapHeight].status != Status.Undisclosed)
                             return false;
                     }
                 }
@@ -190,14 +190,14 @@
                         if (x == (pos.x - 1) || x == (pos.x + width))
                         {
                             //Debug.Log(x + "  " + y);
-                            _grid[x + y * MapHeight].tile = Grid.Tile.Wall;
+                            _grid[x + y * MapHeight].tile = Tile.Wall;
                             walls[counter] = x + y * MapHeight;
                             counter++;
                         }
                         else if (y == (pos.y - 1) || y == (pos.y + height))
                         {
                             //Debug.Log(x + "  " + y);
-                            _grid[x + y * MapHeight].tile = Grid.Tile.Wall;
+                            _grid[x + y * MapHeight].tile = Tile.Wall;
                             walls[counter] = x + y * MapHeight;
                             counter++;
                         }
@@ -212,8 +212,8 @@
             {
                 for (int y = (int)pos.y; y < (pos.y + height); y++)
                 {
-                    _grid[x + y * MapHeight].status = Grid.Status.Revealed;
-                    _grid[x + y * MapHeight].tile = Grid.Tile.Floor;
+                    _grid[x + y * MapHeight].status = Status.Revealed;
+                    _grid[x + y * MapHeight].tile = Tile.Floor;
                     currentRoom[counter] = x + y * MapHeight;
                     counter++;
                 }
@@ -236,7 +236,7 @@
             Direction dir = Direction.NULL;
 
             //Check for EAST
-            if (_grid[pos - 1].status == Grid.Status.Revealed)
+            if (_grid[pos - 1].status == Status.Revealed)
             {
                 //Debug.Log("1");
                 for (int i = 0; i < currentRoom.Length; i++)
@@ -248,7 +248,7 @@
                     isValidWall = false;
             }
             //WEST
-            else if (_grid[pos + 1].status == Grid.Status.Revealed)
+            else if (_grid[pos + 1].status == Status.Revealed)
             {
                 //Debug.Log("2");
                 for (int i = 0; i < currentRoom.Length; i++)
@@ -260,7 +260,7 @@
                     isValidWall = false;
             }
             //SOUTH
-            else if (_grid[pos + MapWidth].status == Grid.Status.Revealed)
+            else if (_grid[pos + MapWidth].status == Status.Revealed)
             {
                 //Debug.Log("3");
                 for (int i = 0; i < currentRoom.Length; i++)
@@ -272,7 +272,7 @@
                     isValidWall = false;
             }
             //NORTH
-            else if (_grid[pos - MapWidth].status == Grid.Status.Revealed)
+            else if (_grid[pos - MapWidth].status == Status.Revealed)
             {
                 //Debug.Log("4");
                 for (int i = 0; i < currentRoom.Length; i++)
@@ -304,7 +304,7 @@
                             //
                             if (i == 0)
                             {
-                                if (_grid[(pos - MapWidth) + j].status != Grid.Status.Undisclosed)
+                                if (_grid[(pos - MapWidth) + j].status != Status.Undisclosed)
                                 {
                                     isValidCorridor = false;
                                     break;
@@ -312,7 +312,7 @@
                             }
                             else
                             {
-                                if (_grid[(pos + MapWidth) + j].status != Grid.Status.Undisclosed)
+                                if (_grid[(pos + MapWidth) + j].status != Status.Undisclosed)
                                 {
                                     isValidCorridor = false;
                                     break;
@@ -323,8 +323,8 @@
 
                     if (isValidCorridor)
                     {
-                        _grid[pos].status = Grid.Status.Revealed;
-                        _grid[pos].tile = Grid.Tile.Door;
+                        _grid[pos].status = Status.Revealed;
+                        _grid[pos].tile = Tile.Door;
                         for (int i = 0; i < 3; i++)
                         {
                             for (int j = 0; j < _minimumCorridorLength; j++)
@@ -334,18 +334,18 @@
                                     case 0:
                                         if (j != 0)
                                         {
-                                            _grid[pos + j].status = Grid.Status.Revealed;
-                                            _grid[pos + j].tile = Grid.Tile.Floor;
+                                            _grid[pos + j].status = Status.Revealed;
+                                            _grid[pos + j].tile = Tile.Floor;
                                             
                                         }
                                         break;
                                     case 1:
-                                        _grid[(pos - MapWidth) + j].status = Grid.Status.Revealed;
-                                        _grid[(pos - MapWidth) + j].tile = Grid.Tile.Wall;
+                                        _grid[(pos - MapWidth) + j].status = Status.Revealed;
+                                        _grid[(pos - MapWidth) + j].tile = Tile.Wall;
                                         break;
                                     case 2:
-                                        _grid[(pos + MapWidth) + j].status = Grid.Status.Revealed;
-                                        _grid[(pos + MapWidth) + j].tile = Grid.Tile.Wall;
+                                        _grid[(pos + MapWidth) + j].status = Status.Revealed;
+                                        _grid[(pos + MapWidth) + j].tile = Tile.Wall;
                                         break;
                                 }
                             }
@@ -367,7 +367,7 @@
                             //
                             if (i == 0)
                             {
-                                if (_grid[(pos - MapWidth) - j].status != Grid.Status.Undisclosed)
+                                if (_grid[(pos - MapWidth) - j].status != Status.Undisclosed)
                                 {
                                     isValidCorridor = false;
                                     break;
@@ -375,7 +375,7 @@
                             }
                             else
                             {
-                                if (_grid[(pos + MapWidth) - j].status != Grid.Status.Undisclosed)
+                                if (_grid[(pos + MapWidth) - j].status != Status.Undisclosed)
                                 {
                                     isValidCorridor = false;
                                     break;
@@ -386,8 +386,8 @@
 
                     if (isValidCorridor)
                     {
-                        _grid[pos].status = Grid.Status.Revealed;
-                        _grid[pos].tile = Grid.Tile.Door;
+                        _grid[pos].status = Status.Revealed;
+                        _grid[pos].tile = Tile.Door;
                         for (int i = 0; i < 3; i++)
                         {
                             for (int j = 0; j < _minimumCorridorLength; j++)
@@ -397,17 +397,17 @@
                                     case 0:
                                         if (j != 0)
                                         {
-                                            _grid[pos - j].status = Grid.Status.Revealed;
-                                            _grid[pos - j].tile = Grid.Tile.Floor;
+                                            _grid[pos - j].status = Status.Revealed;
+                                            _grid[pos - j].tile = Tile.Floor;
                                         }
                                         break;
                                     case 1:
-                                        _grid[(pos - MapWidth) - j].status = Grid.Status.Revealed;
-                                        _grid[(pos - MapWidth) - j].tile = Grid.Tile.Wall;
+                                        _grid[(pos - MapWidth) - j].status = Status.Revealed;
+                                        _grid[(pos - MapWidth) - j].tile = Tile.Wall;
                                         break;
                                     case 2:
-                                        _grid[(pos + MapWidth) - j].status = Grid.Status.Revealed;
-                                        _grid[(pos + MapWidth) - j].tile = Grid.Tile.Wall;
+                                        _grid[(pos + MapWidth) - j].status = Status.Revealed;
+                                        _grid[(pos + MapWidth) - j].tile = Tile.Wall;
                                         break;
                                 }
                             }
@@ -431,7 +431,7 @@
                             //
                             if (i == 0)
                             {
-                                if (_grid[(pos + 1) + (j * MapWidth)].status != Grid.Status.Undisclosed)
+                                if (_grid[(pos + 1) + (j * MapWidth)].status != Status.Undisclosed)
                                 {
                                     isValidCorridor = false;
                                     break;
@@ -439,7 +439,7 @@
                             }
                             else
                             {
-                                if (_grid[(pos - 1) + (j * MapWidth)].status != Grid.Status.Undisclosed)
+                                if (_grid[(pos - 1) + (j * MapWidth)].status != Status.Undisclosed)
                                 {
                                     isValidCorridor = false;
                                     break;
@@ -451,8 +451,8 @@
 
                     if (isValidCorridor)
                     {
-                        _grid[pos].status = Grid.Status.Revealed;
-                        _grid[pos].tile = Grid.Tile.Door;
+                        _grid[pos].status = Status.Revealed;
+                        _grid[pos].tile = Tile.Door;
                         for (int i = 0; i < 3; i++)
                         {
                             for (int j = 0; j < _minimumCorridorLength; j++)
@@ -462,17 +462,17 @@
                                     case 0:
                                         if (j != 0)
                                         {
-                                            _grid[pos + MapWidth * j].status = Grid.Status.Revealed;
-                                            _grid[pos + MapWidth * j].tile = Grid.Tile.Floor;
+                                            _grid[pos + MapWidth * j].status = Status.Revealed;
+                                            _grid[pos + MapWidth * j].tile = Tile.Floor;
                                         }
                                         break;
                                     case 1:
-                                        _grid[(pos - 1) + (j * MapWidth)].status = Grid.Status.Revealed;
-                                        _grid[(pos - 1) + (j * MapWidth)].tile = Grid.Tile.Wall;
+                                        _grid[(pos - 1) + (j * MapWidth)].status = Status.Revealed;
+                                        _grid[(pos - 1) + (j * MapWidth)].tile = Tile.Wall;
                                         break;
                                     case 2:
-                                        _grid[(pos + 1) + (j * MapWidth)].status = Grid.Status.Revealed;
-                                        _grid[(pos + 1) + (j * MapWidth)].tile = Grid.Tile.Wall;
+                                        _grid[(pos + 1) + (j * MapWidth)].status = Status.Revealed;
+                                        _grid[(pos + 1) + (j * MapWidth)].tile = Tile.Wall;
                                         break;
                                 }
                             }
@@ -496,7 +496,7 @@
                             //
                             if (i == 0)
                             {
-                                if (_grid[(pos + 1) - (j * MapWidth)].status != Grid.Status.Undisclosed)
+                                if (_grid[(pos + 1) - (j * MapWidth)].status != Status.Undisclosed)
                                 {
                                     isValidCorridor = false;
                                     break;
@@ -504,7 +504,7 @@
                             }
                             else
                             {
-                                if (_grid[(pos - 1) - (j * MapWidth)].status != Grid.Status.Undisclosed)
+                                if (_grid[(pos - 1) - (j * MapWidth)].status != Status.Undisclosed)
                                 {
                                     isValidCorridor = false;
                                     break;
@@ -517,8 +517,8 @@
                     if (isValidCorridor)
                     {
                         Debug.Log("ok");
-                        _grid[pos].status = Grid.Status.Revealed;
-                        _grid[pos].tile = Grid.Tile.Door;
+                        _grid[pos].status = Status.Revealed;
+                        _grid[pos].tile = Tile.Door;
                         for (int i = 0; i < 3; i++)
                         {
                             for (int j = 0; j < _minimumCorridorLength; j++)
@@ -528,17 +528,17 @@
                                     case 0:
                                         if (j != 0)
                                         {
-                                            _grid[pos - MapWidth * j].status = Grid.Status.Revealed;
-                                            _grid[pos - MapWidth * j].tile = Grid.Tile.Floor;
+                                            _grid[pos - MapWidth * j].status = Status.Revealed;
+                                            _grid[pos - MapWidth * j].tile = Tile.Floor;
                                         }
                                         break;
                                     case 1:
-                                        _grid[(pos - 1) - (j * MapWidth)].status = Grid.Status.Revealed;
-                                        _grid[(pos - 1) - (j * MapWidth)].tile = Grid.Tile.Wall;
+                                        _grid[(pos - 1) - (j * MapWidth)].status = Status.Revealed;
+                                        _grid[(pos - 1) - (j * MapWidth)].tile = Tile.Wall;
                                         break;
                                     case 2:
-                                        _grid[(pos + 1) - (j * MapWidth)].status = Grid.Status.Revealed;
-                                        _grid[(pos + 1) - (j * MapWidth)].tile = Grid.Tile.Wall;
+                                        _grid[(pos + 1) - (j * MapWidth)].status = Status.Revealed;
+                                        _grid[(pos + 1) - (j * MapWidth)].tile = Tile.Wall;
                                         break;
                                 }
                             }
@@ -564,7 +564,7 @@
             {
                 if ((pos + offset * i) >= _grid.Length)
                     return false;
-                if (_grid[pos + offset * i].status != Grid.Status.Undisclosed)
+                if (_grid[pos + offset * i].status != Status.Undisclosed)
                 {
                     return false;
                 }
@@ -588,20 +588,19 @@
                 return false;
         }
 
-        private void SetRoomType(Grid.RoomType type, int pos)
+        private void SetRoomType(RoomType type, int pos)
         {
             _grid[pos].roomType = type;
         }
     }
 
     public enum TileFogState { Revealed, Active, Hiden };
-
+    public enum Status { Revealed, Undisclosed };
+    public enum Tile { Ground, Floor, Wall, Door, Full, Water, Grass };
+    public enum RoomType { SquareRoom, RoundRoom, Corridor };
     public class Grid
     {
-        public enum Status { Revealed, Undisclosed };
-        public enum Tile { Ground, Floor, Wall, Door, Full, Water, Grass };
-        public enum RoomType { SquareRoom, RoundRoom, Corridor };
-
+        public bool isWalkable { get; set; }
         public Status status { get; set; }
         public Tile tile { get; set; }
         public RoomType roomType { get; set; }
@@ -610,6 +609,16 @@
         public byte ItemValue { get; set; }
         public MovingObject Entity { get; set; }
         public GameObject TileObject { get; set; }
+        public GameObject TileItem { get; set; }
+        public int posX { get; set; }
+        public int posY { get; set; }
+        public string Coordinates
+        {
+            get
+            {
+                return string.Format("({0},{1})", posX, posY);
+            }
+        }
         public Fog FogScript
         { 
             get
@@ -620,9 +629,10 @@
         public Grid(Vector3 position, Tile tile = Tile.Ground)
         {
             this.position = position;
-            status = Status.Undisclosed;
+            this.status = Status.Undisclosed;
             this.tile = tile;
-            BasicValue = 1;
+            this.isWalkable = false;
+            this.BasicValue = 1;
         }
 
         public static Grid[] BasicValueToStatus(RawGrid[] rawGrid, int width, int height)

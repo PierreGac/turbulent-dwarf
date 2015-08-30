@@ -46,26 +46,33 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BoardManager.cs" />
      <Compile Include="Assets\Scripts\DungeonSpawner.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\Fog.cs" />
      <Compile Include="Assets\Scripts\FogController.cs" />
      <Compile Include="Assets\Scripts\GUICellularAutomata.cs" />
-     <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\HexTileManager.cs" />
+     <Compile Include="Assets\Scripts\GlobalEventText.cs" />
+     <Compile Include="Assets\Scripts\InventoryUI.cs" />
      <Compile Include="Assets\Scripts\Items\Gem.cs" />
      <Compile Include="Assets\Scripts\Items\ItemManager.cs" />
+     <Compile Include="Assets\Scripts\Items\MiningWall.cs" />
+     <Compile Include="Assets\Scripts\Items\Money.cs" />
+     <Compile Include="Assets\Scripts\Items\MonoItem.cs" />
      <Compile Include="Assets\Scripts\Loader.cs" />
+     <Compile Include="Assets\Scripts\Managers\BoardManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\HexTileManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\ResourcesManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\TileManager.cs" />
      <Compile Include="Assets\Scripts\MovingObject.cs" />
+     <Compile Include="Assets\Scripts\Player\Inventory.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\BasicValues.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\CellularAutomata.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\HexCellularAutomata.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\ICellularAutomata.cs" />
      <Compile Include="Assets\Scripts\Scene.cs" />
-     <Compile Include="Assets\Scripts\SoundManager.cs" />
-     <Compile Include="Assets\Scripts\TileManager.cs" />
      <Compile Include="Assets\Scripts\UserInterface.cs" />
      <Compile Include="Assets\Scripts\Wall.cs" />
      <None Include="Assets\Fonts\OFL.txt" />
