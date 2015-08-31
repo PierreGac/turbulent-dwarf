@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Inventory : MonoBehaviour
 {
-    private InventoryUI InventoryCaneva;
+    private static InventoryUI InventoryCaneva;
     public int InventorySpace = 32;
     public static Item[] Items;
     private static float _money;
@@ -16,7 +16,6 @@ public class Inventory : MonoBehaviour
         set
         {
             _money = value;
-            UserInterface.MoneyText.text = string.Format("Money: {0}", value);
         }
     }
 
@@ -33,24 +32,31 @@ public class Inventory : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.I))
         {
-            InventoryCaneva.OpenInventory(Items);
-            /*
-            Debug.Log("Open inventory");
-            string str = "Content: ";
-            _totalMass = 0;
-            foreach(Item item in Items)
-            {
-                if (item != null)
-                {
-                    str = string.Format("{0} {1}(x{2})", str, item.Name, item.Count);
-                    _totalMass += item.Mass;
-                }
-            }
-            Debug.Log(str + "  Total mass: " + _totalMass);
-            */
+            if (!InventoryCaneva.panel.gameObject.activeInHierarchy)
+                InventoryCaneva.OpenInventory(Items);
+            else
+                InventoryCaneva.Exit();
+        }
+        if(Input.GetKeyDown(KeyCode.L))
+        {
         }
     }
 
+    public static void ReorderInventory()
+    {
+        Item[] tmp = new Item[Items.Length];
+        int index = 0;
+        for(int i = 0; i < Items.Length; i++)
+        {
+            if(Items[i] != null)
+            {
+                tmp[index] = Items[i];
+                index++;
+            }
+        }
+
+        tmp.CopyTo(Items, 0);
+    }
 
     public static bool AddItemToInventory(Item item)
     {
@@ -61,8 +67,10 @@ public class Inventory : MonoBehaviour
             {
                 if (Items[i].Name == item.Name)
                 {
-                    Items[i].Count++;
+                    Items[i].Count += item.Count;
                     GlobalEventText.AddMessage(string.Format("You picked up \"{0}\" (x{1})", item.Name, item.Count));
+                    if (InventoryCaneva.panel.gameObject.activeInHierarchy)
+                        InventoryCaneva.RefreshUI();
                     return true;
                 }
             }
@@ -75,6 +83,8 @@ public class Inventory : MonoBehaviour
             {
                 Items[i] = item;
                 GlobalEventText.AddMessage(string.Format("You picked up \"{0}\" (x{1})", item.Name, item.Count));
+                if (InventoryCaneva.panel.gameObject.activeInHierarchy)
+                    InventoryCaneva.RefreshUI();
                 return true;
             }
         }
@@ -83,5 +93,24 @@ public class Inventory : MonoBehaviour
         Debug.Log("Inventory full!");
         GlobalEventText.AddMessage(string.Format("You can't pickup \"{0}\", because your inventory is full", item.Name));
         return false;
+    }
+
+    public static void RefreshUI()
+    {
+        InventoryCaneva.RefreshUI();
+    }
+
+    public static void RemoveItemFromInventory(Item item)
+    {
+        for(int i = 0; i < Items.Length; i++)
+        {
+            if(item == Items[i])
+            {
+                Items[i] = null;
+                if (InventoryCaneva.panel.gameObject.activeInHierarchy)
+                    InventoryCaneva.RefreshUI();
+                return;
+            }
+        }
     }
 }

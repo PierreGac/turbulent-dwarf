@@ -20,7 +20,7 @@ public class Fog : MonoBehaviour
     {
         _thisTransform = transform;
         _spriteRenderer = _thisTransform.GetComponent<SpriteRenderer>();
-        //_spriteRenderer.enabled = false;
+        //_spriteRenderer.enabled = false; //Enable to disable the fog
     }
 
 

@@ -59,6 +59,10 @@ MonoBehaviour:
   - {fileID: 171270, guid: 19cde32aea0af6e4c8cabbf7e3a7016f, type: 2}
   MoneyTiles:
   - {fileID: 171270, guid: 49eda5fa039374a43b877b584e32fb49, type: 2}
+  Boulders:
+  - {fileID: 171270, guid: aa0992305494e414f98bb5b12d23c808, type: 2}
+  Containers:
+  - {fileID: 171270, guid: 2cdf2b7693ddd994283510330fed0f35, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

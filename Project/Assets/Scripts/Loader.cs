@@ -6,7 +6,6 @@ public class Loader : MonoBehaviour
     public GameObject gameManager;
     public GameObject tileManager;
     public GameObject hexTileManager;
-    public GameObject userInterface;
     public GameObject sceneObject;
     public GameObject resourcesManager;
     void Awake()
@@ -21,8 +20,6 @@ public class Loader : MonoBehaviour
             Instantiate(tileManager);
         if (Scene.instance == null)
             Instantiate(sceneObject);
-        if (UserInterface.instance == null)
-            Instantiate(userInterface);
 
         Scene.SpawnScene();
     }

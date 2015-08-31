@@ -56,6 +56,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   InventorySprite: {fileID: 21300002, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
+  InGameSprite: {fileID: 21300002, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
 --- !u!212 &21229970
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -108,6 +109,11 @@ Prefab:
         type: 3}
     - target: {fileID: 0}
       propertyPath: InventorySprite
+      value: 
+      objectReference: {fileID: 21300002, guid: 86c89512fe21abf4cacd3547630651e8,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: InGameSprite
       value: 
       objectReference: {fileID: 21300002, guid: 86c89512fe21abf4cacd3547630651e8,
         type: 3}

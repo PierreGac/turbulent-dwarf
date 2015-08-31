@@ -190,8 +190,61 @@
             return surroundingHexs;
         }
 
+        private List<RawGrid> GetSurroundingHexes(int posX, int posY, int radius)
+        {
+            List<RawGrid> hexagons = new List<RawGrid>();
+            bool startIsModulo;
+            if (posY % 2 == 0)
+                startIsModulo = true;
+            else
+                startIsModulo = false;
+
+            int end = posX + radius;
+            int start = posX - radius;
+            for (int y = posY - radius; y <= posY + radius; y++)
+            {
+                if (y % 2 == 0)
+                {
+                    if (startIsModulo)
+                    {
+                        start = posX - radius;
+                        end = posX + radius;
+                    }
+                    else
+                    {
+                        start = posX - (radius - 1);
+                        end = posX + radius;
+                    }
+                }
+                else
+                {
+                    if (startIsModulo)
+                    {
+                        start = posX - radius;
+                        end = posX + (radius - 1);
+                    }
+                    else
+                    {
+                        start = posX - radius;
+                        end = posX + radius;
+                    }
+                }
+
+                for (int x = start; x <= end; x++)
+                {
+                    if (!IsOutOfBounds(x, y))
+                    {
+                        if (_map[x + y * _mapHeight].BasicValue != 1)
+                            hexagons.Add(_map[x + y * _mapHeight]);
+                    }
+                }
+            }
+            return hexagons;
+        }
+
         public void ProcessCavern(int pass)
         {
+            DateTime time = DateTime.Now;
             for (int i = 0; i < pass; i++)
             {
                 PlaceWalls_1D5678_2D12(3);
@@ -234,6 +287,7 @@
             ProcessBorders();
 
 
+            Debug.Log("Map generation time [Without rendering]: " + DateTime.Now.Subtract(time));
         }
 
         #region PlaceWalls Born/Death
@@ -367,9 +421,7 @@
                         _grid[index].ItemValue = _map[index].ItemValue;
                         switch (_map[index].BasicValue)
                         {
-                            case BasicValues.Ground: _grid[index].tile = Tile.Floor; _grid[index].isWalkable = true; break;
-                            case BasicValues.Water: _grid[index].tile = Tile.Water; _grid[index].isWalkable = true; break;
-                            case BasicValues.Grass: _grid[index].tile = Tile.Grass; _grid[index].isWalkable = true; break;
+                            case BasicValues.Ground: _grid[index].isWalkable = true; break;
                         }
                         FillAdjacentWalls(x, y);
                     }
@@ -508,7 +560,7 @@
         private int[] _cavesRandomPoint;
         private void FloodCavern()
         {
-            _floodValue = 0;
+            _floodValue = 0; //Initial flood value
             //Start the algorithm
             FloodStart();
             //Fill the rest of the image
@@ -585,13 +637,16 @@
 
         private bool CheckFloodCavern()
         {
-            for (int x = 0; x < _mapWidth; x++)
+            for (int i = 0; i < _size1D; i++)
             {
-                for (int y = 0; y < _mapHeight; y++)
+                /*for (int x = 0; x < _mapWidth; x++)
                 {
-                    if (_map[x + y * _mapHeight].BasicValue != 1 && _map[x + y * _mapHeight].FloodValue == 0)
-                        return false;
-                }
+                    for (int y = 0; y < _mapHeight; y++)
+                    {*/
+                if (_map[i].BasicValue != 1 && _map[i].FloodValue == 0)
+                    return false;
+                /*}
+            }*/
             }
             return true;
         }
@@ -911,9 +966,9 @@
                 {
                     for (int y = 0; y < water[i]._mapHeight; y++)
                     {
-                        if (water[i].Map[x + y * water[i]._mapHeight].BasicValue == 0)
+                        if (water[i].Map[x + y * water[i]._mapHeight].BasicValue == BasicValues.Ground)
                         {
-                            _map[(posX + x) + (posY + y) * _mapHeight].BasicValue = 2;
+                            _map[(posX + x) + (posY + y) * _mapHeight].BasicValue = BasicValues.Water;
                         }
                     }
                 }
@@ -1011,36 +1066,46 @@
 
         public void PrintMap()
         {
+            DateTime time = DateTime.Now;
             _boardHolder = new GameObject("Board").transform;
             Scene._grid = _grid;
-            for (int x = 0; x < _mapWidth; x++)
+            for(int i = 0; i < _size1D; i++)
+            /*for (int x = 0; x < _mapWidth; x++)
             {
-                for (int y = 0; y < _mapHeight; y++)
+                for (int y = 0; y < _mapHeight; y++)*/
                 {
                     GameObject toInstantiate = null;
-                    switch (Scene._grid[x + y * _mapHeight].BasicValue)
+                    switch (Scene._grid[/*x + y * _mapHeight*/i].BasicValue)
                     {
                         case BasicValues.Ground: toInstantiate = HexTileManager.instance.GroundTiles[_rnd.Next(0, HexTileManager.instance.GroundTiles.Length)]; break;
                         case BasicValues.Wall:
-                            if (Scene._grid[x + y * _mapHeight].tile == Tile.Wall)
+                            if (Scene._grid[/*x + y * _mapHeight*/i].tile == Tile.Wall)
                                 toInstantiate = HexTileManager.instance.WallTiles[_rnd.Next(0, HexTileManager.instance.WallTiles.Length)]; break;
-                        case BasicValues.Water: toInstantiate = HexTileManager.instance.WaterTiles[_rnd.Next(0, HexTileManager.instance.WaterTiles.Length)]; break;
-                        case BasicValues.Lava: toInstantiate = HexTileManager.instance.LavaTiles[_rnd.Next(0, HexTileManager.instance.LavaTiles.Length)]; break;
+                        case BasicValues.Water:
+                            toInstantiate = HexTileManager.instance.WaterTiles[_rnd.Next(0, HexTileManager.instance.WaterTiles.Length)];
+                            Scene._grid[/*x + y * _mapHeight*/i].isWalkable = false; 
+                            break;
+                        case BasicValues.Lava:
+                            toInstantiate = HexTileManager.instance.LavaTiles[_rnd.Next(0, HexTileManager.instance.LavaTiles.Length)];
+                            Scene._grid[/*x + y * _mapHeight*/i].isWalkable = false; 
+                            break;
                     }
                     if (toInstantiate != null)
                     {
-                        GameObject instance = GameObject.Instantiate(toInstantiate, Scene._grid[x + y * _mapHeight].position, Quaternion.identity) as GameObject;
-                        Scene._grid[x + y * _mapHeight].TileObject = instance;
-                        GameObject fog = GameObject.Instantiate(TileManager.instance.Fog, Scene._grid[x + y * _mapHeight].position, Quaternion.identity) as GameObject;
+                        GameObject instance = GameObject.Instantiate(toInstantiate, Scene._grid[/*x + y * _mapHeight*/i].position, Quaternion.identity) as GameObject;
+                        Scene._grid[/*x + y * _mapHeight*/i].TileObject = instance;
+                        GameObject fog = GameObject.Instantiate(TileManager.instance.Fog, Scene._grid[/*x + y * _mapHeight*/i].position, Quaternion.identity) as GameObject;
                         fog.transform.SetParent(instance.transform);
                         instance.transform.SetParent(_boardHolder);
-                        instance.name = string.Format("_hex{0}_{1}", x, y);
+                        instance.name = string.Format("_hex{0}_{1}", /*x, y*/ i % _mapWidth,i / _mapWidth);
                     }
                 }
-            }
+            //}
             //_boardHolder.transform.eulerAngles = new Vector3(-90, 0, 0);
 
             PrintItems();
+
+            Debug.Log("Rendering time: " + DateTime.Now.Subtract(time));
         }
         private void PrintItems()
         {
@@ -1059,7 +1124,9 @@
                 {
                     instance = GameObject.Instantiate(toInstantiate, Scene._grid[_validIndexes[i]].position, Quaternion.identity) as GameObject;
                     Scene._grid[_validIndexes[i]].TileItem = instance;
-                    instance.transform.SetParent(Scene._grid[_validIndexes[i]].TileObject.transform);
+                    if (Scene._grid[_validIndexes[i]].TileObject == null)
+                        Debug.Log(Scene._grid[_validIndexes[i]].TileObject + " value: " + Scene._grid[_validIndexes[i]].BasicValue);
+                    instance.transform.SetParent(Scene._grid[_validIndexes[i]].TileObject.transform); //<= BUG NULL REF
                 }
             }
         }

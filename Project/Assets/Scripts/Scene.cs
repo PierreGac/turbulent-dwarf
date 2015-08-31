@@ -73,17 +73,26 @@ public class Scene : MonoBehaviour
                 _playerSpawn = _automata.CompleteGrid[i].position;
                 _playerIndex = i;
             }
-            if (_rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == 0)
+            if (_rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
             {
                 item = GameObject.Instantiate(HexTileManager.instance.Gems[_rnd.Next(0, HexTileManager.instance.Gems.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
                 item.transform.SetParent(_grid[i].TileObject.transform);
                 _grid[i].TileItem = item;
+                _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
             }
-            if (_rnd.Next(0, 50) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == 0)
+            if (_rnd.Next(0, 50) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
             {
                 item = GameObject.Instantiate(HexTileManager.instance.MoneyTiles[_rnd.Next(0, HexTileManager.instance.MoneyTiles.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
                 item.transform.SetParent(_grid[i].TileObject.transform);
                 _grid[i].TileItem = item;
+                _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
+            }
+            if (_rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
+            {
+                item = GameObject.Instantiate(HexTileManager.instance.Containers[_rnd.Next(0, HexTileManager.instance.Containers.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
+                item.transform.SetParent(_grid[i].TileObject.transform);
+                _grid[i].TileItem = item;
+                _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
             }
         }
 

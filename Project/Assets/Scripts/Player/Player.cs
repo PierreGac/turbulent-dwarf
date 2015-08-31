@@ -7,15 +7,11 @@ using UnityEngine.UI;
 //Player inherits from MovingObject, our base class for objects that can move, Enemy also inherits from this.
 public class Player : MonoBehaviour// : MovingObject
 {
-    public float restartLevelDelay = 1f;        //Delay time in seconds to restart level.
-    public int pointsPerFood = 30;              //Number of points to add to player food points when picking up a food object.
-    public int pointsPerSoda = 50;              //Number of points to add to player food points when picking up a soda object.
-    public int wallDamage = 1;                  //How much damage a player does to a wall when chopping it.
     private Rigidbody2D _rb2D;
 
-    private int _currentIndexPosition = 0;
-    private int _currentPosX = 0;
-    private int _currentPosY = 0;
+    public static int CurrentIndexPosition = 0;
+    public static int CurrentPosX = 0;
+    public static int CurrentPosY = 0;
 
     private bool _movementReady = true;
 
@@ -46,9 +42,9 @@ public class Player : MonoBehaviour// : MovingObject
     public void InitPlayer(int index)
     {
         _rb2D = GetComponent<Rigidbody2D>();
-        _currentIndexPosition = index;
-        _currentPosY = index / Scene.Height;
-        _currentPosX = index - _currentPosY * Scene.Height;
+        CurrentIndexPosition = index;
+        CurrentPosY = index / Scene.Height;
+        CurrentPosX = index - CurrentPosY * Scene.Height;
         _start = true;
 
     }
@@ -57,9 +53,9 @@ public class Player : MonoBehaviour// : MovingObject
     {
         if (Scene._grid[desiredIndex].isWalkable && Scene._grid[desiredIndex].ItemValue != ItemValues.MiningBlock)
         {
-            _currentIndexPosition = desiredIndex;
-            _currentPosY = _currentIndexPosition / Scene.Height;
-            _currentPosX = _currentIndexPosition - _currentPosY * Scene.Height;
+            CurrentIndexPosition = desiredIndex;
+            CurrentPosY = CurrentIndexPosition / Scene.Height;
+            CurrentPosX = CurrentIndexPosition - CurrentPosY * Scene.Height;
             Vector3 end = Scene._grid[desiredIndex].position;
             //Calculate the remaining distance to move based on the square magnitude of the difference between current position and end parameter. 
             //Square magnitude is used instead of magnitude because it's computationally cheaper.
@@ -78,13 +74,15 @@ public class Player : MonoBehaviour// : MovingObject
                 //Return and loop until sqrRemainingDistance is close enough to zero to end the function
                 yield return null;
             }
-            Fog.UpdateFog(_currentIndexPosition, TileFogState.Active);
+            Fog.UpdateFog(CurrentIndexPosition, TileFogState.Active);
         }
         else
         {
             if (Scene._grid[desiredIndex].ItemValue == ItemValues.MiningBlock)
+            {
                 Scene._grid[desiredIndex].TileItem.GetComponent<MiningWall>().OnDamage(50, desiredIndex);
-            yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.5f); //Mining time
+            }
         }
 
         _movementReady = true;
@@ -99,20 +97,20 @@ public class Player : MonoBehaviour// : MovingObject
         int vertical = -(int)Input.GetAxisRaw("Vertical");
         if (horizontal != 0 && vertical == 0)
         {
-            if (_currentIndexPosition + horizontal >= 0 && _currentIndexPosition + horizontal < Scene.Size1D)
+            if (CurrentIndexPosition + horizontal >= 0 && CurrentIndexPosition + horizontal < Scene.Size1D)
             {
                 _movementReady = false;
-                StartCoroutine(SmoothMovement(_currentIndexPosition + horizontal));
+                StartCoroutine(SmoothMovement(CurrentIndexPosition + horizontal));
             }
         }
         if(horizontal != 0 && vertical != 0)
         {
-            int desiredPosition = _currentIndexPosition + (vertical * Scene.Width);
+            int desiredPosition = CurrentIndexPosition + (vertical * Scene.Width);
             if (desiredPosition >= 0 && desiredPosition < Scene.Size1D)
             {
                 _movementReady = false;
                 //Get the next position according to the inputs
-                if(_currentPosY % 2 == 0)
+                if(CurrentPosY % 2 == 0)
                 {
                     if (horizontal == -1) StartCoroutine(SmoothMovement(desiredPosition - 1));
                     else StartCoroutine(SmoothMovement(desiredPosition));
@@ -207,7 +205,10 @@ public class Player : MonoBehaviour// : MovingObject
     //OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
     private void OnTriggerEnter2D(Collider2D other)
     {
-        other.GetComponent<MonoItem>().thisItem.PickupItem();
+        if (!other.GetComponent<MonoItem>().isJustSpawned)
+            other.GetComponent<MonoItem>().thisItem.PickupItem();
+        else
+            other.GetComponent<MonoItem>().isJustSpawned = false;
     }
 
 
