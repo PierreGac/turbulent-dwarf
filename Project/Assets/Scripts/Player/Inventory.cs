@@ -19,6 +19,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+
     private float _totalMass = 0;
 
     void Awake()
@@ -108,7 +109,7 @@ public class Inventory : MonoBehaviour
             {
                 Items[i] = null;
                 if (InventoryCaneva.panel.gameObject.activeInHierarchy)
-                    InventoryCaneva.RefreshUI();
+                    InventoryCaneva.RefreshUI(true);
                 return;
             }
         }

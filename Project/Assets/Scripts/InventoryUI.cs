@@ -17,6 +17,12 @@ public class InventoryUI : MonoBehaviour
 
     public Text GlobalMassText;
     public Text GlobalMoneyText;
+    public Text GlobalHealthText;
+    public Text GlobalManaText;
+    public Text GlobalStaminaText;
+    public Text GlobalEatText;
+    public Text GlobalDrinkText;
+    public Text GlobalPlayerNameText;
 
     public Button UseButton;
     public Button ThrowButton;
@@ -43,6 +49,7 @@ public class InventoryUI : MonoBehaviour
         _lastSelectedItem = -1;
         ClearText();
         GlobalMoneyText.text = string.Format("Money: {0}", Inventory.Money);
+        UpdateStatistics();
         for (int i = 0; i < items.Length; i++)
         {
             if(items[i] != null)
@@ -82,7 +89,22 @@ public class InventoryUI : MonoBehaviour
 
         ThrowButton.gameObject.SetActive(true);
         if (Inventory.Items[index].isUsable)
+        {
+            switch(Inventory.Items[index].GType)
+            { 
+                case GlobalType.Fruits:
+                case GlobalType.Vegetables:
+                    UseButton.transform.GetChild(0).GetComponent<Text>().text = "Eat";
+                    break;
+                case GlobalType.Container:
+                    UseButton.transform.GetChild(0).GetComponent<Text>().text = "Open";
+                    break;
+                default:
+                    UseButton.transform.GetChild(0).GetComponent<Text>().text = "Use";
+                break;
+        }
             UseButton.gameObject.SetActive(true);
+        }
         else
             UseButton.gameObject.SetActive(false);
     }
@@ -94,9 +116,15 @@ public class InventoryUI : MonoBehaviour
         DescriptionText.text = "";
     }
 
-    public void RefreshUI()
+    public void RefreshUI(bool fromRemove = false)
     {
         Inventory.ReorderInventory();
+        if (fromRemove)
+        {
+            _lastSelectedItem = -1;
+            UseButton.gameObject.SetActive(false);
+            ThrowButton.gameObject.SetActive(false);
+        }
         if(_lastSelectedItem != -1)
             InventoryItemClick(_lastSelectedItem);
         for (int i = 0; i < Inventory.Items.Length; i++)
@@ -113,7 +141,18 @@ public class InventoryUI : MonoBehaviour
             }
         }
         GlobalMoneyText.text = string.Format("Money: {0}", Inventory.Money);
+        UpdateStatistics();
         CalculateMass();
+    }
+
+    public void UpdateStatistics()
+    {
+        GlobalDrinkText.text = string.Format("Drink: {0}", Player.Stats.Drink);
+        GlobalEatText.text = string.Format("Food: {0}", Player.Stats.Eat);
+        GlobalHealthText.text = string.Format("Health: {0}", Player.Stats.Health);
+        GlobalManaText.text = string.Format("Mana: {0}", Player.Stats.Mana);
+        GlobalStaminaText.text = string.Format("Stamina: {0}", Player.Stats.Stamina);
+        GlobalPlayerNameText.text = Player.Stats.Name;
     }
 
     public void UseSelectedItem()

@@ -63,6 +63,13 @@ MonoBehaviour:
   - {fileID: 171270, guid: aa0992305494e414f98bb5b12d23c808, type: 2}
   Containers:
   - {fileID: 171270, guid: 2cdf2b7693ddd994283510330fed0f35, type: 2}
+  Fruits:
+  - {fileID: 171270, guid: d0a892299b1347a47beaa7c7182bc050, type: 2}
+  - {fileID: 171270, guid: e2535057676ab134fbf4a910f0cdb673, type: 2}
+  - {fileID: 171270, guid: 1015dd44c03b1b04e9d2fb0ea21d0234, type: 2}
+  - {fileID: 171270, guid: ca13edd59f2cf30439e4ebb9fb27fa07, type: 2}
+  - {fileID: 171270, guid: c50c3aaa0a4899544b2810db85699477, type: 2}
+  Vegetables: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

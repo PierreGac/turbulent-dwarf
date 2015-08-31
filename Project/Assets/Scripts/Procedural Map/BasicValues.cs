@@ -22,4 +22,11 @@ public class ItemValues
     public const byte Boulders = 6;
     public const byte Bag01 = 7;
     public const byte Money = 8;
+
+    //Fruits
+    public const byte Orange = 100;
+    public const byte Banana = 101;
+    public const byte Pear = 102;
+    public const byte Apple = 103;
+    public const byte Coconut = 104;
 }

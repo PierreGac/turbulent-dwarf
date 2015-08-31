@@ -5,6 +5,7 @@ public class WhiteGemItem : Item
 {
     public byte ItemValue { get; set; }
     public ItemType Type { get; set; }
+    public GlobalType GType { get; set; }
     public string Name { get; set; }
     public float Mass { get; set; }
     public Sprite InGameSprite { get; set; }
@@ -18,6 +19,7 @@ public class WhiteGemItem : Item
     public WhiteGemItem(GameObject gameObject)
     {
         this.Name = "WhiteGem";
+        this.GType = GlobalType.Gems;
         this.Mass = 1.0f;
         this.Description = "A huge white gem";
         this.Count = 1;
@@ -38,6 +40,7 @@ public class RedGemItem : Item
 {
     public byte ItemValue { get; set; }
     public ItemType Type { get; set; }
+    public GlobalType GType { get; set; }
     public string Name { get; set; }
     public float Mass { get; set; }
     public Sprite InGameSprite { get; set; }
@@ -51,6 +54,7 @@ public class RedGemItem : Item
     public RedGemItem(GameObject gameObject)
     {
         this.Name = "RedGem";
+        this.GType = GlobalType.Gems;
         this.Mass = 1.0f;
         this.Description = "A huge red gem";
         this.Count = 1;
@@ -71,6 +75,7 @@ public class YellowGemItem : Item
 {
     public byte ItemValue { get; set; }
     public ItemType Type { get; set; }
+    public GlobalType GType { get; set; }
     public string Name { get; set; }
     public float Mass { get; set; }
     public Sprite InGameSprite { get; set; }
@@ -86,6 +91,7 @@ public class YellowGemItem : Item
     public YellowGemItem(GameObject gameObject)
     {
         this.Name = "YellowGem";
+        this.GType = GlobalType.Gems;
         this.Mass = 1.0f;
         this.Description = "A huge yellow gem";
         this.Count = 1;

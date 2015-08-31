@@ -94,6 +94,15 @@ public class Scene : MonoBehaviour
                 _grid[i].TileItem = item;
                 _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
             }
+            #region Fruits
+            if (_rnd.Next(0, SpawnRates.UpFruits) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
+            {
+                item = GameObject.Instantiate(HexTileManager.instance.Fruits[_rnd.Next(0, HexTileManager.instance.Fruits.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
+                item.transform.SetParent(_grid[i].TileObject.transform);
+                _grid[i].TileItem = item;
+                _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
+            }
+            #endregion
         }
 
         SpawnPlayer();

@@ -5,6 +5,7 @@ public class MoneyItem : Item
 {
     public byte ItemValue { get; set; }
     public ItemType Type { get; set; }
+    public GlobalType GType { get; set; }
     public string Name { get; set; }
     public float Mass { get; set; }
     public Sprite InGameSprite { get; set; }
@@ -19,6 +20,7 @@ public class MoneyItem : Item
     public MoneyItem(GameObject gameObject)
     {
         this.Name = "Money";
+        this.GType = GlobalType.Money;
         this.Mass = 0.0f;
         this.Description = "Money, used for trading";
         this.gameObject = gameObject;

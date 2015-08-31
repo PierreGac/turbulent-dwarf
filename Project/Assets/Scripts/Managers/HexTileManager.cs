@@ -21,6 +21,8 @@ public class HexTileManager : MonoBehaviour
     public GameObject[] MoneyTiles;
     public GameObject[] Boulders;
     public GameObject[] Containers;
+    public GameObject[] Fruits;
+    public GameObject[] Vegetables;
     #endregion
 
     public static HexTileManager instance = null;

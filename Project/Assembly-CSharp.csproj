@@ -55,12 +55,14 @@
      <Compile Include="Assets\Scripts\InventoryUI.cs" />
      <Compile Include="Assets\Scripts\Items\Bags.cs" />
      <Compile Include="Assets\Scripts\Items\Boulders.cs" />
+     <Compile Include="Assets\Scripts\Items\Fruits.cs" />
      <Compile Include="Assets\Scripts\Items\Gem.cs" />
      <Compile Include="Assets\Scripts\Items\ItemManager.cs" />
      <Compile Include="Assets\Scripts\Items\MiningWall.cs" />
      <Compile Include="Assets\Scripts\Items\Money.cs" />
      <Compile Include="Assets\Scripts\Items\MonoItem.cs" />
      <Compile Include="Assets\Scripts\Items\PanelContainerUI.cs" />
+     <Compile Include="Assets\Scripts\Items\Vegetables.cs" />
      <Compile Include="Assets\Scripts\Loader.cs" />
      <Compile Include="Assets\Scripts\Managers\BoardManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
@@ -71,6 +73,7 @@
      <Compile Include="Assets\Scripts\MovingObject.cs" />
      <Compile Include="Assets\Scripts\Player\Inventory.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerStatistics.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\BasicValues.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\CellularAutomata.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\HexCellularAutomata.cs" />

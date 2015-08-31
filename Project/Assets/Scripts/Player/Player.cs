@@ -22,12 +22,11 @@ public class Player : MonoBehaviour// : MovingObject
 
     public Grid[] Map;
 
+    public static PlayerStatistics Stats;
+
     private bool _start = false;
 
     private Animator animator;                  //Used to store a reference to the Player's animator component.
-    private int food;                           //Used to store player food points total during level.
-
-    public Text foodText;
     //Start overrides the Start function of MovingObject
     /*protected override void Start()
     {
@@ -42,6 +41,7 @@ public class Player : MonoBehaviour// : MovingObject
     public void InitPlayer(int index)
     {
         _rb2D = GetComponent<Rigidbody2D>();
+        Stats = new PlayerStatistics("Gafda", 100, 100, 100, 10, 0, 50, 50, 2, 1, 1);
         CurrentIndexPosition = index;
         CurrentPosY = index / Scene.Height;
         CurrentPosX = index - CurrentPosY * Scene.Height;

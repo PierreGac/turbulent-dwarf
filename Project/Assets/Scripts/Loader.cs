@@ -21,6 +21,10 @@ public class Loader : MonoBehaviour
         if (Scene.instance == null)
             Instantiate(sceneObject);
 
+        //Load item statistics
+        StatisticValues stats = new FruitsStatistics();
+        stats.Init();
+
         Scene.SpawnScene();
     }
 }

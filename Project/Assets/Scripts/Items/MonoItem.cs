@@ -6,6 +6,7 @@ public interface Item
 {
     byte ItemValue { get; set; }
     ItemType Type { get; set; }
+    GlobalType GType { get; set; }
     GameObject gameObject { get; set; }
     string Name { get; set; }
     string Description { get; set; }
@@ -24,12 +25,18 @@ public interface Item
 
 public interface ItemContainer : Item
 {
-    ItemType[] AllowedContent { get; set; }
+    GlobalType[] AllowedContent { get; set; }
     Item[] Content { get; set; }
     void SetContent(params Item[] items);
 }
-
-public enum ItemType { Money, WhiteGem, YellowGem, RedGem, RockBoulder, Bag01};
+/// <summary>
+/// Enum for item categories
+/// </summary>
+public enum GlobalType { Money, Gems, Fruits, Vegetables, Wood, Stone, Container};
+/// <summary>
+/// Detailed enum about items
+/// </summary>
+public enum ItemType { Money, WhiteGem, YellowGem, RedGem, RockBoulder, Bag01, Orange, Banana, Apple, Coconut, Pear};
 
 public class MonoItem : MonoBehaviour
 {
@@ -62,6 +69,23 @@ public class MonoItem : MonoBehaviour
             case ItemType.Bag01:
                 thisItem = new Bag01(gameObject);
             break;
+            #region Fruits
+            case ItemType.Pear:
+                thisItem = new Fruits(gameObject, 0.2f, "A tasty pear", ItemValues.Pear, FruitsStatistics.PearStats);
+            break;
+            case ItemType.Apple:
+                thisItem = new Fruits(gameObject, 0.2f, "A shiny apple", ItemValues.Apple, FruitsStatistics.AppleStats);
+            break;
+            case ItemType.Coconut:
+                thisItem = new Fruits(gameObject, 0.8f, "A heavy coconut", ItemValues.Coconut, FruitsStatistics.CoconutStats);
+            break;
+            case ItemType.Orange:
+                thisItem = new Fruits(gameObject, 0.2f, "A juicy orange", ItemValues.Orange, FruitsStatistics.OrangeStats);
+            break;
+            case ItemType.Banana:
+                thisItem = new Fruits(gameObject, 0.2f, "A sweaty banana", ItemValues.Banana, FruitsStatistics.BananaStats);
+            break;
+            #endregion
         }
         thisItem.Type = Type;
         thisItem.SortingLayer = GetComponent<SpriteRenderer>().sortingLayerID;

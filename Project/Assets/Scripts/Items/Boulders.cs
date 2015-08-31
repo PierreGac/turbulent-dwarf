@@ -7,6 +7,7 @@ public class Boulders : Item
 {
     public byte ItemValue { get; set; }
     public ItemType Type { get; set; }
+    public GlobalType GType { get; set; }
     public string Name { get; set; }
     public float Mass { get; set; }
     public Sprite InGameSprite { get; set; }
@@ -22,6 +23,7 @@ public class Boulders : Item
     public Boulders(GameObject gameObject)
     {
         this.Name = "Boulders";
+        this.GType = GlobalType.Container;
         this.Mass = 10.0f;
         this.Description = "A pile of stone and gems. Prospect it to find some interesting stuff !";
         this.Count = 1;
