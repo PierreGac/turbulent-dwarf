@@ -95,6 +95,8 @@ public class Fog : MonoBehaviour
     public static void UpdateFogPlayerSpawn(int index)
     {
         Scene._grid[index].FogScript.UpdateFogTile(TileFogState.Active);
+        if (Scene._grid[index].TileItem != null)
+            Scene._grid[index].TileItem.GetComponent<MonoItem>().spriteRenderer.enabled = true;
         Scene._grid[index].FogScript.State = TileFogState.Active;
     }
 
@@ -138,6 +140,9 @@ public class Fog : MonoBehaviour
             {
                 grid.FogScript.UpdateFogTile(state);
                 grid.FogScript.State = state;
+                //Show item
+                if (grid.TileItem != null && grid.TileItem.GetComponent<MonoItem>() != null)
+                    grid.TileItem.GetComponent<MonoItem>().spriteRenderer.enabled = true;
             }
         }
 

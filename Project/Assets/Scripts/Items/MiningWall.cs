@@ -30,7 +30,7 @@ public class MiningWall : MonoBehaviour
             //Spawn boulder:
             GameObject toInstantiate = Instantiate(HexTileManager.instance.Boulders[Random.Range(0, HexTileManager.instance.Boulders.Length)], Scene._grid[index].position, Quaternion.identity) as GameObject;
             toInstantiate.transform.SetParent(Scene._grid[index].TileObject.transform); //Set the hex tile as parent
-            
+            toInstantiate.GetComponent<MonoItem>().spriteRenderer.enabled = true;
             Destroy(gameObject);
         }
     }

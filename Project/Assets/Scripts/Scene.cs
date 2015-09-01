@@ -73,6 +73,8 @@ public class Scene : MonoBehaviour
                 _playerSpawn = _automata.CompleteGrid[i].position;
                 _playerIndex = i;
             }
+
+
             if (_rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
             {
                 item = GameObject.Instantiate(HexTileManager.instance.Gems[_rnd.Next(0, HexTileManager.instance.Gems.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;

@@ -9,6 +9,7 @@ public class InventoryUI : MonoBehaviour
 
     public GameObject[] Buttons;
     private Image[] _images;
+    public Sprite EmptySprite;
 
     public Text NameText;
     public Text CountText;
@@ -36,6 +37,7 @@ public class InventoryUI : MonoBehaviour
         for (int i = 0; i < Buttons.Length; i++)
         {
             _images[i] = Buttons[i].transform.GetChild(0).GetComponent<Image>();
+            _images[i].gameObject.SetActive(false);
         }
         _lastSelectedItem = -1;
     }
@@ -52,16 +54,14 @@ public class InventoryUI : MonoBehaviour
         UpdateStatistics();
         for (int i = 0; i < items.Length; i++)
         {
-            if(items[i] != null)
+            if (items[i] != null)
             {
-                Buttons[i].SetActive(true);
+                _images[i].gameObject.SetActive(true);
                 _images[i].sprite = items[i].InventorySprite; //Set the sprite
             }
             else
-            {
-                _images[i].sprite = null;
-                Buttons[i].SetActive(false);
-            }
+                _images[i].gameObject.SetActive(false);
+                //_images[i].sprite = EmptySprite;*/
         }
         CalculateMass();
     }
@@ -131,14 +131,12 @@ public class InventoryUI : MonoBehaviour
         {
             if (Inventory.Items[i] != null)
             {
-                Buttons[i].SetActive(true);
+                _images[i].gameObject.SetActive(true);
                 _images[i].sprite = Inventory.Items[i].InventorySprite; //Set the sprite
             }
             else
-            {
-                _images[i].sprite = null;
-                Buttons[i].SetActive(false);
-            }
+                _images[i].gameObject.SetActive(false);
+                //_images[i].sprite = EmptySprite;*/
         }
         GlobalMoneyText.text = string.Format("Money: {0}", Inventory.Money);
         UpdateStatistics();
@@ -172,7 +170,7 @@ public class InventoryUI : MonoBehaviour
         GameObject item = MonoItem.CreateGameObjectFromItem(Inventory.Items[_lastSelectedItem]);
         GlobalEventText.AddMessage(string.Format("You just throw away \"{0}\" (x{1})", Inventory.Items[_lastSelectedItem].Name, Inventory.Items[_lastSelectedItem].Count));
         Inventory.RemoveItemFromInventory(Inventory.Items[_lastSelectedItem]);
-        Debug.Log(item);
+        //Debug.Log(item);
         item.transform.position = Scene._grid[Player.CurrentIndexPosition].position;
         item.transform.SetParent(Scene._grid[Player.CurrentIndexPosition].TileObject.transform);
 

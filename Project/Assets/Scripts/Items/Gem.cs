@@ -1,6 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public class Gems : Item
+{
+    public byte ItemValue { get; set; }
+    public ItemType Type { get; set; }
+    public GlobalType GType { get; set; }
+    public string Name { get; set; }
+    public float Mass { get; set; }
+    public Sprite InGameSprite { get; set; }
+    public Sprite InventorySprite { get; set; }
+    public int Count { get; set; }
+    public GameObject gameObject { get; set; }
+    public string Description { get; set; }
+    public bool isUsable { get; set; }
+    public bool isStackable { get; set; }
+    public float Value { get; set; }
+    public int SortingLayer { get; set; }
+    public Gems(GameObject gameObject, string name, string description, byte itemValue)
+    {
+        this.Name = name;
+        this.GType = GlobalType.Gems;
+        this.Mass = 1.0f;
+        this.Description = description;
+        this.Count = 1;
+        this.gameObject = gameObject;
+        this.isUsable = false;
+        this.ItemValue = itemValue;
+        this.isStackable = true;
+    }
+
+    public void PickupItem()
+    {
+        if (Inventory.AddItemToInventory(this))
+            MonoBehaviour.Destroy(gameObject);
+    }
+    public void Use() { }
+
+    public object Clone()
+    {
+        Gems clonedItem = new Gems(null, this.Name, this.Description, this.ItemValue);
+        clonedItem.Type = Type;
+        clonedItem.SortingLayer = SortingLayer;
+        clonedItem.InventorySprite = InventorySprite;
+        clonedItem.InGameSprite = InGameSprite;
+        clonedItem.Count = Count;
+        return clonedItem;
+    }
+}
+
+/*
 public class WhiteGemItem : Item
 {
     public byte ItemValue { get; set; }
@@ -34,6 +83,17 @@ public class WhiteGemItem : Item
             MonoBehaviour.Destroy(gameObject);
     }
     public void Use() { }
+
+    public object Clone()
+    {
+        WhiteGemItem clonedItem = new WhiteGemItem(null);
+        clonedItem.Type = Type;
+        clonedItem.SortingLayer = SortingLayer;
+        clonedItem.InventorySprite = InventorySprite;
+        clonedItem.InGameSprite = InGameSprite;
+        clonedItem.Count = Count;
+        return clonedItem;
+    }
 }
 
 public class RedGemItem : Item
@@ -69,6 +129,17 @@ public class RedGemItem : Item
             MonoBehaviour.Destroy(gameObject);
     }
     public void Use() { }
+
+    public object Clone()
+    {
+        RedGemItem clonedItem = new RedGemItem(null);
+        clonedItem.Type = Type;
+        clonedItem.SortingLayer = SortingLayer;
+        clonedItem.InventorySprite = InventorySprite;
+        clonedItem.InGameSprite = InGameSprite;
+        clonedItem.Count = Count;
+        return clonedItem;
+    }
 }
 
 public class YellowGemItem : Item
@@ -106,4 +177,16 @@ public class YellowGemItem : Item
             MonoBehaviour.Destroy(gameObject);
     }
     public void Use() { }
+
+    public object Clone()
+    {
+        YellowGemItem clonedItem = new YellowGemItem(null);
+        clonedItem.Type = Type;
+        clonedItem.SortingLayer = SortingLayer;
+        clonedItem.InventorySprite = InventorySprite;
+        clonedItem.InGameSprite = InGameSprite;
+        clonedItem.Count = Count;
+        return clonedItem;
+    }
 }
+*/

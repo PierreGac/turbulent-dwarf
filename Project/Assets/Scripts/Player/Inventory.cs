@@ -38,8 +38,9 @@ public class Inventory : MonoBehaviour
             else
                 InventoryCaneva.Exit();
         }
-        if(Input.GetKeyDown(KeyCode.L))
+        if(Input.GetKeyDown(KeyCode.C))
         {
+            CraftUI.OpenCraftingUI();
         }
     }
 
@@ -62,17 +63,20 @@ public class Inventory : MonoBehaviour
     public static bool AddItemToInventory(Item item)
     {
         //Looking for the same item
-        for(int i = 0; i < Items.Length; i++)
+        if (item.isStackable) //If the item is stackable
         {
-            if (Items[i] != null)
+            for (int i = 0; i < Items.Length; i++)
             {
-                if (Items[i].Name == item.Name)
+                if (Items[i] != null)
                 {
-                    Items[i].Count += item.Count;
-                    GlobalEventText.AddMessage(string.Format("You picked up \"{0}\" (x{1})", item.Name, item.Count));
-                    if (InventoryCaneva.panel.gameObject.activeInHierarchy)
-                        InventoryCaneva.RefreshUI();
-                    return true;
+                    if (Items[i].Name == item.Name)
+                    {
+                        Items[i].Count += item.Count;
+                        GlobalEventText.AddMessage(string.Format("You picked up \"{0}\" (x{1})", item.Name, item.Count));
+                        if (InventoryCaneva.panel.gameObject.activeInHierarchy)
+                            InventoryCaneva.RefreshUI();
+                        return true;
+                    }
                 }
             }
         }
@@ -101,6 +105,10 @@ public class Inventory : MonoBehaviour
         InventoryCaneva.RefreshUI();
     }
 
+    /// <summary>
+    /// Removes an item from the inventory
+    /// </summary>
+    /// <param name="item"></param>
     public static void RemoveItemFromInventory(Item item)
     {
         for(int i = 0; i < Items.Length; i++)

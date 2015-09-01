@@ -59,9 +59,11 @@ public class PanelContainerUI : MonoBehaviour
         UpdateButtonAtPage(_actualPage);
     }
 
+
     public void SelectedItem(int index)
     {
         int contentIndex = _buttons.Length * _actualPage + index;
+        Debug.Log(contentIndex);
         if (_itemContainer.Content[contentIndex].Name != "Money")
             Inventory.AddItemToInventory(_itemContainer.Content[contentIndex]);
         else
@@ -71,6 +73,7 @@ public class PanelContainerUI : MonoBehaviour
             Inventory.RefreshUI();
         }
         _itemContainer.Content[contentIndex] = null;
+        
         Debug.Log("Removed item n°" + contentIndex);
         _images[index].sprite = null;
         _buttons[index].SetActive(false);

@@ -14,6 +14,7 @@ public class Fruits : Item
     public GameObject gameObject { get; set; }
     public string Description { get; set; }
     public bool isUsable { get; set; }
+    public bool isStackable { get; set; }
     public float Value { get; set; }
     public int SortingLayer { get; set; }
 
@@ -30,6 +31,7 @@ public class Fruits : Item
         this.isUsable = true;
         this.ItemValue = itemValue;
         this._stats = stats;
+        this.isStackable = true;
     }
 
     public void PickupItem()
@@ -54,6 +56,17 @@ public class Fruits : Item
             this.Count--;
             Inventory.RefreshUI();
         }
+    }
+
+    public object Clone()
+    {
+        Fruits clonedItem = new Fruits(null, Mass, Description, ItemValue, _stats);
+        clonedItem.Type = Type;
+        clonedItem.SortingLayer = SortingLayer;
+        clonedItem.InventorySprite = InventorySprite;
+        clonedItem.InGameSprite = InGameSprite;
+        clonedItem.Count = Count;
+        return clonedItem;
     }
 }
 

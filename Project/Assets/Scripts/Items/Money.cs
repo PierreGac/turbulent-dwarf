@@ -14,6 +14,7 @@ public class MoneyItem : Item
     public GameObject gameObject { get; set; }
     public string Description { get; set; }
     public bool isUsable { get; set; }
+    public bool isStackable { get; set; }
 
     public float Value { get; set; }
     public int SortingLayer { get; set; }
@@ -27,6 +28,7 @@ public class MoneyItem : Item
         this.isUsable = false;
         this.Value = Random.Range(50, 200);
         this.ItemValue = ItemValues.Money;
+        this.isStackable = true;
     }
 
     public void PickupItem()
@@ -39,5 +41,13 @@ public class MoneyItem : Item
     public void Use()
     {
         
+    }
+
+    public object Clone()
+    {
+        MoneyItem clonedItem =  new MoneyItem(null);
+        clonedItem.Value = Value;
+        clonedItem.Count = Count;
+        return clonedItem;
     }
 }

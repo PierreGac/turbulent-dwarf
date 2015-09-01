@@ -70,7 +70,11 @@
      <Compile Include="Assets\Scripts\Managers\ResourcesManager.cs" />
      <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
      <Compile Include="Assets\Scripts\Managers\TileManager.cs" />
+     <Compile Include="Assets\Scripts\Mechanics\DragHandeler.cs" />
+     <Compile Include="Assets\Scripts\Mechanics\InventorySlot.cs" />
      <Compile Include="Assets\Scripts\MovingObject.cs" />
+     <Compile Include="Assets\Scripts\Player\Craft.cs" />
+     <Compile Include="Assets\Scripts\Player\CraftUI.cs" />
      <Compile Include="Assets\Scripts\Player\Inventory.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStatistics.cs" />

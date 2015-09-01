@@ -17,6 +17,7 @@ public class Boulders : Item
     public string Description { get; set; }
     public float Value { get; set; }
     public bool isUsable { get; set; }
+    public bool isStackable { get; set; }
     public int SortingLayer { get; set; }
     
     private ItemType[] _itemsInBoulder;
@@ -31,6 +32,7 @@ public class Boulders : Item
         this._itemsInBoulder = new ItemType[] { ItemType.RedGem, ItemType.WhiteGem, ItemType.YellowGem };
         this.isUsable = true;
         this.ItemValue = ItemValues.Boulders;
+        this.isStackable = true;
     }
 
     public void PickupItem()
@@ -72,5 +74,16 @@ public class Boulders : Item
             this.Count--;
         else
             Inventory.RemoveItemFromInventory(this);
+    }
+
+    public object Clone()
+    {
+        Boulders clonedItem = new Boulders(null);
+        clonedItem.Type = Type;
+        clonedItem.SortingLayer = SortingLayer;
+        clonedItem.InventorySprite = InventorySprite;
+        clonedItem.InGameSprite = InGameSprite;
+        clonedItem.Count = Count;
+        return clonedItem;
     }
 }

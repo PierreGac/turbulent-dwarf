@@ -151,8 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f5d183b08d59146aa14e0604a55884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventoryCaneva: {fileID: 0}
-  InventorySpace: 32
+  InventorySpace: 40
 --- !u!114 &11496662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,13 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 459ee4d1d735caa448175b1e4b25b1ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartLevelDelay: 1
-  pointsPerFood: 10
-  pointsPerSoda: 20
-  wallDamage: 1
   x: 0
   y: 0
-  foodText: {fileID: 0}
 --- !u!124 &12455244
 Behaviour:
   m_ObjectHideFlags: 1

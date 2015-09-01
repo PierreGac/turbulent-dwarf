@@ -14,6 +14,7 @@ public class Bag01 : ItemContainer
     public GameObject gameObject { get; set; }
     public string Description { get; set; }
     public bool isUsable { get; set; }
+    public bool isStackable { get; set; }
     public float Value { get; set; }
     public int SortingLayer { get; set; }
     public Item[] Content { get; set; }
@@ -29,6 +30,7 @@ public class Bag01 : ItemContainer
         this.gameObject = gameObject;
         this.isUsable = true;
         this.ItemValue = ItemValues.Bag01;
+        this.isStackable = false;
         AllowedContent = new GlobalType[] { GlobalType.Gems, GlobalType.Money, GlobalType.Fruits };
     }
 
@@ -84,5 +86,25 @@ public class Bag01 : ItemContainer
             Content[i] = items[i];
             this.Mass += items[i].Mass;
         }
+    }
+
+    public object Clone()
+    {
+        Bag01 clonedItem = new Bag01(null);
+
+        //Set the new content items:
+        clonedItem.Content = new Item[Content.Length];
+        for (int i = 0; i < Content.Length; i++ )
+        {
+            clonedItem.Content[i] = (Item)Content[i].Clone();
+        }
+        clonedItem.Mass = Mass;
+
+        clonedItem.Type = Type;
+        clonedItem.SortingLayer = SortingLayer;
+        clonedItem.InventorySprite = InventorySprite;
+        clonedItem.InGameSprite = InGameSprite;
+        clonedItem.Count = Count;
+        return clonedItem;
     }
 }
