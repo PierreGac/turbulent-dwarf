@@ -8,6 +8,7 @@ public class DragHandeler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public Item currentItem { get; set; }
 
     public SlotType Type;
+    private Text _countText;
     public Image image { get; set; }
     public int ID { get; set; }
     public bool isSplitting { get; set; }
@@ -19,20 +20,29 @@ public class DragHandeler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     void Awake()
     {
+        //out of bounds???
+        _countText = transform.GetChild(0).GetComponent<Text>();
         image = GetComponent<Image>();
     }
 
+    public void UpdateCountText(int count)
+    {
+        _countText.text = count.ToString();
+    }
+    public Text GetCountText()
+    {
+        return _countText;
+    }
     //Drag handeler in the slot
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        ID = int.Parse(transform.parent.name); //Get the ID of the current dragged item
+        //Check if delete key:
         if (Input.GetKey(KeyCode.LeftControl) && Type == SlotType.Craft)
-        {
             isSplitting = true;
-        }
         else
             isSplitting = false;
-        ID = int.Parse(transform.parent.name); //Get the ID of the current dragged item
         //Get the current item dragged:
         switch(Type)
         {
@@ -57,16 +67,11 @@ public class DragHandeler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("endDrag " + transform.parent.name);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         if (transform.parent != _startParent)
-        {
             transform.position = _startPosition;
-        }
         else
-        {
             itemBeginDragged.transform.position = _startPosition;
-        }
         itemBeginDragged = null;
     }
 }

@@ -18,6 +18,7 @@ public class PanelContainerUI : MonoBehaviour
     private static int _actualPage = 0;
 
     private static ItemContainer _itemContainer = null;
+    private bool _onHoovering = false;
 
     void Awake()
     {
@@ -129,8 +130,38 @@ public class PanelContainerUI : MonoBehaviour
 
         //Nothing left, we can destroy the object:
         Inventory.RemoveItemFromInventory(_itemContainer);
+        InventoryUI.OnHoovering = false;
+        InventoryPopupInfos.Hide();
         Debug.Log("Container is empty");
         Exit();
+    }
+
+
+    public void OnPointerEnter(int index)
+    {
+        int contentIndex = _buttons.Length * _actualPage + index;
+        if (contentIndex >= _itemContainer.Content.Length)
+            return;
+        if (_itemContainer.Content[contentIndex] == null)
+            return;
+        InventoryPopupInfos.Show(_itemContainer.Content[contentIndex].Name, _itemContainer.Content[contentIndex].Count);
+        _onHoovering = true;
+    }
+    public void OnPointerExit()
+    {
+        if (_onHoovering)
+        {
+            InventoryPopupInfos.Hide();
+            _onHoovering = false;
+        }
+    }
+
+    void Update()
+    {
+        if (_onHoovering)
+        {
+            InventoryPopupInfos.ChangePosition();
+        }
     }
 
     public static void StaticExit()
@@ -163,6 +194,7 @@ public class PanelContainerUI : MonoBehaviour
             {
                 _buttons[cnt].SetActive(true);
                 _images[cnt].sprite = _itemContainer.Content[i].InventorySprite;
+                _images[cnt].transform.GetChild(0).GetComponent<Text>().text = _itemContainer.Content[i].Count.ToString();
             }
             else
                 _buttons[cnt].SetActive(false);

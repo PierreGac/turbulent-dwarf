@@ -7,6 +7,18 @@ public class ResourcesManager : MonoBehaviour
 
     public GameObject Player;
     public GameObject MainCamera;
+    public Sprite EmptySprite;
+
+
+    #region Item sprites
+    #region INGAME
+    public Sprite IG_Bag01;
+    #endregion
+    #region INVENTORY
+    public Sprite IN_Bag01;
+    #endregion
+
+    #endregion
 
     void Awake()
     {

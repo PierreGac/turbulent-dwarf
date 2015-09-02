@@ -206,7 +206,11 @@ public class Player : MonoBehaviour// : MovingObject
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.GetComponent<MonoItem>().isJustSpawned)
+        {
+            Scene._grid[Player.CurrentIndexPosition].TileItem = null;
+            Scene._grid[Player.CurrentIndexPosition].ItemValue = ItemValues.NULL;
             other.GetComponent<MonoItem>().thisItem.PickupItem();
+        }
         else
             other.GetComponent<MonoItem>().isJustSpawned = false;
     }

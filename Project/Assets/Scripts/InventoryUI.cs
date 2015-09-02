@@ -26,13 +26,16 @@ public class InventoryUI : MonoBehaviour
     public Text GlobalPlayerNameText;
 
     public Button UseButton;
-    public Button ThrowButton;
+
+    private Canvas _parentCanevas;
+    public static bool OnHoovering = false;
 
     private float _mass = 0;
     private int _lastSelectedItem = -1;
 
     void Awake()
     {
+        _parentCanevas = transform.parent.GetComponent<Canvas>();
         _images = new Image[Buttons.Length];
         for (int i = 0; i < Buttons.Length; i++)
         {
@@ -46,7 +49,6 @@ public class InventoryUI : MonoBehaviour
     {
         panel.SetActive(true);
         panelPlayer.SetActive(true);
-        ThrowButton.gameObject.SetActive(false);
         UseButton.gameObject.SetActive(false);
         _lastSelectedItem = -1;
         ClearText();
@@ -57,6 +59,7 @@ public class InventoryUI : MonoBehaviour
             if (items[i] != null)
             {
                 _images[i].gameObject.SetActive(true);
+                _images[i].transform.GetChild(0).GetComponent<Text>().text = items[i].Count.ToString();
                 _images[i].sprite = items[i].InventorySprite; //Set the sprite
             }
             else
@@ -64,6 +67,30 @@ public class InventoryUI : MonoBehaviour
                 //_images[i].sprite = EmptySprite;*/
         }
         CalculateMass();
+    }
+
+    public void OnPointerEnter(int index)
+    {
+        if (Inventory.Items[index] == null)
+            return;
+        InventoryPopupInfos.Show(Inventory.Items[index].Name, Inventory.Items[index].Count);
+        OnHoovering = true;
+    }
+    public void OnPointerExit()
+    {
+        if (OnHoovering)
+        {
+            InventoryPopupInfos.Hide();
+            OnHoovering = false;
+        }
+    }
+
+    void Update()
+    {
+        if(OnHoovering)
+        {
+            InventoryPopupInfos.ChangePosition();
+        }
     }
 
     public void Exit()
@@ -79,6 +106,80 @@ public class InventoryUI : MonoBehaviour
         {
             ClearText();
             _lastSelectedItem = -1;
+            UseButton.gameObject.SetActive(false);
+            return;
+        }
+
+        //Removing item:
+        if (Input.GetMouseButton(1))
+        {
+            GameObject item = null;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                GlobalEventText.AddMessage(string.Format("You just throw away \"{0}\" (x1)", Inventory.Items[index].Name));
+                item = MonoItem.CreateGameObjectFromItem(Inventory.Items[index]);
+                item.GetComponent<MonoItem>().thisItem.Count = 1;
+                Inventory.DecreaseCount(Inventory.Items[index], 1);
+            }
+            else
+            {
+                GlobalEventText.AddMessage(string.Format("You just throw away \"{0}\" (x{1})", Inventory.Items[index].Name, Inventory.Items[index].Count));
+                item = MonoItem.CreateGameObjectFromItem(Inventory.Items[index]);
+                Inventory.RemoveItemFromInventory(Inventory.Items[index]);
+                //Hide the infos popup
+                OnHoovering = false;
+                InventoryPopupInfos.Hide();
+            }
+
+
+            //Check if the playe tile contains items
+            if (Scene._grid[Player.CurrentIndexPosition].TileItem != null)
+            {
+                //Check if the existing item is not a container
+                Item[] items;
+                Item existing = Scene._grid[Player.CurrentIndexPosition].TileItem.GetComponent<MonoItem>().thisItem;
+                if (existing.GType != GlobalType.Container)
+                {
+                    Debug.Log("Wrap items");
+                    //Wrap all items in a bag:
+                    Bag01 bag = new Bag01(Scene._grid[Player.CurrentIndexPosition].TileItem);
+                    items = new Item[2];
+                    items[0] = existing;
+                    items[1] = item.GetComponent<MonoItem>().thisItem;
+                    bag.SetContent(items);
+                    Scene._grid[Player.CurrentIndexPosition].TileItem.GetComponent<MonoItem>().thisItem = bag;
+
+                    Scene._grid[Player.CurrentIndexPosition].ItemValue = bag.ItemValue;
+
+                    Scene._grid[Player.CurrentIndexPosition].TileItem.GetComponent<SpriteRenderer>().sprite = bag.InGameSprite;
+
+                    Destroy(item);
+                }
+                else
+                {
+                    Debug.Log("Add content");
+                    ItemContainer container = (ItemContainer)existing;
+                    items = new Item[container.Content.Length + 1];
+                    //Get the existing items
+                    for(int i = 0; i < container.Content.Length; i++)
+                    {
+                        items[i] = container.Content[i];
+                    }
+                    items[container.Content.Length] = (Item)item.GetComponent<MonoItem>().thisItem.Clone(); //Add the new item
+                    container.SetContent(items); //Set the new content
+
+                    Destroy(item);
+                }
+                
+            }
+            else
+            {
+                //Create the object in the player tile
+                item.transform.position = Scene._grid[Player.CurrentIndexPosition].position;
+                item.transform.SetParent(Scene._grid[Player.CurrentIndexPosition].TileObject.transform);
+                Scene._grid[Player.CurrentIndexPosition].TileItem = item;
+                Scene._grid[Player.CurrentIndexPosition].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
+            }
             return;
         }
         _lastSelectedItem = index;
@@ -87,7 +188,6 @@ public class InventoryUI : MonoBehaviour
         CountText.text = string.Format("Quantity: {0}", Inventory.Items[index].Count);
         DescriptionText.text = string.Format("Description: {0}", Inventory.Items[index].Description);
 
-        ThrowButton.gameObject.SetActive(true);
         if (Inventory.Items[index].isUsable)
         {
             switch(Inventory.Items[index].GType)
@@ -118,12 +218,11 @@ public class InventoryUI : MonoBehaviour
 
     public void RefreshUI(bool fromRemove = false)
     {
-        Inventory.ReorderInventory();
+        //Inventory.ReorderInventory();
         if (fromRemove)
         {
             _lastSelectedItem = -1;
             UseButton.gameObject.SetActive(false);
-            ThrowButton.gameObject.SetActive(false);
         }
         if(_lastSelectedItem != -1)
             InventoryItemClick(_lastSelectedItem);
@@ -132,11 +231,14 @@ public class InventoryUI : MonoBehaviour
             if (Inventory.Items[i] != null)
             {
                 _images[i].gameObject.SetActive(true);
+                _images[i].transform.GetChild(0).GetComponent<Text>().text = Inventory.Items[i].Count.ToString();
                 _images[i].sprite = Inventory.Items[i].InventorySprite; //Set the sprite
             }
             else
+            {
                 _images[i].gameObject.SetActive(false);
-                //_images[i].sprite = EmptySprite;*/
+                _images[i].sprite = ResourcesManager.instance.EmptySprite;
+            }
         }
         GlobalMoneyText.text = string.Format("Money: {0}", Inventory.Money);
         UpdateStatistics();
@@ -161,21 +263,6 @@ public class InventoryUI : MonoBehaviour
         GlobalEventText.AddMessage(string.Format("You used \"{0}\"", Inventory.Items[_lastSelectedItem].Name));
         Inventory.Items[_lastSelectedItem].Use();
         RefreshUI();
-    }
-
-    public void ThrowSelectedItem()
-    {
-        if (_lastSelectedItem == -1)
-            return;
-        GameObject item = MonoItem.CreateGameObjectFromItem(Inventory.Items[_lastSelectedItem]);
-        GlobalEventText.AddMessage(string.Format("You just throw away \"{0}\" (x{1})", Inventory.Items[_lastSelectedItem].Name, Inventory.Items[_lastSelectedItem].Count));
-        Inventory.RemoveItemFromInventory(Inventory.Items[_lastSelectedItem]);
-        //Debug.Log(item);
-        item.transform.position = Scene._grid[Player.CurrentIndexPosition].position;
-        item.transform.SetParent(Scene._grid[Player.CurrentIndexPosition].TileObject.transform);
-
-        ThrowButton.gameObject.SetActive(false);
-        _lastSelectedItem = -1;
     }
 
     public void CalculateMass()

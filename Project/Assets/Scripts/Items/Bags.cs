@@ -31,42 +31,47 @@ public class Bag01 : ItemContainer
         this.isUsable = true;
         this.ItemValue = ItemValues.Bag01;
         this.isStackable = false;
+        this.InGameSprite = ResourcesManager.instance.IG_Bag01;
+        this.InventorySprite = ResourcesManager.instance.IN_Bag01;
         AllowedContent = new GlobalType[] { GlobalType.Gems, GlobalType.Money, GlobalType.Fruits };
     }
 
     public void PickupItem()
     {
-        //Set a random stuff inside the bag:
-        Item[] items = new Item[Random.Range(2, 12)];
-        GlobalType type;
-        GameObject tmp = null;
-        for (int i = 0; i < items.Length; i++)
+        if (Content == null)
         {
-            //Get a random item type:
-            type = AllowedContent[Random.Range(0, AllowedContent.Length)];
-            //Creating the item
-            switch (type)
+            //Set a random stuff inside the bag:
+            Item[] items = new Item[Random.Range(2, 12)];
+            GlobalType type;
+            GameObject tmp = null;
+            for (int i = 0; i < items.Length; i++)
             {
-                case GlobalType.Gems:
-                    tmp = MonoBehaviour.Instantiate(HexTileManager.instance.Gems[Random.Range(0, HexTileManager.instance.Gems.Length)]) as GameObject;
-                    items[i] = tmp.GetComponent<MonoItem>().GetItem();
-                    items[i].Count = Random.Range(1, 3);
-                    break;
-                case GlobalType.Money:
-                    tmp = MonoBehaviour.Instantiate(HexTileManager.instance.MoneyTiles[Random.Range(0, HexTileManager.instance.MoneyTiles.Length)]) as GameObject;
-                    items[i] = tmp.GetComponent<MonoItem>().GetItem();
-                    items[i].Value = Random.Range(20, 250);
-                    break;
-                case GlobalType.Fruits:
-                    tmp = MonoBehaviour.Instantiate(HexTileManager.instance.Fruits[Random.Range(0, HexTileManager.instance.Fruits.Length)]) as GameObject;
-                    items[i] = tmp.GetComponent<MonoItem>().GetItem();
-                    items[i].Count = Random.Range(1, 5);
-                    break;
+                //Get a random item type:
+                type = AllowedContent[Random.Range(0, AllowedContent.Length)];
+                //Creating the item
+                switch (type)
+                {
+                    case GlobalType.Gems:
+                        tmp = MonoBehaviour.Instantiate(HexTileManager.instance.Gems[Random.Range(0, HexTileManager.instance.Gems.Length)]) as GameObject;
+                        items[i] = tmp.GetComponent<MonoItem>().GetItem();
+                        items[i].Count = Random.Range(1, 3);
+                        break;
+                    case GlobalType.Money:
+                        tmp = MonoBehaviour.Instantiate(HexTileManager.instance.MoneyTiles[Random.Range(0, HexTileManager.instance.MoneyTiles.Length)]) as GameObject;
+                        items[i] = tmp.GetComponent<MonoItem>().GetItem();
+                        items[i].Value = Random.Range(20, 250);
+                        break;
+                    case GlobalType.Fruits:
+                        tmp = MonoBehaviour.Instantiate(HexTileManager.instance.Fruits[Random.Range(0, HexTileManager.instance.Fruits.Length)]) as GameObject;
+                        items[i] = tmp.GetComponent<MonoItem>().GetItem();
+                        items[i].Count = Random.Range(1, 5);
+                        break;
+                }
+                MonoBehaviour.Destroy(tmp);
             }
-            MonoBehaviour.Destroy(tmp);
-        }
-        SetContent(items);
+            SetContent(items);
 
+        }
 
         if (Inventory.AddItemToInventory(this))
             MonoBehaviour.Destroy(gameObject);

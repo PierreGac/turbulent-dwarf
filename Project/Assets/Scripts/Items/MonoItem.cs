@@ -150,21 +150,22 @@ public class MonoItem : MonoBehaviour
     public static GameObject CreateGameObjectFromItem(Item item)
     {
         GameObject obj = new GameObject(item.Name);
-
-        MonoItem monoItem = obj.AddComponent<MonoItem>();
-        monoItem.thisItem = item;
-        monoItem.InventorySprite = item.InventorySprite;
-        monoItem.Type = item.Type;
-        monoItem.isJustSpawned = true;
-
         //Sprite renderer
         SpriteRenderer sprite = obj.AddComponent<SpriteRenderer>();
         sprite.sprite = item.InGameSprite;
         sprite.sortingLayerID = item.SortingLayer;
 
-        //BonCollider
+        //BoxCollider
         BoxCollider2D collider = obj.AddComponent<BoxCollider2D>();
         collider.size = sprite.sprite.bounds.size;
+
+        MonoItem monoItem = obj.AddComponent<MonoItem>();
+        monoItem.thisItem = (Item)item.Clone();
+        monoItem.thisItem.gameObject = obj;
+        monoItem.InventorySprite = item.InventorySprite;
+        monoItem.Type = item.Type;
+        monoItem.isJustSpawned = true;
+        monoItem.spriteRenderer.enabled = true;
 
         return obj;
     }
