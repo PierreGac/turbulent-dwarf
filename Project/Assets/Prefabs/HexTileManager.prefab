@@ -57,6 +57,8 @@ MonoBehaviour:
   - {fileID: 171270, guid: 6cf8340ab6a3b0a41abe22f032468e15, type: 2}
   - {fileID: 171270, guid: 5cf9180264f66c342a828d8bfc4ad0dd, type: 2}
   - {fileID: 171270, guid: 19cde32aea0af6e4c8cabbf7e3a7016f, type: 2}
+  RawGems:
+  - {fileID: 171270, guid: 25cb685cce493314b8be2505e4828919, type: 2}
   MoneyTiles:
   - {fileID: 171270, guid: 49eda5fa039374a43b877b584e32fb49, type: 2}
   Boulders:
@@ -70,6 +72,16 @@ MonoBehaviour:
   - {fileID: 171270, guid: ca13edd59f2cf30439e4ebb9fb27fa07, type: 2}
   - {fileID: 171270, guid: c50c3aaa0a4899544b2810db85699477, type: 2}
   Vegetables: []
+  Rocks:
+  - {fileID: 171270, guid: 18352798522b9dc408637b0efffd48bb, type: 2}
+  - {fileID: 171270, guid: 59f1a65db4e9aa242a805560fd2ad70e, type: 2}
+  - {fileID: 171270, guid: 8e88b663b37962d4a978a9e0fc32058a, type: 2}
+  - {fileID: 171270, guid: 3c9c8a77c2c699b4b8cf0cde41fcf7d1, type: 2}
+  Blocs:
+  - {fileID: 171270, guid: 2699cd0090ac13243a1ab792a1ea0459, type: 2}
+  - {fileID: 171270, guid: f44887587bf4a734b9ab0bbfc5708bd1, type: 2}
+  - {fileID: 171270, guid: 8826220cf95681546bcdef61275ffcec, type: 2}
+  - {fileID: 171270, guid: eda18b0b7f5699741b8781e4548fb8b3, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

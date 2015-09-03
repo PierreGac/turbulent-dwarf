@@ -144,7 +144,10 @@ public class PanelContainerUI : MonoBehaviour
             return;
         if (_itemContainer.Content[contentIndex] == null)
             return;
-        InventoryPopupInfos.Show(_itemContainer.Content[contentIndex].Name, _itemContainer.Content[contentIndex].Count);
+        if(_itemContainer.Content[contentIndex].Type == ItemType.Money)
+            InventoryPopupInfos.Show(_itemContainer.Content[contentIndex].Name, (int)_itemContainer.Content[contentIndex].Value);
+        else
+            InventoryPopupInfos.Show(_itemContainer.Content[contentIndex].Name, _itemContainer.Content[contentIndex].Count);
         _onHoovering = true;
     }
     public void OnPointerExit()

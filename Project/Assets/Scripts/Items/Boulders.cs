@@ -33,6 +33,8 @@ public class Boulders : Item
         this.isUsable = true;
         this.ItemValue = ItemValues.Boulders;
         this.isStackable = true;
+        this.InGameSprite = ResourcesManager.instance.IG_Boulders;
+        this.InventorySprite = ResourcesManager.instance.IN_Boulders;
     }
 
     public void PickupItem()

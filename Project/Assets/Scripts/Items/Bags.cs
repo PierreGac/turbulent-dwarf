@@ -33,7 +33,7 @@ public class Bag01 : ItemContainer
         this.isStackable = false;
         this.InGameSprite = ResourcesManager.instance.IG_Bag01;
         this.InventorySprite = ResourcesManager.instance.IN_Bag01;
-        AllowedContent = new GlobalType[] { GlobalType.Gems, GlobalType.Money, GlobalType.Fruits };
+        AllowedContent = new GlobalType[] { GlobalType.Gems, GlobalType.Money, GlobalType.Fruits, GlobalType.RawGems, GlobalType.Rocks };
     }
 
     public void PickupItem()
@@ -64,7 +64,17 @@ public class Bag01 : ItemContainer
                     case GlobalType.Fruits:
                         tmp = MonoBehaviour.Instantiate(HexTileManager.instance.Fruits[Random.Range(0, HexTileManager.instance.Fruits.Length)]) as GameObject;
                         items[i] = tmp.GetComponent<MonoItem>().GetItem();
+                        items[i].Count = Random.Range(1, 4);
+                        break;
+                    case GlobalType.RawGems:
+                        tmp = MonoBehaviour.Instantiate(HexTileManager.instance.RawGems[Random.Range(0, HexTileManager.instance.RawGems.Length)]) as GameObject;
+                        items[i] = tmp.GetComponent<MonoItem>().GetItem();
                         items[i].Count = Random.Range(1, 5);
+                        break;
+                    case GlobalType.Rocks:
+                        tmp = MonoBehaviour.Instantiate(HexTileManager.instance.Rocks[Random.Range(0, HexTileManager.instance.Rocks.Length)]) as GameObject;
+                        items[i] = tmp.GetComponent<MonoItem>().GetItem();
+                        items[i].Count = Random.Range(5, 13);
                         break;
                 }
                 MonoBehaviour.Destroy(tmp);

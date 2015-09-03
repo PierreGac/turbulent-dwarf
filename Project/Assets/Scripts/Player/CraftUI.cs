@@ -95,76 +95,134 @@ public class CraftUI : MonoBehaviour
 
     public void CraftTableBTN()
     {
-        /*#region Creating the crafting string
-        RecipeItem[] craftingTable = new RecipeItem[9];
-        for(int i = 0; i < 9; i++)
-        {
-            if (ItemsInCraftTable[i] != null)
-            {
-                craftingTable[i] = new RecipeItem(ItemsInCraftTable[i].Name, ItemsInCraftTable[i].InventorySprite, ItemsInCraftTable[i].Count);
-            }
-            //Debug.Log(string.Format("Item {0} : {1} (x{2})", i, ItemsInCraftTable[i].Name, ItemsInCraftTable[i].Count));
-            else
-            {
-                craftingTable[i] = RecipeItem.EMPTY;
-                //Debug.Log(string.Format("Item {0} : {1}", i, ItemsInCraftTable[i]));
-            }
-        }
-        #endregion
-        */
-
         #region Find the recipe
         int recipeIndex = Craft.CheckIfCorrectRecipe(ItemsInCraftTable);
+        Recipe targetRecipe = Craft.Recipes[recipeIndex];
         if (recipeIndex == -1)
         {
             RemoveItemFromInventory();
             GlobalEventText.AddMessage("Bad recipe!");
             return;
         }
-        if (!Craft.Recipes[recipeIndex].isKnown)
+        //Check for the random success
+        bool success = true;
+        if(targetRecipe.SuccessChance != 100)
         {
-            Craft.Recipes[recipeIndex].isKnown = true; //Set the selected recipe as "known"
-            GlobalEventText.AddMessage(string.Format("Yay! You learned how to make {0}", Craft.Recipes[recipeIndex].Name));
-        }
-        //Get the results (put the results in the result panel)
-        for(int i = 0; i < 3; i++)
-        {
-            if (Craft.Recipes[recipeIndex].Results[i] != null)
+            int result = Random.Range(0, 100);
+            if (result <= targetRecipe.SuccessChance)
+                success = true;
+            else
             {
-                //Compare the actual recipe to the old one:
-                if (_previousRecipe != null && Craft.Recipes[recipeIndex].Name == _previousRecipe.Name)
-                {
-                    if(ItemsInResult[i] != null)
-                    {
-                        ItemsInResult[i].Count += Craft.Recipes[recipeIndex].Results[i].Count;
-                    }
-                }
-                else
-                {
-                    //Add the previous item to the inventory
-                    if(ItemsInResult[i] != null)
-                    {
-                        Inventory.AddItemToInventory(ItemsInResult[i]);
-                    }
+                success = false;
+                GlobalEventText.AddMessage("You failed...");
+            }
+        }
+        if (!targetRecipe.isKnown && success)
+        {
+            targetRecipe.isKnown = true; //Set the selected recipe as "known"
+            GlobalEventText.AddMessage(string.Format("Yay! You learned how to make {0}", targetRecipe.Name));
+        }
 
-                    ItemsInResult[i] = (Item)Craft.Recipes[recipeIndex].Results[i].Clone();
+        if (success)
+        {
+            #region RandomResult
+            //Check if the result is random:
+            if (targetRecipe.isRandomResult)
+            {
+                bool isOK = false;
+                int index = 0;
+                List<Item> tempItemList = new List<Item>(targetRecipe.RandomResults.Length);
+                for (int i = 0; i < targetRecipe.RandomResults.Length; i++)
+                {
+                    tempItemList.Add(targetRecipe.RandomResults[i]);
+                }
+                for (int i = 0; i < targetRecipe.AmountOfRandomItemInResult; i++)
+                {
+                    isOK = false;
+                    Item rndResult = null;
+                    //Get the random result
+                    do
+                    {
+                        index = Random.Range(0, tempItemList.Count);
+                        rndResult = (Item)tempItemList[index].Clone();
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (ItemsInResult[j] == null)
+                                isOK = true;
+                            else if (ItemsInResult[j].Name != rndResult.Name)
+                                isOK = true;
+                        }
+                    } while (!isOK);
+
+
+                    if (ItemsInResult[i] != null) // Look if the item is different
+                    {
+                        if (ItemsInResult[i].Name == rndResult.Name)
+                            ItemsInResult[i].Count += rndResult.Count;
+                        else
+                        {
+                            Inventory.AddItemToInventory(ItemsInResult[i]);
+                            ItemsInResult[i] = (Item)rndResult.Clone();
+                        }
+                    }
+                    else
+                    {
+                        ItemsInResult[i] = (Item)rndResult.Clone();
+                    }
 
                     //Update result sprite
                     _resultImages[i].gameObject.SetActive(true);
                     _resultImages[i].sprite = ItemsInResult[i].InventorySprite;
+
+                    tempItemList.RemoveAt(index);
                 }
             }
+            #endregion
             else
             {
-                ItemsInResult[i] = null;
+                //Get the results (put the results in the result panel)
+                for (int i = 0; i < 3; i++)
+                {
+                    if (Craft.Recipes[recipeIndex].Results[i] != null)
+                    {
+                        //Compare the actual recipe to the old one:
+                        if (_previousRecipe != null && Craft.Recipes[recipeIndex].Name == _previousRecipe.Name)
+                        {
+                            if (ItemsInResult[i] != null)
+                            {
+                                ItemsInResult[i].Count += Craft.Recipes[recipeIndex].Results[i].Count;
+                            }
+                        }
+                        else
+                        {
+                            //Add the previous item to the inventory
+                            if (ItemsInResult[i] != null)
+                            {
+                                Inventory.AddItemToInventory(ItemsInResult[i]);
+                            }
 
-                //Update result sprite
-                _resultImages[i].gameObject.SetActive(false);
-                _resultImages[i].sprite = ResourcesManager.instance.EmptySprite;
+                            ItemsInResult[i] = (Item)Craft.Recipes[recipeIndex].Results[i].Clone();
+
+                            //Update result sprite
+                            _resultImages[i].gameObject.SetActive(true);
+                            _resultImages[i].sprite = ItemsInResult[i].InventorySprite;
+                        }
+                    }
+                    else
+                    {
+                        ItemsInResult[i] = null;
+
+                        //Update result sprite
+                        _resultImages[i].gameObject.SetActive(false);
+                        _resultImages[i].sprite = ResourcesManager.instance.EmptySprite;
+                    }
+                }
             }
+            _previousRecipe = Craft.Recipes[recipeIndex];
         }
+        else
+            _previousRecipe = null;
 
-        _previousRecipe = Craft.Recipes[recipeIndex];
 
         //Handle craft items:
         for(int i = 0; i < 9; i++)
@@ -337,7 +395,6 @@ public class CraftUI : MonoBehaviour
     #region Recipes list
     private static List<GameObject> _recipeButtons;
     private static Image[] _recipeImages;
-    private static Recipe[] _knownRecipes;
     public static void RefreshRecipesList()
     {
         if (_recipeButtons != null)
@@ -352,7 +409,6 @@ public class CraftUI : MonoBehaviour
 
 
         int ID = 0;
-        List<Recipe> tmpList = new List<Recipe>();
         //Looping through the recipes list
         for(int i = 0; i < Craft.Recipes.Length; i++)
         {
@@ -361,7 +417,6 @@ public class CraftUI : MonoBehaviour
                 //If the recipe is known => display it ! YAY !
                 if(Craft.Recipes[i].isKnown)
                 {
-                    tmpList.Add(Craft.Recipes[i]);
                     //Create a new button:
                     GameObject btn = Recipe.CreateRecipeInventoryButton(ID, i);
                     btn.transform.SetParent(_recipeButtonsObject.transform);
@@ -370,13 +425,11 @@ public class CraftUI : MonoBehaviour
                 }
             }
         }
-        _knownRecipes = new Recipe[tmpList.Count];
-        tmpList.CopyTo(_knownRecipes);
     }
 
     public static void OnRecipePointerEnter(int index)
     {
-        if(_knownRecipes[index] != null)
+        if(Craft.Recipes[index] != null)
         {
             InventoryUI.OnHooveringRecipe = true;
             RecipePopupInfos.Show(index);

@@ -34,11 +34,33 @@ public interface ItemContainer : Item
 /// <summary>
 /// Enum for item categories
 /// </summary>
-public enum GlobalType { Money, Gems, Fruits, Vegetables, Wood, Stone, Container};
+public enum GlobalType { Money, Gems, Fruits, Vegetables, Wood, Stone, Container, Rocks, Blocs, RawGems};
 /// <summary>
 /// Detailed enum about items
 /// </summary>
-public enum ItemType { Money, WhiteGem, YellowGem, RedGem, RockBoulder, Bag01, Orange, Banana, Apple, Coconut, Pear};
+public enum ItemType
+{ 
+    Money, 
+    WhiteGem, 
+    YellowGem, 
+    RedGem, 
+    RockBoulder, 
+    Bag01,
+    Orange,
+    Banana,
+    Apple, 
+    Coconut,
+    Pear,
+    RockGranit,
+    RockGabbro,
+    RockDiorite,
+    RockBasalt,
+    BlocGranit,
+    BlocGabbro,
+    BlocDiorite,
+    BlocBasalt,
+    RawGem
+};
 
 public class MonoItem : MonoBehaviour
 {
@@ -73,6 +95,9 @@ public class MonoItem : MonoBehaviour
             case ItemType.RedGem:
                 thisItem = new Gems(gameObject, "Red gem", "A blood red gem", ItemValues.RedGem);
                 break;
+            case ItemType.RawGem:
+                thisItem = new RawGems(gameObject);
+                break;
             case ItemType.RockBoulder:
                 thisItem = new Boulders(gameObject);
                 break;
@@ -96,11 +121,37 @@ public class MonoItem : MonoBehaviour
                 thisItem = new Fruits(gameObject, 0.2f, "A sweaty banana", ItemValues.Banana, FruitsStatistics.BananaStats);
                 break;
             #endregion
+            #region Rocks
+            case ItemType.RockBasalt:
+                thisItem = new Rocks(gameObject, Rocks.BasaltName, ItemValues.RockBasalt);
+                break;
+            case ItemType.RockDiorite:
+                thisItem = new Rocks(gameObject, Rocks.DioriteName, ItemValues.RockDiorite);
+                break;
+            case ItemType.RockGabbro:
+                thisItem = new Rocks(gameObject, Rocks.GabbroName, ItemValues.RockGabbro);
+                break;
+            case ItemType.RockGranit:
+                thisItem = new Rocks(gameObject, Rocks.GranitName, ItemValues.RockGranit);
+                break;
+            #endregion
+            #region Blocs
+            case ItemType.BlocBasalt:
+                thisItem = new RockBlocks(gameObject, RockBlocks.BasaltName, ItemValues.BlocBasalt);
+                break;
+            case ItemType.BlocDiorite:
+                thisItem = new RockBlocks(gameObject, RockBlocks.DioriteName, ItemValues.BlocDiorite);
+                break;
+            case ItemType.BlocGabbro:
+                thisItem = new RockBlocks(gameObject, RockBlocks.GabbroName, ItemValues.BlocGabbro);
+                break;
+            case ItemType.BlocGranit:
+                thisItem = new RockBlocks(gameObject, RockBlocks.GranitName, ItemValues.BlocGranit);
+                break;
+            #endregion
         }
         thisItem.Type = Type;
         thisItem.SortingLayer = GetComponent<SpriteRenderer>().sortingLayerID;
-        thisItem.InventorySprite = InventorySprite;
-        thisItem.InGameSprite = GetComponent<SpriteRenderer>().sprite;
 
         return thisItem;
     }

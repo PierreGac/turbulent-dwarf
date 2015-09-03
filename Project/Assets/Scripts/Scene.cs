@@ -77,7 +77,14 @@ public class Scene : MonoBehaviour
 
             if (_rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
             {
-                item = GameObject.Instantiate(HexTileManager.instance.Gems[_rnd.Next(0, HexTileManager.instance.Gems.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
+                item = GameObject.Instantiate(HexTileManager.instance.Rocks[_rnd.Next(0, HexTileManager.instance.Rocks.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
+                item.transform.SetParent(_grid[i].TileObject.transform);
+                _grid[i].TileItem = item;
+                _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
+            }
+            if (_rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
+            {
+                item = GameObject.Instantiate(HexTileManager.instance.RawGems[_rnd.Next(0, HexTileManager.instance.RawGems.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
                 item.transform.SetParent(_grid[i].TileObject.transform);
                 _grid[i].TileItem = item;
                 _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;

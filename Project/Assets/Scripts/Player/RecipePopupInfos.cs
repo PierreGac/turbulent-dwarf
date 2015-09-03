@@ -82,15 +82,23 @@ public class RecipePopupInfos : MonoBehaviour
             //Results:
             for (int i = 0; i < 3; i++)
             {
-                if (recipe.Results[i] == null)
+                if (recipe.Results[i] == null && !recipe.isRandomResult)
                 {
                     _resultsImages[i].gameObject.SetActive(false);
                 }
                 else
                 {
                     _resultsImages[i].gameObject.SetActive(true);
-                    _resultsImages[i].sprite = recipe.Results[i].InventorySprite;
-                    _resultsImages[i].transform.GetChild(0).GetComponent<Text>().text = recipe.Results[i].Count.ToString();
+                    if (recipe.isRandomResult)
+                    {
+                        _resultsImages[i].sprite = ResourcesManager.instance.InterrogationDotSprite;
+                        _resultsImages[i].transform.GetChild(0).GetComponent<Text>().text = "";
+                    }
+                    else
+                    {
+                        _resultsImages[i].sprite = recipe.Results[i].InventorySprite;
+                        _resultsImages[i].transform.GetChild(0).GetComponent<Text>().text = recipe.Results[i].Count.ToString();
+                    }
                 }
             }
 

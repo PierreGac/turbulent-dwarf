@@ -18,11 +18,14 @@ public class HexTileManager : MonoBehaviour
 
     #region Items
     public GameObject[] Gems;
+    public GameObject[] RawGems;
     public GameObject[] MoneyTiles;
     public GameObject[] Boulders;
     public GameObject[] Containers;
     public GameObject[] Fruits;
     public GameObject[] Vegetables;
+    public GameObject[] Rocks;
+    public GameObject[] Blocs;
     #endregion
 
     public static HexTileManager instance = null;

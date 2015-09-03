@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: 0abd1d491e7c95a4a843b12364fb29e2
-timeCreated: 1441019451
+timeCreated: 1441316266
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: RockTiles_0
+    21300002: RockTiles_1
+    21300004: RockTiles_2
+    21300006: RockTiles_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -57,6 +60,36 @@ TextureImporter:
         y: 577
         width: 63
         height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RockTiles_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 615
+        width: 31
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RockTiles_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 619
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RockTiles_3
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 566
+        width: 41
+        height: 41
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

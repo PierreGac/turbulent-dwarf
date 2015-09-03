@@ -9,20 +9,75 @@ public class Craft : MonoBehaviour
 
     void Awake()
     {
+        CreateRecipes();
+    }
+
+    private void CreateRecipes()
+    {
         Recipes = new Recipe[10];
+        Item[] items = new Item[9];
         Item[] _rTMP = { null, null, null, null, new Gems(null, "White gem", "A white gem", ItemValues.WhiteGem), null, null, null, null };
-        Recipes[0] = new Recipe(_rTMP, "NAAAME", 100, new Item[]{new Gems(null, "Red gem", "A blood red gem", ItemValues.RedGem), null, null});
+        Recipes[0] = new Recipe(_rTMP, "NAAAME", 100, new Item[] { new Gems(null, "Red gem", "A blood red gem", ItemValues.RedGem), null, null });
         Recipes[0].isKnown = true;
         Recipes[0].InventorySprite = _rTMP[4].InventorySprite;
 
         Item[] _rTMP2 = { null, null, null, null, new Gems(null, "Red gem", "a blood red gem", ItemValues.RedGem), null, null, null, null };
-        Recipes[1] = new Recipe(_rTMP2, "BWAA", 100, new Item[]{new Gems(null, "White gem", "A white gem", ItemValues.WhiteGem), null, null});
+        Recipes[1] = new Recipe(_rTMP2, "BWAA", 100, new Item[] { new Gems(null, "White gem", "A white gem", ItemValues.WhiteGem), null, null });
         Recipes[1].isKnown = true;
         Recipes[1].InventorySprite = _rTMP2[4].InventorySprite;
 
         Item[] _rTMP3 = { null, null, null, null, new Gems(null, "Yellow gem", "A yellow gem", ItemValues.YellowGem), null, null, null, null };
         Recipes[2] = new Recipe(_rTMP3, "TOTO", 100, new Item[] { new Gems(null, "White gem", "A white gem", ItemValues.WhiteGem), null, null });
         Recipes[2].InventorySprite = _rTMP3[4].InventorySprite;
+
+        #region Rocks
+        for (int i = 0; i < 9; i++)
+        {
+            items[i] = new Rocks(null, Rocks.BasaltName, ItemValues.RockBasalt);
+        }
+        Recipes[3] = new Recipe(items, RockBlocks.BasaltName, 100, new Item[] { null, new RockBlocks(null, RockBlocks.BasaltName, ItemValues.BlocBasalt), null });
+        Recipes[3].InventorySprite = ResourcesManager.instance.IN_Bloc;
+
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        for (int i = 0; i < 9; i++)
+        {
+            items[i] = new Rocks(null, Rocks.DioriteName, ItemValues.RockDiorite);
+        }
+        Recipes[4] = new Recipe(items, RockBlocks.DioriteName, 100, new Item[] { null, new RockBlocks(null, RockBlocks.DioriteName, ItemValues.BlocDiorite), null });
+        Recipes[4].InventorySprite = ResourcesManager.instance.IN_Bloc;
+
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        for (int i = 0; i < 9; i++)
+        {
+            items[i] = new Rocks(null, Rocks.GabbroName, ItemValues.RockGabbro);
+        }
+        Recipes[4] = new Recipe(items, RockBlocks.GabbroName, 100, new Item[] { null, new RockBlocks(null, RockBlocks.GabbroName, ItemValues.BlocGabbro), null });
+        Recipes[4].InventorySprite = ResourcesManager.instance.IN_Bloc;
+
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        for (int i = 0; i < 9; i++)
+        {
+            items[i] = new Rocks(null, Rocks.GranitName, ItemValues.RockGranit);
+        }
+        Recipes[5] = new Recipe(items, RockBlocks.GranitName, 100, new Item[] { null, new RockBlocks(null, RockBlocks.GranitName, ItemValues.BlocGranit), null });
+        Recipes[5].InventorySprite = ResourcesManager.instance.IN_Bloc;
+        #endregion
+
+        for (int i = 0; i < 9; i++)
+        {
+            if (i == 4)
+                items[i] = new RawGems(null);
+            else
+                items[i] = null;
+        }
+        Recipes[6] = new Recipe(items, "Raw gem", 50, null, true, new Item[] { new Gems(null, "Red gem", "A blood red gem", ItemValues.RedGem), new Gems(null, "White gem", "A shiny white gem", ItemValues.WhiteGem), new Gems(null, "Yellow gem", "A yellow gem", ItemValues.YellowGem)}, 1);
+        Recipes[6].InventorySprite = ResourcesManager.instance.IN_RawGem;
     }
 
     public static int CheckIfCorrectRecipe(Item[] recipe)
@@ -68,17 +123,36 @@ public class Recipe
 
     public Item[] Results;
 
+    public bool isRandomResult { get; set; }
+
+    public Item[] RandomResults { get; set; }
+
+    public int AmountOfRandomItemInResult { get; set; }
     public bool isKnown { get; set; }
 
-    public Recipe(Item[] items, string name, float success, Item[] results)
+    public Recipe(Item[] items, string name, float success, Item[] results, bool random = false, Item[] randomResults = null, int amountOfRandomItems = 1)
     {
         Items = new Item[9];
         items.CopyTo(Items, 0);
+
         Results = new Item[3];
-        results.CopyTo(Results, 0);
+        if (results != null)
+        {
+            results.CopyTo(Results, 0);
+        }
         SuccessChance = success;
         Name = name;
         isKnown = false;
+        isRandomResult = random;
+        if (amountOfRandomItems > 3)
+            AmountOfRandomItemInResult = 3;
+        else
+            AmountOfRandomItemInResult = amountOfRandomItems;
+        if(randomResults != null)
+        {
+            RandomResults = new Item[randomResults.Length];
+            randomResults.CopyTo(RandomResults, 0);
+        }
     }
 
     public bool CompareRecipes(Item[] recipe)
@@ -116,7 +190,7 @@ public class Recipe
         EventTrigger eventTrigger = obj.AddComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerEnter;
-        entry.callback.AddListener((eventData) => { CraftUI.OnRecipePointerEnter(index); });
+        entry.callback.AddListener((eventData) => { CraftUI.OnRecipePointerEnter(recipeID); });
         eventTrigger.triggers.Add(entry);
 
         entry = new EventTrigger.Entry();
@@ -126,7 +200,7 @@ public class Recipe
 
         entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerDown;
-        entry.callback.AddListener((eventData) => { CraftUI.OnRecipeClick(index); });
+        entry.callback.AddListener((eventData) => { CraftUI.OnRecipeClick(recipeID); });
         eventTrigger.triggers.Add(entry);
 
         //Create first child:

@@ -9,6 +9,7 @@ public class ResourcesManager : MonoBehaviour
     public GameObject MainCamera;
     public Sprite EmptySprite;
 
+    public Sprite InterrogationDotSprite;
     public GameObject RecipeButton;
 
     #region Item sprites
@@ -18,6 +19,10 @@ public class ResourcesManager : MonoBehaviour
     public Sprite IG_RedGem;
     public Sprite IG_YellowGem;
     public Sprite IG_MoneyBag;
+    public Sprite IG_Rock;
+    public Sprite IG_Bloc;
+    public Sprite IG_RawGem;
+    public Sprite IG_Boulders;
     #endregion
     #region INVENTORY
     public Sprite IN_Bag01;
@@ -25,6 +30,10 @@ public class ResourcesManager : MonoBehaviour
     public Sprite IN_RedGem;
     public Sprite IN_YellowGem;
     public Sprite IN_MoneyBag;
+    public Sprite IN_Rock;
+    public Sprite IN_Bloc;
+    public Sprite IN_RawGem;
+    public Sprite IN_Boulders;
     #endregion
 
     #endregion

@@ -50,9 +50,7 @@
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\Fog.cs" />
      <Compile Include="Assets\Scripts\FogController.cs" />
-     <Compile Include="Assets\Scripts\GUICellularAutomata.cs" />
      <Compile Include="Assets\Scripts\GlobalEventText.cs" />
-     <Compile Include="Assets\Scripts\InventoryUI.cs" />
      <Compile Include="Assets\Scripts\Items\Bags.cs" />
      <Compile Include="Assets\Scripts\Items\Boulders.cs" />
      <Compile Include="Assets\Scripts\Items\Fruits.cs" />
@@ -61,7 +59,9 @@
      <Compile Include="Assets\Scripts\Items\MiningWall.cs" />
      <Compile Include="Assets\Scripts\Items\Money.cs" />
      <Compile Include="Assets\Scripts\Items\MonoItem.cs" />
-     <Compile Include="Assets\Scripts\Items\PanelContainerUI.cs" />
+     <Compile Include="Assets\Scripts\Items\RawGems.cs" />
+     <Compile Include="Assets\Scripts\Items\RockBlocs.cs" />
+     <Compile Include="Assets\Scripts\Items\Rocks.cs" />
      <Compile Include="Assets\Scripts\Items\Vegetables.cs" />
      <Compile Include="Assets\Scripts\Loader.cs" />
      <Compile Include="Assets\Scripts\Managers\BoardManager.cs" />
@@ -87,6 +87,9 @@
      <Compile Include="Assets\Scripts\Procedural Map\ICellularAutomata.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\SpawnRates.cs" />
      <Compile Include="Assets\Scripts\Scene.cs" />
+     <Compile Include="Assets\Scripts\UI\GUICellularAutomata.cs" />
+     <Compile Include="Assets\Scripts\UI\InventoryUI.cs" />
+     <Compile Include="Assets\Scripts\UI\PanelContainerUI.cs" />
      <Compile Include="Assets\Scripts\UserInterface.cs" />
      <Compile Include="Assets\Scripts\Wall.cs" />
      <None Include="Assets\Fonts\OFL.txt" />
