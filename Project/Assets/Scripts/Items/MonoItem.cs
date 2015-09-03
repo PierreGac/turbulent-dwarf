@@ -55,48 +55,6 @@ public class MonoItem : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = false;
         GetItem();
-        /*switch(Type)
-        {
-            case ItemType.Money:
-                thisItem = new MoneyItem(gameObject);
-            break;
-            case ItemType.WhiteGem:
-                thisItem = new Gems(gameObject, "White gem", "A very bright white gem", ItemValues.WhiteGem);
-            break;
-            case ItemType.YellowGem:
-                thisItem = new Gems(gameObject, "Yellow gem", "A yellow gem", ItemValues.YellowGem);
-            break;
-            case ItemType.RedGem:
-                thisItem = new Gems(gameObject, "Red gem", "A blood red gem", ItemValues.RedGem);
-            break;
-            case ItemType.RockBoulder:
-                thisItem = new Boulders(gameObject);
-            break;
-            case ItemType.Bag01:
-                thisItem = new Bag01(gameObject);
-            break;
-            #region Fruits
-            case ItemType.Pear:
-                thisItem = new Fruits(gameObject, 0.2f, "A tasty pear", ItemValues.Pear, FruitsStatistics.PearStats);
-            break;
-            case ItemType.Apple:
-                thisItem = new Fruits(gameObject, 0.2f, "A shiny apple", ItemValues.Apple, FruitsStatistics.AppleStats);
-            break;
-            case ItemType.Coconut:
-                thisItem = new Fruits(gameObject, 0.8f, "A heavy coconut", ItemValues.Coconut, FruitsStatistics.CoconutStats);
-            break;
-            case ItemType.Orange:
-                thisItem = new Fruits(gameObject, 0.2f, "A juicy orange", ItemValues.Orange, FruitsStatistics.OrangeStats);
-            break;
-            case ItemType.Banana:
-                thisItem = new Fruits(gameObject, 0.2f, "A sweaty banana", ItemValues.Banana, FruitsStatistics.BananaStats);
-            break;
-            #endregion
-        }
-        thisItem.Type = Type;
-        thisItem.SortingLayer = GetComponent<SpriteRenderer>().sortingLayerID;
-        thisItem.InventorySprite = InventorySprite;
-        thisItem.InGameSprite = GetComponent<SpriteRenderer>().sprite;*/
     }
 
     public Item GetItem()

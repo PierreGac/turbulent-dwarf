@@ -33,21 +33,56 @@ public class InventoryPopupInfos : MonoBehaviour
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_parentCanevas.transform as RectTransform, Input.mousePosition, _parentCanevas.worldCamera, out pos);
         
-        _transform.position = _parentCanevas.transform.TransformPoint(pos + _dimensions);
+        _transform.position = _parentCanevas.transform.TransformPoint(pos + GetOffset(pos));
         _text.text = string.Format("{0} (x{1})", name, count);
         _rectTransform.SetHeight(_text.preferredHeight + 4);
 
         return pos;
     }
 
-    private Vector2 GetOffset(Vector2 pos)
+    private static Vector2 GetOffset(Vector2 pos)
     {
+        bool isX = false;
+        bool isY = false;
         Vector2 offset = Vector2.zero;
 
         Vector2 canevaSize = _parentCanevas.GetComponent<RectTransform>().GetSize();
         Vector2 dimensions = _rectTransform.GetSize();
-        if (pos.x + (dimensions.x / 2) < canevaSize.x)
+        //Debug.Log(canevaSize.x / 2 + " : " + (pos.x + dimensions.x));
+        if (pos.x + dimensions.x < canevaSize.x / 2)
             offset.x = dimensions.x / 1.9f;
+        else
+        {
+            isX = true;
+            offset.x = dimensions.x / 1.9f;
+        }
+        if (pos.y - dimensions.y > -canevaSize.y / 2)
+            offset.y = -dimensions.y / 1.9f;
+        else
+        {
+            isY = true;
+            offset.y = -dimensions.y / 1.9f;
+        }
+        if (isY || isX)
+        {
+            if(isX && !isY)
+            {
+                offset.y = - dimensions.y;
+                offset.x = (dimensions.x - (canevaSize.x - pos.x) / 2) / 2;
+                return offset;
+            }
+            if(isY && !isX)
+            {
+                offset.y = dimensions.y;
+                return offset;
+            }
+            if(isY && isX)
+            {
+                offset.y = dimensions.y;
+                offset.x = (dimensions.x - (canevaSize.x - pos.x) / 2) / 2;
+                return offset;
+            }
+        }
 
         return offset;
     }
@@ -63,7 +98,7 @@ public class InventoryPopupInfos : MonoBehaviour
         Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_parentCanevas.transform as RectTransform, Input.mousePosition, _parentCanevas.worldCamera, out pos);
 
-        _transform.position = _parentCanevas.transform.TransformPoint(pos + _dimensions);
+        _transform.position = _parentCanevas.transform.TransformPoint(pos + GetOffset(pos));
         return pos;
     }
 }

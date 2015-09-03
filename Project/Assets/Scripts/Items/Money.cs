@@ -29,6 +29,8 @@ public class MoneyItem : Item
         this.Value = Random.Range(50, 200);
         this.ItemValue = ItemValues.Money;
         this.isStackable = true;
+        this.InGameSprite = ResourcesManager.instance.IG_MoneyBag;
+        this.InventorySprite = ResourcesManager.instance.IN_MoneyBag;
     }
 
     public void PickupItem()

@@ -278,7 +278,7 @@
             }
 
 
-            Debug.Log(CheckFloodCavern());
+            //Debug.Log(CheckFloodCavern());
             #endregion
             GetAccessibleIndexes();
             SpawnNextLevelDoor();
@@ -287,7 +287,7 @@
             ProcessBorders();
 
 
-            Debug.Log("Map generation time [Without rendering]: " + DateTime.Now.Subtract(time));
+            //Debug.Log("Map generation time [Without rendering]: " + DateTime.Now.Subtract(time));
         }
 
         #region PlaceWalls Born/Death
@@ -1033,8 +1033,6 @@
             int rndExit = _rnd.Next(0, _validIndexes.Length);
             _map[_validIndexes[rndExit]].ItemValue = ItemValues.ExitDoor;
             _grid[_validIndexes[rndExit]].isWalkable = true;
-            Debug.Log(rndExit + "=>> " + _map[_validIndexes[rndExit]].BasicValue);
-
         }
         #endregion
 
@@ -1105,7 +1103,7 @@
 
             PrintItems();
 
-            Debug.Log("Rendering time: " + DateTime.Now.Subtract(time));
+            //Debug.Log("Rendering time: " + DateTime.Now.Subtract(time));
         }
         private void PrintItems()
         {

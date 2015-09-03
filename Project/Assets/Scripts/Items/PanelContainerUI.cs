@@ -194,7 +194,10 @@ public class PanelContainerUI : MonoBehaviour
             {
                 _buttons[cnt].SetActive(true);
                 _images[cnt].sprite = _itemContainer.Content[i].InventorySprite;
-                _images[cnt].transform.GetChild(0).GetComponent<Text>().text = _itemContainer.Content[i].Count.ToString();
+                if (_itemContainer.Content[i].Type != ItemType.Money)
+                    _images[cnt].transform.GetChild(0).GetComponent<Text>().text = _itemContainer.Content[i].Count.ToString();
+                else
+                    _images[cnt].transform.GetChild(0).GetComponent<Text>().text = _itemContainer.Content[i].Value.ToString();
             }
             else
                 _buttons[cnt].SetActive(false);

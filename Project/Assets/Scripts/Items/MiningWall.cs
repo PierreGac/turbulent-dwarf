@@ -23,7 +23,7 @@ public class MiningWall : MonoBehaviour
         _audioSource.PlayOneShot(MiningSounds[Random.Range(0, MiningSounds.Length)]);
         if(HealthPoints <= 0)
         {
-            Debug.Log("Destroyed");
+            //Debug.Log("Destroyed");
             Scene._grid[index].TileItem = null;
             Scene._grid[index].isWalkable = true;
             Scene._grid[index].ItemValue = 0;

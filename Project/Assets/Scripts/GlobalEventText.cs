@@ -5,7 +5,7 @@ using System.Collections;
 public class GlobalEventText : MonoBehaviour
 {
     public static GlobalEventText instance = null;
-    public float FadingTime = 5.0f;
+    public float FadingTime = 3.0f;
     private static Text _text;
     private static float _lastTimeMessage = -1;
     private static bool _onFading = false;
@@ -32,7 +32,6 @@ public class GlobalEventText : MonoBehaviour
     {
         //_text.text = string.Format("{0}{1}\r\n", _text.text, message);
         instance.StartCoroutine(instance.UpdateText(message));
-        _lastTimeMessage = Time.time;
     }
 
     private IEnumerator UpdateText(string message)
@@ -49,9 +48,11 @@ public class GlobalEventText : MonoBehaviour
         for(int i = 0; i < message.Length; i++)
         {
             _text.text = string.Format("{0}{1}", _text.text, message[i]);
+            _lastTimeMessage = Time.time;
             yield return new WaitForSeconds(0.02f);
         }
         _text.text = string.Format("{0}\r\n", _text.text);
+        _lastTimeMessage = Time.time;
         _onFading = false;
     }
 }

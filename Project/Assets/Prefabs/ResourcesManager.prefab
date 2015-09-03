@@ -42,8 +42,17 @@ MonoBehaviour:
   Player: {fileID: 192226, guid: 49057d693b0239f478affbf652d9faf9, type: 2}
   MainCamera: {fileID: 120484, guid: 5d07463e2217a3c43b8bd4ba608b8155, type: 2}
   EmptySprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  RecipeButton: {fileID: 190108, guid: cff180d3d4e1d9a4e9de64df8210406d, type: 2}
   IG_Bag01: {fileID: 21300000, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IG_WhiteGem: {fileID: 21300000, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
+  IG_RedGem: {fileID: 21300004, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
+  IG_YellowGem: {fileID: 21300002, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
+  IG_MoneyBag: {fileID: 21300000, guid: af9b4a7bc4a3c5546b683cbfa0404701, type: 3}
   IN_Bag01: {fileID: 21300000, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IN_WhiteGem: {fileID: 21300000, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
+  IN_RedGem: {fileID: 21300004, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
+  IN_YellowGem: {fileID: 21300002, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
+  IN_MoneyBag: {fileID: 21300000, guid: af9b4a7bc4a3c5546b683cbfa0404701, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

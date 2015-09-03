@@ -36,11 +36,18 @@ public class Inventory : MonoBehaviour
             if (!InventoryCaneva.panel.gameObject.activeInHierarchy)
                 InventoryCaneva.OpenInventory(Items);
             else
+            {
+                if (CraftUI.isActive)
+                    CraftUI.StaticExit();
                 InventoryCaneva.Exit();
+            }
         }
-        if(Input.GetKeyDown(KeyCode.C))
+        if(Input.GetKeyDown(KeyCode.C) && InventoryCaneva.panel.gameObject.activeInHierarchy)
         {
-            CraftUI.OpenCraftingUI();
+            if (!CraftUI.isActive)
+                CraftUI.OpenCraftingUI();
+            else
+                CraftUI.StaticExit();
         }
     }
 
@@ -86,8 +93,7 @@ public class Inventory : MonoBehaviour
         {
             if (Items[i] == null)
             {
-                Items[i] = item;
-                Debug.Log("cccc: " + Items[i].Count);
+                Items[i] = (Item)item.Clone();
                 GlobalEventText.AddMessage(string.Format("You picked up \"{0}\" (x{1})", item.Name, item.Count));
                 if (InventoryCaneva.panel.gameObject.activeInHierarchy)
                     InventoryCaneva.RefreshUI();

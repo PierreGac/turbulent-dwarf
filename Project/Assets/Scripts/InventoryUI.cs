@@ -29,6 +29,7 @@ public class InventoryUI : MonoBehaviour
 
     private Canvas _parentCanevas;
     public static bool OnHoovering = false;
+    public static bool OnHooveringRecipe = false;
 
     private float _mass = 0;
     private int _lastSelectedItem = -1;
@@ -91,10 +92,16 @@ public class InventoryUI : MonoBehaviour
         {
             InventoryPopupInfos.ChangePosition();
         }
+        if(OnHooveringRecipe)
+        {
+            RecipePopupInfos.ChangePosition();
+        }
     }
 
     public void Exit()
     {
+        if (CraftUI.isActive)
+            CraftUI.StaticExit();
         panel.SetActive(false);
         panelPlayer.SetActive(false);
         _lastSelectedItem = -1;
