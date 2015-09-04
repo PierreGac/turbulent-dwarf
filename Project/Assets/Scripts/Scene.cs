@@ -8,7 +8,8 @@ using System.Collections.Generic;
 
 public class Scene : MonoBehaviour
 {
-    private Random _rnd;
+    public static Transform BoardHolder;
+    public static Random rnd;
     public static Scene instance = null;
     public static Grid[] _grid;
     public static int Width;
@@ -31,8 +32,11 @@ public class Scene : MonoBehaviour
 
     void Awake()
     {
+        BoardHolder = new GameObject("Board").transform;
+
         Width = 100;
         Height = 100;
+
         if (instance == null)
             instance = this;
         else
@@ -44,8 +48,8 @@ public class Scene : MonoBehaviour
     /// </summary>
     public static void SpawnScene()
     {
-        instance._rnd = new Random();
-        instance._automata = new HexCellularAutomata(100, 100, instance._rnd);
+        rnd = new Random();
+        instance._automata = new HexCellularAutomata(100, 100, rnd);
         instance._automata.RandomFillMap();
         instance._automata.ProcessCavern(3);
         instance._automata.PrintMap();
@@ -68,45 +72,45 @@ public class Scene : MonoBehaviour
         GameObject item;
         for (int i = 0; i < Size1D; i++)
         {
-            if (_rnd.Next(0, 50) == 1 && _automata.CompleteGrid[i].isWalkable == true && _playerSpawn == Vector3.zero)
+            if (rnd.Next(0, 50) == 1 && _grid[i].isWalkable == true && _playerSpawn == Vector3.zero)
             {
-                _playerSpawn = _automata.CompleteGrid[i].position;
+                _playerSpawn = _grid[i].position;
                 _playerIndex = i;
             }
 
 
-            if (_rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
+            if (rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
             {
-                item = GameObject.Instantiate(HexTileManager.instance.Rocks[_rnd.Next(0, HexTileManager.instance.Rocks.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
+                item = GameObject.Instantiate(HexTileManager.instance.Rocks[rnd.Next(0, HexTileManager.instance.Rocks.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
                 item.transform.SetParent(_grid[i].TileObject.transform);
                 _grid[i].TileItem = item;
                 _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
             }
-            if (_rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
+            if (rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
             {
-                item = GameObject.Instantiate(HexTileManager.instance.RawGems[_rnd.Next(0, HexTileManager.instance.RawGems.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
+                item = GameObject.Instantiate(HexTileManager.instance.RawGems[rnd.Next(0, HexTileManager.instance.RawGems.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
                 item.transform.SetParent(_grid[i].TileObject.transform);
                 _grid[i].TileItem = item;
                 _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
             }
-            if (_rnd.Next(0, 50) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
+            if (rnd.Next(0, 50) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
             {
-                item = GameObject.Instantiate(HexTileManager.instance.MoneyTiles[_rnd.Next(0, HexTileManager.instance.MoneyTiles.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
+                item = GameObject.Instantiate(HexTileManager.instance.MoneyTiles[rnd.Next(0, HexTileManager.instance.MoneyTiles.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
                 item.transform.SetParent(_grid[i].TileObject.transform);
                 _grid[i].TileItem = item;
                 _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
             }
-            if (_rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
+            if (rnd.Next(0, 20) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
             {
-                item = GameObject.Instantiate(HexTileManager.instance.Containers[_rnd.Next(0, HexTileManager.instance.Containers.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
+                item = GameObject.Instantiate(HexTileManager.instance.Containers[rnd.Next(0, HexTileManager.instance.Containers.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
                 item.transform.SetParent(_grid[i].TileObject.transform);
                 _grid[i].TileItem = item;
                 _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
             }
             #region Fruits
-            if (_rnd.Next(0, SpawnRates.UpFruits) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
+            if (rnd.Next(0, SpawnRates.UpFruits) == 1 && _grid[i].isWalkable && _grid[i].ItemValue == ItemValues.NULL)
             {
-                item = GameObject.Instantiate(HexTileManager.instance.Fruits[_rnd.Next(0, HexTileManager.instance.Fruits.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
+                item = GameObject.Instantiate(HexTileManager.instance.Fruits[rnd.Next(0, HexTileManager.instance.Fruits.Length)], _grid[i].TileObject.transform.position, _grid[i].TileObject.transform.rotation) as GameObject;
                 item.transform.SetParent(_grid[i].TileObject.transform);
                 _grid[i].TileItem = item;
                 _grid[i].ItemValue = item.GetComponent<MonoItem>().thisItem.ItemValue;
@@ -208,6 +212,75 @@ public class Scene : MonoBehaviour
         {
             if (_grid[(x + 1) + (y - 1) * Width].TileObject != null)
                 surroundingHexs.Add(_grid[(x + 1) + (y - 1) * Width]);
+        }
+        #endregion
+
+        return surroundingHexs;
+    }
+
+    public static List<Grid> GetSurroundingHexesBasicValue(Grid hexagon)
+    {
+        //return instance._automata.GetSurroundingHexes(hex);
+        if (hexagon == null)
+            return new List<Grid>();
+        int x = hexagon.posX;
+        int y = hexagon.posY;
+        List<Grid> surroundingHexs = new List<Grid>();
+        #region LEFT SIDE
+        //Left upper sider
+        if (y % 2 != 0)
+        {
+            if (!IsOutOfBounds(x, y - 1))
+                surroundingHexs.Add(_grid[x + (y - 1) * Width]);
+        }
+        else if (!IsOutOfBounds(x - 1, y - 1))
+        {
+            surroundingHexs.Add(_grid[(x - 1) + (y - 1) * Width]);
+        }
+
+
+        //Left tile
+        if (!IsOutOfBounds(x - 1, y))
+        {
+            surroundingHexs.Add(_grid[(x - 1) + y * Width]);
+        }
+        //Left down tile
+        if (y % 2 != 0)
+        {
+            if (!IsOutOfBounds(x, y + 1))
+                surroundingHexs.Add(_grid[x + (y + 1) * Width]);
+        }
+        else if (!IsOutOfBounds(x - 1, y + 1))
+        {
+            surroundingHexs.Add(_grid[(x - 1) + (y + 1) * Width]);
+        }
+
+        #endregion
+        #region RIGHT SIDE
+        //Right down tile
+        if (y % 2 == 0)
+        {
+            if (!IsOutOfBounds(x, y + 1))
+                surroundingHexs.Add(_grid[x + (y + 1) * Width]);
+        }
+        else if (!IsOutOfBounds(x + 1, y + 1))
+        {
+            surroundingHexs.Add(_grid[(x + 1) + (y + 1) * Width]);
+        }
+        //Right tile
+        if (!IsOutOfBounds(x + 1, y))
+        {
+            surroundingHexs.Add(_grid[(x + 1) + y * Width]);
+        }
+
+        if (y % 2 == 0)
+        {
+            if (!IsOutOfBounds(x, y - 1))
+                surroundingHexs.Add(_grid[x + (y - 1) * Width]);
+        }
+        else if (!IsOutOfBounds(x + 1, y - 1))
+        {
+            surroundingHexs.Add(_grid[(x + 1) + (y - 1) * Width]);
         }
         #endregion
 

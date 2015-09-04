@@ -60,6 +60,9 @@ TagManager:
   - name: Block
     uniqueID: 559832369
     locked: 0
+  - name: Trees
+    uniqueID: 2320479327
+    locked: 0
   - name: Fog
     uniqueID: 2412024909
     locked: 0

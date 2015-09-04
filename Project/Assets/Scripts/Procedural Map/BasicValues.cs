@@ -9,6 +9,9 @@ public class BasicValues
     public const byte Water = 3;
     public const byte Grass = 4;
     public const byte Lava = 5;
+
+    public const byte MushroomBiome = 10;
+    public const byte MushroomWater = 11;
 }
 
 public class ItemValues
@@ -44,6 +47,12 @@ public class ItemValues
     public const byte BlocBasalt = 141;
     public const byte BlocGabbro = 142;
     public const byte BlocDiorite = 143;
+
+    //MushroomTree
+    public const byte MushroomTree = 160;
+    public const byte MushroomMucus = 161;
+    public const byte MushroomLog = 162;
+    public const byte Mushroom01 = 163;
 
 
 }

@@ -78,14 +78,17 @@ public class FruitsStatistics : StatisticValues
     public static PlayerStatistics CoconutStats;
     public static PlayerStatistics BananaStats;
     public static PlayerStatistics OrangeStats;
+    public static PlayerStatistics Mushroom01Stats;
 
     public void Init()
     {
+        //NAME//HEALTH//STAMINA//MANA//ARMOR//EXP//DRINK//EAT//STRENGTH//AGILITY//CHARISMA
         PearStats = new PlayerStatistics("Pear", 0.2f, 0.2f, 0.2f, 0, 0.1f, 1.7f, 4.0f, 0, 0, 0);
         AppleStats = new PlayerStatistics("Apple", 0.2f, 0.2f, 0.2f, 0, 0.1f, 0.7f, 5.0f, 0, 0, 0);
         CoconutStats = new PlayerStatistics("Coconut", 0.2f, 0.2f, 0.4f, 0, 0.1f, 7.0f, 0.2f, 0, 0, 0);
         BananaStats = new PlayerStatistics("Banana", 0.4f, 0.2f, 0.2f, 0, 0.1f, 0.2f, 7.0f, 0, 0, 0);
         OrangeStats = new PlayerStatistics("Orange", 0.2f, 0.4f, 0.2f, 0, 0.1f, 3.0f, 2.0f, 0, 0, 0);
+        Mushroom01Stats = new PlayerStatistics("Green mushroom", 3f, 3f, -2f, 0, 0.1f, 0.5f, -2.0f, 0, 0, 0);
     }
 }
 

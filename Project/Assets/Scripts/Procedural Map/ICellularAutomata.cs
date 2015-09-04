@@ -11,8 +11,7 @@ namespace DungeonSpawner
         int MapHeight { get; set; }
         int Size1D { get; }
         int Percentage { get; set; }
-        RawGrid[] Map { get; }
-        Grid[] CompleteGrid { get; }
+        //RawGrid[] Map { get; }
 
         void RandomFillMap();
         void SetSize(int width, int height);

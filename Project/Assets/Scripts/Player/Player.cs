@@ -78,10 +78,23 @@ public class Player : MonoBehaviour// : MovingObject
         }
         else
         {
-            if (Scene._grid[desiredIndex].ItemValue == ItemValues.MiningBlock)
+            switch (Scene._grid[desiredIndex].ItemValue)
             {
-                Scene._grid[desiredIndex].TileItem.GetComponent<MiningWall>().OnDamage(50, desiredIndex);
-                yield return new WaitForSeconds(0.5f); //Mining time
+                case ItemValues.MiningBlock:
+                    if (!Scene._grid[desiredIndex].TileItem.GetComponent<MiningWall>().OnDamage(50, desiredIndex))
+                        yield return new WaitForSeconds(0.5f); //Mining time
+                    else
+                    {
+                        Debug.Log("destroy");
+                        Destroy(Scene._grid[desiredIndex].TileItem);
+                    }
+                    break;
+                case ItemValues.MushroomTree:
+                    if (!Scene._grid[desiredIndex].TileItem.GetComponent<MushroomTree>().OnDamage(50, desiredIndex))
+                        yield return new WaitForSeconds(0.5f); //Mining time
+                    else
+                        Destroy(Scene._grid[desiredIndex].TileItem);
+                    break;
             }
         }
 

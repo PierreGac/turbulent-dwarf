@@ -16,6 +16,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!1 &178116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 474884}
+  - 114: {fileID: 11445900}
+  m_Layer: 0
+  m_Name: MushroomBiome
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
 --- !u!4 &457126
 Transform:
   m_ObjectHideFlags: 1
@@ -25,9 +41,43 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 474884}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &474884
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 457126}
+  m_RootOrder: 0
+--- !u!114 &11445900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c3ee8a1082f7e7489944816f2964320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GroundTiles:
+  - {fileID: 126908, guid: 9a91af7c5955ad3428ef8109a9db6deb, type: 2}
+  _TreeTiles:
+  - {fileID: 113194, guid: e59003472b76cb94bb40a9b5d08326cc, type: 2}
+  _MushroomTiles:
+  - {fileID: 171270, guid: 384882eba4d6d6f4bbef22d7bb19f5fd, type: 2}
+  _WaterTiles:
+  - {fileID: 126908, guid: 21ba04c5d7fdffb4fb4911b4fc9ab20a, type: 2}
+  _LogTiles:
+  - {fileID: 111714, guid: a040248415f84974cb424b05cb9afaba, type: 2}
 --- !u!114 &11466340
 MonoBehaviour:
   m_ObjectHideFlags: 1

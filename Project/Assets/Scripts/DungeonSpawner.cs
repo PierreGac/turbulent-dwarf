@@ -594,7 +594,7 @@
         }
     }
 
-    public enum TileFogState { Revealed, Active, Hiden };
+    /*public enum TileFogState { Revealed, Active, Hiden };
     public enum Status { Revealed, Undisclosed };
     public enum Tile { Ground, Floor, Wall, Door, Full, Water, Grass };
     public enum RoomType { SquareRoom, RoundRoom, Corridor };
@@ -612,6 +612,7 @@
         public GameObject TileItem { get; set; }
         public int posX { get; set; }
         public int posY { get; set; }
+        public float Strength { get; set; }
         public string Coordinates
         {
             get
@@ -694,5 +695,5 @@
                     return Direction.NULL;
             }
         }
-    }
+    }*/
 }

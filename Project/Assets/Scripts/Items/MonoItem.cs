@@ -31,10 +31,22 @@ public interface ItemContainer : Item
     Item[] Content { get; set; }
     void SetContent(params Item[] items);
 }
+
+public interface DestructibleTile
+{
+    AudioSource Audio { get; set; }
+
+    float HealthPoints { get; set; }
+
+    float DamageCoef { get; set; }
+
+
+    bool OnDamage(float damagePoints, int index);
+}
 /// <summary>
 /// Enum for item categories
 /// </summary>
-public enum GlobalType { Money, Gems, Fruits, Vegetables, Wood, Stone, Container, Rocks, Blocs, RawGems};
+public enum GlobalType { Money, Gems, Fruits, Vegetables, Wood, Stone, Container, Rocks, Blocs, RawGems, Logs, Planks};
 /// <summary>
 /// Detailed enum about items
 /// </summary>
@@ -51,6 +63,7 @@ public enum ItemType
     Apple, 
     Coconut,
     Pear,
+    Mushroom01,
     RockGranit,
     RockGabbro,
     RockDiorite,
@@ -59,7 +72,8 @@ public enum ItemType
     BlocGabbro,
     BlocDiorite,
     BlocBasalt,
-    RawGem
+    RawGem,
+    MushroomLog
 };
 
 public class MonoItem : MonoBehaviour
@@ -70,7 +84,6 @@ public class MonoItem : MonoBehaviour
     public bool isJustSpawned = false;
 
     public SpriteRenderer spriteRenderer;
-    public Sprite InventorySprite;
 
     void Awake()
     {
@@ -120,6 +133,9 @@ public class MonoItem : MonoBehaviour
             case ItemType.Banana:
                 thisItem = new Fruits(gameObject, 0.2f, "A sweaty banana", ItemValues.Banana, FruitsStatistics.BananaStats);
                 break;
+            case ItemType.Mushroom01:
+                thisItem = new Fruits(gameObject, 0.2f, "A green mushroom. Should I eat it?", ItemValues.Mushroom01, FruitsStatistics.Mushroom01Stats);
+                break;
             #endregion
             #region Rocks
             case ItemType.RockBasalt:
@@ -149,6 +165,11 @@ public class MonoItem : MonoBehaviour
                 thisItem = new RockBlocks(gameObject, RockBlocks.GranitName, ItemValues.BlocGranit);
                 break;
             #endregion
+            #region Logs
+            case ItemType.MushroomLog:
+                thisItem = new MushroomLog(gameObject);
+                break;
+            #endregion
         }
         thisItem.Type = Type;
         thisItem.SortingLayer = GetComponent<SpriteRenderer>().sortingLayerID;
@@ -171,7 +192,6 @@ public class MonoItem : MonoBehaviour
         MonoItem monoItem = obj.AddComponent<MonoItem>();
         monoItem.thisItem = (Item)item.Clone();
         monoItem.thisItem.gameObject = obj;
-        monoItem.InventorySprite = item.InventorySprite;
         monoItem.Type = item.Type;
         monoItem.isJustSpawned = true;
         monoItem.spriteRenderer.enabled = true;

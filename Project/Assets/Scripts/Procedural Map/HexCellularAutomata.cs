@@ -11,13 +11,13 @@
     {
         #region private variables
         private Random _rnd;
-        private Grid[] _grid;
-        public Grid[] CompleteGrid { get { return _grid; } }
+        //private Grid[] _grid;
+        //public Grid[] CompleteGrid { get { return _grid; } }
         private string _seed = null;
 
         private int _playerSpawn;
 
-        private Transform _boardHolder;
+        //private Transform _boardHolder;
         #endregion
         public static float _hexWidth;
         public static float _hexHeight;
@@ -66,14 +66,14 @@
                 _percentage = value;
             }
         }
-        private RawGrid[] _map;
+        /*private RawGrid[] _map;
         public RawGrid[] Map
         {
             get
             {
                 return _map;
             }
-        }
+        }*/
         #endregion
 
 
@@ -117,36 +117,36 @@
             {
                 if (!IsOutOfBounds(x, y - 1))
                 {
-                    if (_grid[x + (y - 1) * _mapWidth].TileObject != null)
-                        surroundingHexs.Add(_grid[x + (y - 1) * _mapWidth]);
+                    if (Scene._grid[x + (y - 1) * _mapWidth].TileObject != null)
+                        surroundingHexs.Add(Scene._grid[x + (y - 1) * _mapWidth]);
                 }
             }
             else if (!IsOutOfBounds(x - 1, y - 1))
             {
-                if (_grid[(x - 1) + (y - 1) * _mapWidth].TileObject != null)
-                    surroundingHexs.Add(_grid[(x - 1) + (y - 1) * _mapWidth]);
+                if (Scene._grid[(x - 1) + (y - 1) * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(Scene._grid[(x - 1) + (y - 1) * _mapWidth]);
             }
 
 
             //Left tile
             if (!IsOutOfBounds(x - 1, y))
             {
-                if (_grid[(x - 1) + y * _mapWidth].TileObject != null)
-                    surroundingHexs.Add(_grid[(x - 1) + y * _mapWidth]);
+                if (Scene._grid[(x - 1) + y * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(Scene._grid[(x - 1) + y * _mapWidth]);
             }
             //Left down tile
             if (y % 2 != 0)
             {
                 if (!IsOutOfBounds(x, y + 1))
                 {
-                    if (_grid[x + (y + 1) * _mapWidth].TileObject != null)
-                        surroundingHexs.Add(_grid[x + (y + 1) * _mapWidth]);
+                    if (Scene._grid[x + (y + 1) * _mapWidth].TileObject != null)
+                        surroundingHexs.Add(Scene._grid[x + (y + 1) * _mapWidth]);
                 }
             }
             else if (!IsOutOfBounds(x - 1, y + 1))
             {
-                if (_grid[(x - 1) + (y + 1) * _mapWidth].TileObject != null)
-                    surroundingHexs.Add(_grid[(x - 1) + (y + 1) * _mapWidth]);
+                if (Scene._grid[(x - 1) + (y + 1) * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(Scene._grid[(x - 1) + (y + 1) * _mapWidth]);
             }
 
             #endregion
@@ -156,43 +156,43 @@
             {
                 if (!IsOutOfBounds(x, y + 1))
                 {
-                    if (_grid[x + (y + 1) * _mapWidth].TileObject != null)
-                        surroundingHexs.Add(_grid[x + (y + 1) * _mapWidth]);
+                    if (Scene._grid[x + (y + 1) * _mapWidth].TileObject != null)
+                        surroundingHexs.Add(Scene._grid[x + (y + 1) * _mapWidth]);
                 }
             }
             else if (!IsOutOfBounds(x + 1, y + 1))
             {
-                if (_grid[(x + 1) + (y + 1) * _mapWidth].TileObject != null)
-                    surroundingHexs.Add(_grid[(x + 1) + (y + 1) * _mapWidth]);
+                if (Scene._grid[(x + 1) + (y + 1) * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(Scene._grid[(x + 1) + (y + 1) * _mapWidth]);
             }
             //Right tile
             if (!IsOutOfBounds(x + 1, y))
             {
-                if (_grid[(x + 1) + y * _mapWidth].TileObject != null)
-                    surroundingHexs.Add(_grid[(x + 1) + y * _mapWidth]);
+                if (Scene._grid[(x + 1) + y * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(Scene._grid[(x + 1) + y * _mapWidth]);
             }
 
             if (y % 2 == 0)
             {
                 if (!IsOutOfBounds(x, y - 1))
                 {
-                    if (_grid[x + (y - 1) * _mapWidth].TileObject != null)
-                        surroundingHexs.Add(_grid[x + (y - 1) * _mapWidth]);
+                    if (Scene._grid[x + (y - 1) * _mapWidth].TileObject != null)
+                        surroundingHexs.Add(Scene._grid[x + (y - 1) * _mapWidth]);
                 }
             }
             else if (!IsOutOfBounds(x + 1, y - 1))
             {
-                if (_grid[(x + 1) + (y - 1) * _mapWidth].TileObject != null)
-                    surroundingHexs.Add(_grid[(x + 1) + (y - 1) * _mapWidth]);
+                if (Scene._grid[(x + 1) + (y - 1) * _mapWidth].TileObject != null)
+                    surroundingHexs.Add(Scene._grid[(x + 1) + (y - 1) * _mapWidth]);
             }
             #endregion
 
             return surroundingHexs;
         }
 
-        private List<RawGrid> GetSurroundingHexes(int posX, int posY, int radius)
+        private List<Grid> GetSurroundingHexes(int posX, int posY, int radius)
         {
-            List<RawGrid> hexagons = new List<RawGrid>();
+            List<Grid> hexagons = new List<Grid>();
             bool startIsModulo;
             if (posY % 2 == 0)
                 startIsModulo = true;
@@ -234,8 +234,8 @@
                 {
                     if (!IsOutOfBounds(x, y))
                     {
-                        if (_map[x + y * _mapHeight].BasicValue != 1)
-                            hexagons.Add(_map[x + y * _mapHeight]);
+                        if (Scene._grid[x + y * _mapHeight].BasicValue != 1)
+                            hexagons.Add(Scene._grid[x + y * _mapHeight]);
                     }
                 }
             }
@@ -276,19 +276,42 @@
                         ResetFloodValue();
                 }
             }
-
-
             //Debug.Log(CheckFloodCavern());
             #endregion
             GetAccessibleIndexes();
+
+            PlaceBiomes();
+
             SpawnNextLevelDoor();
-            SpawnMiningBlocks();
-            //SaveToFile();
+
+            //SpawnMiningBlocks();
+            
             ProcessBorders();
 
 
             //Debug.Log("Map generation time [Without rendering]: " + DateTime.Now.Subtract(time));
         }
+
+        #region Biomes
+        private void PlaceBiomes()
+        {
+            int max = 0;
+            int center = 0;
+            #region Mushroom
+            MushroomBiome mushroomBiome;
+            max = _rnd.Next(2, 4); //Get the max number of mushroom biomes
+            for(int i = 0; i < max; i++)
+            {
+                //Get a random starting point for the biome:
+                center = _validIndexes[_rnd.Next(0, _validIndexes.Length)];
+                if (Scene._grid[center].BasicValue == BasicValues.MushroomBiome)
+                    max++;
+                mushroomBiome = new MushroomBiome(_rnd);
+                mushroomBiome.SpawnBiome(center);
+            }
+            #endregion
+        }
+        #endregion
 
         #region PlaceWalls Born/Death
 
@@ -301,9 +324,9 @@
                     for (int y = 0; y < _mapHeight; y++)
                     {
                         if (GetAdjacentWalls(x, y, 1, 1) >= 5 || GetAdjacentWalls(x, y, 2, 2) <= 2) //DIE!
-                            _map[x + y * _mapHeight].BasicValue = 1;
+                            Scene._grid[x + y * _mapHeight].BasicValue = 1;
                         else
-                            _map[x + y * _mapHeight].BasicValue = 0;
+                            Scene._grid[x + y * _mapHeight].BasicValue = 0;
                     }
                 }
             }
@@ -317,9 +340,9 @@
                     for (int y = 0; y < _mapHeight; y++)
                     {
                         if (GetAdjacentWalls(x, y, 1, 1) >= 5 || GetAdjacentWalls(x, y, 2, 2) <= 1) //DIE!
-                            _map[x + y * _mapHeight].BasicValue = 1;
+                            Scene._grid[x + y * _mapHeight].BasicValue = 1;
                         else
-                            _map[x + y * _mapHeight].BasicValue = 0;
+                            Scene._grid[x + y * _mapHeight].BasicValue = 0;
                     }
                 }
             }
@@ -332,10 +355,10 @@
                 {
                     for (int y = 0; y < _mapHeight; y++)
                     {
-                        if (GetAdjacentWalls(x, y, 1, 1) < 3 && _map[x + y * _mapHeight].BasicValue == 1)
-                            _map[x + y * _mapHeight].BasicValue = 0;
-                        if (GetAdjacentWalls(x, y, 1, 1) > 4 && _map[x + y * _mapHeight].BasicValue != 1)
-                            _map[x + y * _mapHeight].BasicValue = 1;
+                        if (GetAdjacentWalls(x, y, 1, 1) < 3 && Scene._grid[x + y * _mapHeight].BasicValue == 1)
+                            Scene._grid[x + y * _mapHeight].BasicValue = 0;
+                        if (GetAdjacentWalls(x, y, 1, 1) > 4 && Scene._grid[x + y * _mapHeight].BasicValue != 1)
+                            Scene._grid[x + y * _mapHeight].BasicValue = 1;
                     }
                 }
             }
@@ -349,9 +372,9 @@
                     for (int y = 0; y < _mapHeight; y++)
                     {
                         if (GetAdjacentWalls(x, y, 1, 1) >= 5) //DIE!
-                            _map[x + y * _mapHeight].BasicValue = 1;
+                            Scene._grid[x + y * _mapHeight].BasicValue = 1;
                         else
-                            _map[x + y * _mapHeight].BasicValue = 0;
+                            Scene._grid[x + y * _mapHeight].BasicValue = 0;
                     }
                 }
             }
@@ -414,14 +437,12 @@
                 for (int y = 0; y < _mapHeight; y++)
                 {
                     index = x + y * _mapHeight;
-                    if (_map[index].BasicValue != 1)
+                    if (Scene._grid[index].BasicValue != 1)
                     {
-                        _grid[index].status = Status.Revealed;
-                        _grid[index].BasicValue = _map[index].BasicValue;
-                        _grid[index].ItemValue = _map[index].ItemValue;
-                        switch (_map[index].BasicValue)
+                        Scene._grid[index].status = Status.Revealed;
+                        switch (Scene._grid[index].BasicValue)
                         {
-                            case BasicValues.Ground: _grid[index].isWalkable = true; break;
+                            case BasicValues.Ground: Scene._grid[index].isWalkable = true; break;
                         }
                         FillAdjacentWalls(x, y);
                     }
@@ -447,7 +468,7 @@
                     {
                         if (IsWall(iX, iY) && !IsOutOfBounds(iX, iY))
                         {
-                            _grid[iX + iY * _mapHeight].tile = Tile.Wall;
+                            Scene._grid[iX + iY * _mapHeight].tile = Tile.Wall;
                             //_grid[iX + iY * _mapHeight].BasicValue = BasicValues.Wall;
                         }
                     }
@@ -458,8 +479,8 @@
 
         public void Destroy()
         {
-            if (_boardHolder != null)
-                GameObject.Destroy(_boardHolder.gameObject);
+            if (Scene.BoardHolder != null)
+                GameObject.Destroy(Scene.BoardHolder.gameObject);
             if (_seed != null)
                 _rnd = new Random(_seed.GetHashCode());
         }
@@ -469,8 +490,8 @@
         public void RandomFillMap()
         {
             setSizes();
-            _map = new RawGrid[_mapWidth * _mapHeight];
-            _grid = new Grid[_mapWidth * _mapHeight];
+            //_map = new RawGrid[_mapWidth * _mapHeight];
+            Scene._grid = new Grid[_mapWidth * _mapHeight];
 
             int index;
             for (int x = 0; x < _mapWidth; x++)
@@ -478,16 +499,16 @@
                 for (int y = 0; y < _mapHeight; y++)
                 {
                     index = x + y * _mapHeight;
-                    _map[index] = new RawGrid();
-                    _grid[index] = new Grid(calcWorldCoord(new Vector2(x, y)), Tile.Full);
-                    _grid[index].posX = x;
-                    _grid[index].posY = y;
+                    //_map[index] = new RawGrid();
+                    Scene._grid[index] = new Grid(calcWorldCoord(new Vector2(x, y)), Tile.Full);
+                    Scene._grid[index].posX = x;
+                    Scene._grid[index].posY = y;
                     //Border
                     if (x == 0 || y == 0 || (x == _mapWidth - 1) || (y == _mapHeight - 1))
-                        _map[index].BasicValue = BasicValues.Wall;
+                        Scene._grid[index].BasicValue = BasicValues.Wall;
                     // Inside
                     else
-                        _map[index].BasicValue = GetRandomTileStatus(_percentage);
+                        Scene._grid[index].BasicValue = GetRandomTileStatus(_percentage);
                 }
             }
         }
@@ -529,7 +550,7 @@
         {
             if (IsOutOfBounds(x, y))
                 return true; //true
-            if (_map[x + y * _mapHeight].BasicValue == 1)
+            if (Scene._grid[x + y * _mapHeight].BasicValue == 1)
                 return true;
             else
                 return false;
@@ -571,18 +592,18 @@
                 for (int y = 0; y < _mapHeight; y++)
                 {
                     index = x + y * _mapHeight;
-                    if (_map[index].BasicValue != 1)
+                    if (Scene._grid[index].BasicValue != 1)
                     {
-                        if (_map[index].FloodValue != 0)
+                        if (Scene._grid[index].FloodValue != 0)
                             GetAdjacentFloodValue(x, y, _floodValue);
                         else //New cavern?
                         {
                             if (CheckAdjacentFloodValue(x, y))
-                                _map[index].FloodValue = GetAdjacentFloodValue(x, y, _floodValue);
+                                Scene._grid[index].FloodValue = GetAdjacentFloodValue(x, y, _floodValue);
                             else
                             {
                                 _floodValue++;
-                                _map[index].FloodValue = GetAdjacentFloodValue(x, y, _floodValue);
+                                Scene._grid[index].FloodValue = GetAdjacentFloodValue(x, y, _floodValue);
                             }
                         }
 
@@ -601,13 +622,13 @@
             int middle = _size1D / 2;
             for (int i = 0; i < _size1D; i++)
             {
-                if (_map[i].FloodValue > 0)
+                if (Scene._grid[i].FloodValue > 0)
                 {
-                    _caves[_map[i].FloodValue - 1]++;
-                    if (Mathf.Abs(i - middle) < Mathf.Abs(cavePoints[_map[i].FloodValue - 1] - middle))
+                    _caves[Scene._grid[i].FloodValue - 1]++;
+                    if (Mathf.Abs(i - middle) < Mathf.Abs(cavePoints[Scene._grid[i].FloodValue - 1] - middle))
                     {
-                        cavePoints[_map[i].FloodValue - 1] = i;
-                        _cavesRandomPoint[_map[i].FloodValue - 1] = i;
+                        cavePoints[Scene._grid[i].FloodValue - 1] = i;
+                        _cavesRandomPoint[Scene._grid[i].FloodValue - 1] = i;
                     }
                 }
             }
@@ -625,10 +646,10 @@
             {
                 for (int y = 0; y < _mapHeight; y++)
                 {
-                    if (_map[x + y * _mapHeight].BasicValue != 1)
+                    if (Scene._grid[x + y * _mapHeight].BasicValue != 1)
                     {
                         _floodValue++;
-                        _map[x + y * _mapHeight].FloodValue = GetAdjacentFloodValue(x, y, _floodValue);
+                        Scene._grid[x + y * _mapHeight].FloodValue = GetAdjacentFloodValue(x, y, _floodValue);
                         return;
                     }
                 }
@@ -643,7 +664,7 @@
                 {
                     for (int y = 0; y < _mapHeight; y++)
                     {*/
-                if (_map[i].BasicValue != 1 && _map[i].FloodValue == 0)
+                if (Scene._grid[i].BasicValue != 1 && Scene._grid[i].FloodValue == 0)
                     return false;
                 /*}
             }*/
@@ -658,24 +679,24 @@
             int endX = x + 1;
             int endY = y + 1;
             //Debug.Log(_map[startX + y * _mapHeight].BasicValue + "  " + _map[startX + y * _mapHeight].BasicValue + "  " + _map[startX + y * _mapHeight].BasicValue + "  " + _map[startX + y * _mapHeight].BasicValue);
-            if (!IsOutOfBounds(startX, y) && _map[startX + y * _mapHeight].BasicValue != 1 && _map[startX + y * _mapHeight].FloodValue == 0)
+            if (!IsOutOfBounds(startX, y) && Scene._grid[startX + y * _mapHeight].BasicValue != 1 && Scene._grid[startX + y * _mapHeight].FloodValue == 0)
             {
-                _map[startX + y * _mapHeight].FloodValue = floodValue;
+                Scene._grid[startX + y * _mapHeight].FloodValue = floodValue;
                 GetAdjacentFloodValue(startX, y, floodValue);
             }
-            if (!IsOutOfBounds(endX, y) && _map[endX + y * _mapHeight].BasicValue != 1 && _map[endX + y * _mapHeight].FloodValue == 0)
+            if (!IsOutOfBounds(endX, y) && Scene._grid[endX + y * _mapHeight].BasicValue != 1 && Scene._grid[endX + y * _mapHeight].FloodValue == 0)
             {
-                _map[endX + y * _mapHeight].FloodValue = floodValue;
+                Scene._grid[endX + y * _mapHeight].FloodValue = floodValue;
                 GetAdjacentFloodValue(endX, y, floodValue);
             }
-            if (!IsOutOfBounds(x, startY) && _map[x + startY * _mapHeight].BasicValue != 1 && _map[x + startY * _mapHeight].FloodValue == 0)
+            if (!IsOutOfBounds(x, startY) && Scene._grid[x + startY * _mapHeight].BasicValue != 1 && Scene._grid[x + startY * _mapHeight].FloodValue == 0)
             {
-                _map[x + startY * _mapHeight].FloodValue = floodValue;
+                Scene._grid[x + startY * _mapHeight].FloodValue = floodValue;
                 GetAdjacentFloodValue(x, startY, floodValue);
             }
-            if (!IsOutOfBounds(x, endY) && _map[x + endY * _mapHeight].BasicValue != 1 && _map[x + endY * _mapHeight].FloodValue == 0)
+            if (!IsOutOfBounds(x, endY) && Scene._grid[x + endY * _mapHeight].BasicValue != 1 && Scene._grid[x + endY * _mapHeight].FloodValue == 0)
             {
-                _map[x + endY * _mapHeight].FloodValue = floodValue;
+                Scene._grid[x + endY * _mapHeight].FloodValue = floodValue;
                 GetAdjacentFloodValue(x, endY, floodValue);
             }
             return floodValue;
@@ -688,14 +709,14 @@
             int endX = x + 1;
             int endY = y + 1;
 
-            if (!IsOutOfBounds(startX, y) && _map[startX + y * _mapHeight].FloodValue != 0)
+            if (!IsOutOfBounds(startX, y) && Scene._grid[startX + y * _mapHeight].FloodValue != 0)
                 return true;
-            if (!IsOutOfBounds(endX, y) && _map[endX + y * _mapHeight].FloodValue != 0)
+            if (!IsOutOfBounds(endX, y) && Scene._grid[endX + y * _mapHeight].FloodValue != 0)
                 return true;
 
-            if (!IsOutOfBounds(x, startY) && _map[x + startY * _mapHeight].FloodValue != 0)
+            if (!IsOutOfBounds(x, startY) && Scene._grid[x + startY * _mapHeight].FloodValue != 0)
                 return true;
-            if (!IsOutOfBounds(x, endY) && _map[x + endY * _mapHeight].FloodValue != 0)
+            if (!IsOutOfBounds(x, endY) && Scene._grid[x + endY * _mapHeight].FloodValue != 0)
                 return true;
 
             return false;
@@ -709,14 +730,14 @@
 
             int found = 0;
 
-            if (!IsOutOfBounds(startX, y) && _map[startX + y * _mapHeight].FloodValue == defaultFloodValue)
+            if (!IsOutOfBounds(startX, y) && Scene._grid[startX + y * _mapHeight].FloodValue == defaultFloodValue)
                 found++;
-            if (!IsOutOfBounds(endX, y) && _map[endX + y * _mapHeight].FloodValue == defaultFloodValue)
+            if (!IsOutOfBounds(endX, y) && Scene._grid[endX + y * _mapHeight].FloodValue == defaultFloodValue)
                 found++;
 
-            if (!IsOutOfBounds(x, startY) && _map[x + startY * _mapHeight].FloodValue == defaultFloodValue)
+            if (!IsOutOfBounds(x, startY) && Scene._grid[x + startY * _mapHeight].FloodValue == defaultFloodValue)
                 found++;
-            if (!IsOutOfBounds(x, endY) && _map[x + endY * _mapHeight].FloodValue == defaultFloodValue)
+            if (!IsOutOfBounds(x, endY) && Scene._grid[x + endY * _mapHeight].FloodValue == defaultFloodValue)
                 found++;
 
             if (found >= 2)
@@ -786,13 +807,13 @@
                         }
                         for (int j = 0; j < linePoints.Length; j++)
                         {
-                            if (_map[linePoints[j]].BasicValue == 1 && _map[linePoints[j]].FloodValue == 0 || _map[linePoints[j]].BasicValue != 1 && _map[linePoints[j]].FloodValue == _caves[i])
+                            if (Scene._grid[linePoints[j]].BasicValue == 1 && Scene._grid[linePoints[j]].FloodValue == 0 || Scene._grid[linePoints[j]].BasicValue != 1 && Scene._grid[linePoints[j]].FloodValue == _caves[i])
                             {
-                                _map[linePoints[j]].BasicValue = 0;
-                                _map[linePoints[j]].FloodValue = (byte)(i + 1);
-                                AddAdjacentNoise(linePoints[j] - (int)(linePoints[j] / _mapWidth) * _mapWidth, linePoints[j] / _mapHeight, _map[linePoints[j]].FloodValue);
+                                Scene._grid[linePoints[j]].BasicValue = 0;
+                                Scene._grid[linePoints[j]].FloodValue = (byte)(i + 1);
+                                AddAdjacentNoise(linePoints[j] - (int)(linePoints[j] / _mapWidth) * _mapWidth, linePoints[j] / _mapHeight, Scene._grid[linePoints[j]].FloodValue);
                             }
-                            else if (_map[linePoints[j]].BasicValue != 1 && _map[linePoints[j]].FloodValue != (byte)(i + 1))
+                            else if (Scene._grid[linePoints[j]].BasicValue != 1 && Scene._grid[linePoints[j]].FloodValue != (byte)(i + 1))
                                 break;
                         }
                     }
@@ -807,13 +828,13 @@
                         }
                         for (int j = 0; j < linePoints.Length; j++)
                         {
-                            if (_map[linePoints[j]].BasicValue == 1 && _map[linePoints[j]].FloodValue == 0 || _map[linePoints[j]].BasicValue != 1 && _map[linePoints[j]].FloodValue == _caves[i])
+                            if (Scene._grid[linePoints[j]].BasicValue == 1 && Scene._grid[linePoints[j]].FloodValue == 0 || Scene._grid[linePoints[j]].BasicValue != 1 && Scene._grid[linePoints[j]].FloodValue == _caves[i])
                             {
-                                _map[linePoints[j]].BasicValue = 0;
-                                _map[linePoints[j]].FloodValue = (byte)(i + 1);
-                                AddAdjacentNoise(linePoints[j] - (int)(linePoints[j] / _mapWidth) * _mapWidth, linePoints[j] / _mapHeight, _map[linePoints[j]].FloodValue);
+                                Scene._grid[linePoints[j]].BasicValue = 0;
+                                Scene._grid[linePoints[j]].FloodValue = (byte)(i + 1);
+                                AddAdjacentNoise(linePoints[j] - (int)(linePoints[j] / _mapWidth) * _mapWidth, linePoints[j] / _mapHeight, Scene._grid[linePoints[j]].FloodValue);
                             }
-                            else if (_map[linePoints[j]].BasicValue != 1 && _map[linePoints[j]].FloodValue != (byte)(i + 1))
+                            else if (Scene._grid[linePoints[j]].BasicValue != 1 && Scene._grid[linePoints[j]].FloodValue != (byte)(i + 1))
                                 break;
                         }
                     }
@@ -830,37 +851,37 @@
 
             if (!IsOutOfBounds(startX, y))
             {
-                if (_map[startX + y * _mapHeight].BasicValue == 1)
-                    _map[startX + y * _mapHeight].BasicValue = 0;
-                _map[startX + y * _mapHeight].FloodValue = floodValue;
+                if (Scene._grid[startX + y * _mapHeight].BasicValue == 1)
+                    Scene._grid[startX + y * _mapHeight].BasicValue = 0;
+                Scene._grid[startX + y * _mapHeight].FloodValue = floodValue;
             }
 
             if (!IsOutOfBounds(endX, y))
             {
-                if (_map[endX + y * _mapHeight].BasicValue == 1)
-                    _map[endX + y * _mapHeight].BasicValue = 0;
-                _map[endX + y * _mapHeight].FloodValue = floodValue;
+                if (Scene._grid[endX + y * _mapHeight].BasicValue == 1)
+                    Scene._grid[endX + y * _mapHeight].BasicValue = 0;
+                Scene._grid[endX + y * _mapHeight].FloodValue = floodValue;
             }
 
             if (!IsOutOfBounds(x, startY))
             {
-                if (_map[x + startY * _mapHeight].BasicValue == 1)
-                    _map[x + startY * _mapHeight].BasicValue = 0;
-                _map[x + startY * _mapHeight].FloodValue = floodValue;
+                if (Scene._grid[x + startY * _mapHeight].BasicValue == 1)
+                    Scene._grid[x + startY * _mapHeight].BasicValue = 0;
+                Scene._grid[x + startY * _mapHeight].FloodValue = floodValue;
             }
 
             if (!IsOutOfBounds(x, endY))
             {
-                if (_map[x + endY * _mapHeight].BasicValue == 1)
-                    _map[x + endY * _mapHeight].BasicValue = 0;
-                _map[x + endY * _mapHeight].FloodValue = floodValue;
+                if (Scene._grid[x + endY * _mapHeight].BasicValue == 1)
+                    Scene._grid[x + endY * _mapHeight].BasicValue = 0;
+                Scene._grid[x + endY * _mapHeight].FloodValue = floodValue;
             }
         }
 
         private void ResetFloodValue()
         {
             for (int i = 0; i < _size1D; i++)
-                _map[i].FloodValue = 0;
+                Scene._grid[i].FloodValue = 0;
         }
 
         /// <summary>
@@ -871,7 +892,7 @@
             int count = 0;
             for (int i = 0; i < _size1D; i++)
             {
-                if (_map[i].BasicValue != 1)
+                if (Scene._grid[i].BasicValue != 1)
                     count++;
             }
 
@@ -879,53 +900,10 @@
             count = 0;
             for (int i = 0; i < _size1D; i++)
             {
-                if (_map[i].BasicValue != 1)
+                if (Scene._grid[i].BasicValue != 1)
                 {
                     _validIndexes[count] = i;
                     count++;
-                }
-            }
-        }
-        #endregion
-
-        #region SpawnGrass
-        private void SpawnGrassMultiple()
-        {
-            //Get a random number of water spots:
-            int waterSpots = _rnd.Next(4, 15);
-            Debug.Log("OnSpawnGrass: " + waterSpots);
-            int sizeX;
-            int sizeY;
-            int posX;
-            int posY;
-
-
-            //Setup a random cellular automata for each spot:
-            HexCellularAutomata[] water = new HexCellularAutomata[waterSpots];
-            for (int i = 0; i < waterSpots; i++)
-            {
-                //Get a random size for the cellular automata:
-                //sizeX = _rnd.Next(4, 11);
-                sizeY = _rnd.Next(20, 30);
-                sizeX = sizeY + 2;
-                water[i] = new HexCellularAutomata(sizeX, sizeY, _rnd);
-                water[i].RandomFillMap();
-                water[i].PlaceWalls_1D5678_2D1(4);
-
-                //Select a random position for the water in the actual grid:
-                posX = _rnd.Next(0, _mapWidth - sizeX);
-                posY = _rnd.Next(0, _mapHeight - sizeY);
-                //Merge the water map and the current map:
-                for (int x = 0; x < water[i]._mapWidth; x++)
-                {
-                    for (int y = 0; y < water[i]._mapHeight; y++)
-                    {
-                        if (water[i].Map[x + y * water[i]._mapHeight].BasicValue == 0)
-                        {
-                            if (_map[(posX + x) + (posY + y) * _mapHeight].BasicValue != 1 && _map[(posX + x) + (posY + y) * _mapHeight].BasicValue != 2)
-                                _map[(posX + x) + (posY + y) * _mapHeight].BasicValue = 3;
-                        }
-                    }
                 }
             }
         }
@@ -945,8 +923,8 @@
 
 
             //Setup a random cellular automata for each spot:
-            HexCellularAutomata[] water = new HexCellularAutomata[waterSpots];
-            HexCellularAutomata[] lava = new HexCellularAutomata[lavaSpots];
+            HexCellularAutomataIndependent[] water = new HexCellularAutomataIndependent[waterSpots];
+            HexCellularAutomataIndependent[] lava = new HexCellularAutomataIndependent[lavaSpots];
             #region Water
             for (int i = 0; i < waterSpots; i++)
             {
@@ -954,7 +932,7 @@
                 //sizeX = _rnd.Next(4, 11);
                 sizeY = _rnd.Next(8, 15);
                 sizeX = sizeY + _rnd.Next(0, 5);
-                water[i] = new HexCellularAutomata(sizeX, sizeY, _rnd);
+                water[i] = new HexCellularAutomataIndependent(sizeX, sizeY, _rnd);
                 water[i].RandomFillMap();
                 water[i].PlaceWalls_1D5678_2D1(3);
 
@@ -962,13 +940,13 @@
                 posX = _rnd.Next(0, _mapWidth - sizeX);
                 posY = _rnd.Next(0, _mapHeight - sizeY);
                 //Merge the water map and the current map:
-                for (int x = 0; x < water[i]._mapWidth; x++)
+                for (int x = 0; x < water[i].MapWidth; x++)
                 {
-                    for (int y = 0; y < water[i]._mapHeight; y++)
+                    for (int y = 0; y < water[i].MapHeight; y++)
                     {
-                        if (water[i].Map[x + y * water[i]._mapHeight].BasicValue == BasicValues.Ground)
+                        if (water[i].Map[x + y * water[i].MapHeight].BasicValue == BasicValues.Ground)
                         {
-                            _map[(posX + x) + (posY + y) * _mapHeight].BasicValue = BasicValues.Water;
+                            Scene._grid[(posX + x) + (posY + y) * _mapHeight].BasicValue = BasicValues.Water;
                         }
                     }
                 }
@@ -981,7 +959,7 @@
                 //sizeX = _rnd.Next(4, 11);
                 sizeY = _rnd.Next(5, 15);
                 sizeX = sizeY + _rnd.Next(1, 6);
-                lava[i] = new HexCellularAutomata(sizeX, sizeY, _rnd);
+                lava[i] = new HexCellularAutomataIndependent(sizeX, sizeY, _rnd);
                 lava[i].RandomFillMap();
                 lava[i].PlaceWalls_1D5678_2D1(3);
 
@@ -989,13 +967,13 @@
                 posX = _rnd.Next(0, _mapWidth - sizeX);
                 posY = _rnd.Next(0, _mapHeight - sizeY);
                 //Merge the water map and the current map:
-                for (int x = 0; x < lava[i]._mapWidth; x++)
+                for (int x = 0; x < lava[i].MapWidth; x++)
                 {
-                    for (int y = 0; y < lava[i]._mapHeight; y++)
+                    for (int y = 0; y < lava[i].MapHeight; y++)
                     {
-                        if (lava[i]._map[x + y * lava[i]._mapHeight].BasicValue == BasicValues.Ground)
+                        if (lava[i].Map[x + y * lava[i].MapHeight].BasicValue == BasicValues.Ground)
                         {
-                            _map[(posX + x) + (posY + y) * _mapHeight].BasicValue = BasicValues.Lava;
+                            Scene._grid[(posX + x) + (posY + y) * _mapHeight].BasicValue = BasicValues.Lava;
                         }
                     }
                 }
@@ -1009,7 +987,7 @@
         {
             if (_validIndexes == null)
                 return;
-            HexCellularAutomata miningAutomata = new HexCellularAutomata(_mapWidth, _mapHeight, _rnd);
+            HexCellularAutomataIndependent miningAutomata = new HexCellularAutomataIndependent(_mapWidth, _mapHeight, _rnd);
             miningAutomata.RandomFillMap();
 
             miningAutomata.PlaceWalls_1D5678(1);
@@ -1018,10 +996,10 @@
 
             for (int i = 0; i < _size1D; i++)
             {
-                if (_map[i].BasicValue == 0)
+                if (Scene._grid[i].BasicValue == BasicValues.Ground/* && Scene._grid[i].ItemValue == 0*/) // _map
                 {
-                    if (miningAutomata._map[i].BasicValue == 0)
-                        _map[i].ItemValue = ItemValues.MiningBlock;
+                    if (miningAutomata.Map[i].BasicValue == BasicValues.Ground)
+                        Scene._grid[i].ItemValue = ItemValues.MiningBlock;
                 }
             }
         }
@@ -1031,8 +1009,8 @@
         public void SpawnNextLevelDoor()
         {
             int rndExit = _rnd.Next(0, _validIndexes.Length);
-            _map[_validIndexes[rndExit]].ItemValue = ItemValues.ExitDoor;
-            _grid[_validIndexes[rndExit]].isWalkable = true;
+            Scene._grid[_validIndexes[rndExit]].ItemValue = ItemValues.ExitDoor;
+            Scene._grid[_validIndexes[rndExit]].isWalkable = true;
         }
         #endregion
 
@@ -1047,8 +1025,8 @@
                     str = "";
                     for (int y = _mapHeight - 1; y != 0; y--)
                     {
-                        if (_map[x + y * _mapHeight].BasicValue != 1)
-                            str += _map[x + y * _mapHeight].FloodValue;
+                        if (Scene._grid[x + y * _mapHeight].BasicValue != 1)
+                            str += Scene._grid[x + y * _mapHeight].FloodValue;
                         else
                         {
                             if (_floodValue >= 10)
@@ -1065,8 +1043,7 @@
         public void PrintMap()
         {
             DateTime time = DateTime.Now;
-            _boardHolder = new GameObject("Board").transform;
-            Scene._grid = _grid;
+            //_boardHolder = new GameObject("Board").transform;
             for(int i = 0; i < _size1D; i++)
             /*for (int x = 0; x < _mapWidth; x++)
             {
@@ -1081,21 +1058,29 @@
                                 toInstantiate = HexTileManager.instance.WallTiles[_rnd.Next(0, HexTileManager.instance.WallTiles.Length)]; break;
                         case BasicValues.Water:
                             toInstantiate = HexTileManager.instance.WaterTiles[_rnd.Next(0, HexTileManager.instance.WaterTiles.Length)];
-                            Scene._grid[/*x + y * _mapHeight*/i].isWalkable = false; 
+                            Scene._grid[i].isWalkable = false; 
+                            break;
+                        case BasicValues.MushroomWater:
+                            toInstantiate = MushroomBiomeTileManager.WaterTiles[_rnd.Next(0, MushroomBiomeTileManager.WaterTiles.Length)];
+                            Scene._grid[i].isWalkable = false;
                             break;
                         case BasicValues.Lava:
                             toInstantiate = HexTileManager.instance.LavaTiles[_rnd.Next(0, HexTileManager.instance.LavaTiles.Length)];
                             Scene._grid[/*x + y * _mapHeight*/i].isWalkable = false; 
                             break;
+                        case BasicValues.MushroomBiome:
+                            toInstantiate = MushroomBiomeTileManager.GroundTiles[_rnd.Next(0, MushroomBiomeTileManager.GroundTiles.Length)];
+                            Scene._grid[i].isWalkable = true; 
+                            break;
                     }
                     if (toInstantiate != null)
                     {
-                        GameObject instance = GameObject.Instantiate(toInstantiate, Scene._grid[/*x + y * _mapHeight*/i].position, Quaternion.identity) as GameObject;
-                        Scene._grid[/*x + y * _mapHeight*/i].TileObject = instance;
-                        GameObject fog = GameObject.Instantiate(TileManager.instance.Fog, Scene._grid[/*x + y * _mapHeight*/i].position, Quaternion.identity) as GameObject;
+                        GameObject instance = GameObject.Instantiate(toInstantiate, Scene._grid[i].position, Quaternion.identity) as GameObject;
+                        Scene._grid[i].TileObject = instance;
+                        GameObject fog = GameObject.Instantiate(TileManager.instance.Fog, Scene._grid[i].position, Quaternion.identity) as GameObject;
                         fog.transform.SetParent(instance.transform);
-                        instance.transform.SetParent(_boardHolder);
-                        instance.name = string.Format("_hex{0}_{1}", /*x, y*/ i % _mapWidth,i / _mapWidth);
+                        instance.transform.SetParent(Scene.BoardHolder);
+                        instance.name = string.Format("_hex{0}_{1}", i % _mapWidth,i / _mapWidth);
                     }
                 }
             //}
@@ -1110,13 +1095,16 @@
             if (_validIndexes == null)
                 return;
             GameObject instance = null;
+            GameObject toInstantiate = null;
             for (int i = 0; i < _validIndexes.Length; i++)
             {
-                GameObject toInstantiate = null;
+                toInstantiate = null;
                 switch (Scene._grid[_validIndexes[i]].ItemValue)
                 {
                     case ItemValues.ExitDoor: toInstantiate = HexTileManager.instance.ExitDoor; break;
                     case ItemValues.MiningBlock: toInstantiate = HexTileManager.instance.MiningBlock; Scene._grid[_validIndexes[i]].isWalkable = false; break;
+                    case ItemValues.MushroomTree: toInstantiate = MushroomBiomeTileManager.TreeTiles[_rnd.Next(0, MushroomBiomeTileManager.TreeTiles.Length)]; Scene._grid[_validIndexes[i]].isWalkable = false; break;
+                    case ItemValues.Mushroom01: toInstantiate = MushroomBiomeTileManager.MushroomTiles[_rnd.Next(0, MushroomBiomeTileManager.MushroomTiles.Length)]; break;
                 }
                 if (toInstantiate != null)
                 {

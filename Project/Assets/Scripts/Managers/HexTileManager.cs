@@ -16,6 +16,7 @@ public class HexTileManager : MonoBehaviour
     public GameObject ExitDoor;
     public GameObject MiningBlock;
 
+
     #region Items
     public GameObject[] Gems;
     public GameObject[] RawGems;

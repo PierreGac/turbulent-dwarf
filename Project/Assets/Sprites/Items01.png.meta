@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1930ea0725cc4d24c948244d6978afb1
-timeCreated: 1441129296
+timeCreated: 1441391249
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -11,6 +11,7 @@ TextureImporter:
     21300008: Items01_4
     21300010: Items01_5
     21300012: Items01_6
+    21300014: Items01_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -74,7 +75,7 @@ TextureImporter:
         width: 38
         height: 39
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Items01_2
       rect:
@@ -84,7 +85,7 @@ TextureImporter:
         width: 38
         height: 38
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Items01_3
       rect:
@@ -94,7 +95,7 @@ TextureImporter:
         width: 29
         height: 42
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Items01_4
       rect:
@@ -104,7 +105,7 @@ TextureImporter:
         width: 39
         height: 40
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Items01_5
       rect:
@@ -114,7 +115,7 @@ TextureImporter:
         width: 41
         height: 44
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Items01_6
       rect:
@@ -124,7 +125,17 @@ TextureImporter:
         width: 57
         height: 56
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Items01_7
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 491
+        width: 44
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

@@ -54,6 +54,8 @@ MonoBehaviour:
   IG_Bloc: {fileID: 21300006, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
   IG_RawGem: {fileID: 21300004, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
   IG_Boulders: {fileID: 21300000, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
+  IG_MushroomLog: {fileID: 21300014, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IG_Mushroom01: {fileID: 21300014, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
   IN_Bag01: {fileID: 21300000, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
   IN_WhiteGem: {fileID: 21300000, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
   IN_RedGem: {fileID: 21300004, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
@@ -63,6 +65,8 @@ MonoBehaviour:
   IN_Bloc: {fileID: 21300006, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
   IN_RawGem: {fileID: 21300004, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
   IN_Boulders: {fileID: 21300000, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
+  IN_MushroomLog: {fileID: 21300004, guid: 3056f36a333ecb448a761b7edb45154c, type: 3}
+  IN_Mushroom01: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
