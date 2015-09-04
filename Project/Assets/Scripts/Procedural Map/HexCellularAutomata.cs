@@ -284,7 +284,7 @@
 
             SpawnNextLevelDoor();
 
-            //SpawnMiningBlocks();
+            SpawnMiningBlocks();
             
             ProcessBorders();
 

@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc565585c7cd9c248acbe0b4302f3dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 20
+  Type: 21
   isJustSpawned: 0
   spriteRenderer: {fileID: 0}
 --- !u!212 &21260194
@@ -93,6 +93,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Type
+      value: 21
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

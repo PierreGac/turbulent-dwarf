@@ -75,6 +75,7 @@ public class Scene : MonoBehaviour
             if (rnd.Next(0, 50) == 1 && _grid[i].isWalkable == true && _playerSpawn == Vector3.zero)
             {
                 _playerSpawn = _grid[i].position;
+                Player.PlayerBiome = _grid[i].Biome;
                 _playerIndex = i;
             }
 

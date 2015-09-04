@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public enum BiomeType { Normal, Mushroom};
+public enum BiomeType { Normal, Mushroom, Crystal};
 
 public interface IBiome
 {

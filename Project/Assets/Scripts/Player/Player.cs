@@ -13,6 +13,8 @@ public class Player : MonoBehaviour// : MovingObject
     public static int CurrentPosX = 0;
     public static int CurrentPosY = 0;
 
+    public static BiomeType PlayerBiome;
+
     private bool _movementReady = true;
 
     public int x = 0;
@@ -51,12 +53,17 @@ public class Player : MonoBehaviour// : MovingObject
 
     protected IEnumerator SmoothMovement(int desiredIndex)
     {
-        if (Scene._grid[desiredIndex].isWalkable && Scene._grid[desiredIndex].ItemValue != ItemValues.MiningBlock)
+        if (Scene._grid[desiredIndex].isWalkable/* && Scene._grid[desiredIndex].ItemValue != ItemValues.MiningBlock*/)
         {
             CurrentIndexPosition = desiredIndex;
             CurrentPosY = CurrentIndexPosition / Scene.Height;
             CurrentPosX = CurrentIndexPosition - CurrentPosY * Scene.Height;
             Vector3 end = Scene._grid[desiredIndex].position;
+            if(PlayerBiome != Scene._grid[desiredIndex].Biome)
+            {
+                PlayerBiome = Scene._grid[desiredIndex].Biome;
+                GlobalEventText.AddMessage(string.Format("You just entered in the biome {0}", PlayerBiome.ToString()));
+            }
             //Calculate the remaining distance to move based on the square magnitude of the difference between current position and end parameter. 
             //Square magnitude is used instead of magnitude because it's computationally cheaper.
             float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
@@ -84,10 +91,7 @@ public class Player : MonoBehaviour// : MovingObject
                     if (!Scene._grid[desiredIndex].TileItem.GetComponent<MiningWall>().OnDamage(50, desiredIndex))
                         yield return new WaitForSeconds(0.5f); //Mining time
                     else
-                    {
-                        Debug.Log("destroy");
                         Destroy(Scene._grid[desiredIndex].TileItem);
-                    }
                     break;
                 case ItemValues.MushroomTree:
                     if (!Scene._grid[desiredIndex].TileItem.GetComponent<MushroomTree>().OnDamage(50, desiredIndex))

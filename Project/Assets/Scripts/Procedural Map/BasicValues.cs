@@ -12,6 +12,8 @@ public class BasicValues
 
     public const byte MushroomBiome = 10;
     public const byte MushroomWater = 11;
+
+    public const byte CrystalBiome = 20;
 }
 
 public class ItemValues
@@ -53,6 +55,9 @@ public class ItemValues
     public const byte MushroomMucus = 161;
     public const byte MushroomLog = 162;
     public const byte Mushroom01 = 163;
+
+    //Crystal biome
+    public const byte HugeCrystal = 170;
 
 
 }

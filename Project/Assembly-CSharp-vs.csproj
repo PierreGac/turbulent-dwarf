@@ -85,13 +85,14 @@
      <Compile Include="Assets\Scripts\Player\PlayerStatistics.cs" />
      <Compile Include="Assets\Scripts\Player\RecipePopupInfos.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\BasicValues.cs" />
+     <Compile Include="Assets\Scripts\Procedural Map\Biomes\CrystalBiome.cs" />
+     <Compile Include="Assets\Scripts\Procedural Map\Biomes\MushroomBiome.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\CellularAutomata.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\Grid.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\HexCellularAutomata.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\HexCellularAutomataIndependent.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\IBiome.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\ICellularAutomata.cs" />
-     <Compile Include="Assets\Scripts\Procedural Map\MushroomBiome.cs" />
      <Compile Include="Assets\Scripts\Procedural Map\SpawnRates.cs" />
      <Compile Include="Assets\Scripts\Scene.cs" />
      <Compile Include="Assets\Scripts\UI\GUICellularAutomata.cs" />
