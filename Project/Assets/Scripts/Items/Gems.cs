@@ -17,6 +17,20 @@ public class Gems : Item
     public bool isStackable { get; set; }
     public float Value { get; set; }
     public int SortingLayer { get; set; }
+
+    //STATIC NAMES
+    #region Static names
+    public static string RedGemName = "Red gem";
+    public static string WhiteGemName = "White gem";
+    public static string YellowGemName = "Yellow gem";
+
+    public static string RedGemDescription = "A blood red gem";
+    public static string WhiteGemDescription = "A very bright white gem";
+    public static string YellowGemDescription = "A yellow gem";
+
+    #endregion
+
+
     public Gems(GameObject gameObject, string name, string description, byte itemValue)
     {
         this.Name = name;
@@ -33,14 +47,17 @@ public class Gems : Item
             case ItemValues.WhiteGem:
                 InGameSprite = ResourcesManager.instance.IN_WhiteGem;
                 InventorySprite = ResourcesManager.instance.IG_WhiteGem;
+                this.Type = ItemType.WhiteGem;
                 break;
             case ItemValues.RedGem:
                 InGameSprite = ResourcesManager.instance.IN_RedGem;
                 InventorySprite = ResourcesManager.instance.IG_RedGem;
+                this.Type = ItemType.RedGem;
                 break;
             case ItemValues.YellowGem:
                 InGameSprite = ResourcesManager.instance.IN_YellowGem;
                 InventorySprite = ResourcesManager.instance.IG_YellowGem;
+                this.Type = ItemType.YellowGem;
                 break;
         }
     }

@@ -32,21 +32,10 @@ public interface ItemContainer : Item
     void SetContent(params Item[] items);
 }
 
-public interface DestructibleTile
-{
-    AudioSource Audio { get; set; }
-
-    float HealthPoints { get; set; }
-
-    float DamageCoef { get; set; }
-
-
-    bool OnDamage(float damagePoints, int index);
-}
 /// <summary>
 /// Enum for item categories
 /// </summary>
-public enum GlobalType { Money, Gems, Fruits, Vegetables, Wood, Stone, Container, Rocks, Blocs, RawGems, Logs, Planks};
+public enum GlobalType { Money, Gems, Fruits, Vegetables, Wood, Stone, Container, Rocks, Blocs, RawGems, Logs, Planks, Crystals, Powders};
 /// <summary>
 /// Detailed enum about items
 /// </summary>
@@ -73,9 +62,12 @@ public enum ItemType
     BlocDiorite,
     BlocBasalt,
     RawGem,
-    MushroomLog
+    MushroomLog,
+    RawPentanite,
+    PentanitePowder
 };
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class MonoItem : MonoBehaviour
 {
     public ItemType Type;
@@ -83,12 +75,12 @@ public class MonoItem : MonoBehaviour
     [HideInInspector]
     public bool isJustSpawned = false;
 
-    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer { get; set; }
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.enabled = false;
+        //spriteRenderer.enabled = false;
         GetItem();
     }
 
@@ -100,13 +92,13 @@ public class MonoItem : MonoBehaviour
                 thisItem = new MoneyItem(gameObject);
                 break;
             case ItemType.WhiteGem:
-                thisItem = new Gems(gameObject, "White gem", "A very bright white gem", ItemValues.WhiteGem);
+                thisItem = new Gems(gameObject, Gems.RedGemName, Gems.RedGemDescription, ItemValues.WhiteGem);
                 break;
             case ItemType.YellowGem:
-                thisItem = new Gems(gameObject, "Yellow gem", "A yellow gem", ItemValues.YellowGem);
+                thisItem = new Gems(gameObject, Gems.YellowGemName, Gems.YellowGemDescription, ItemValues.YellowGem);
                 break;
             case ItemType.RedGem:
-                thisItem = new Gems(gameObject, "Red gem", "A blood red gem", ItemValues.RedGem);
+                thisItem = new Gems(gameObject, Gems.WhiteGemName, Gems.WhiteGemDescription, ItemValues.RedGem);
                 break;
             case ItemType.RawGem:
                 thisItem = new RawGems(gameObject);
@@ -134,7 +126,7 @@ public class MonoItem : MonoBehaviour
                 thisItem = new Fruits(gameObject, 0.2f, "A sweaty banana", ItemValues.Banana, FruitsStatistics.BananaStats);
                 break;
             case ItemType.Mushroom01:
-                thisItem = new Fruits(gameObject, 0.2f, "A green mushroom. Should I eat it?", ItemValues.Mushroom01, FruitsStatistics.Mushroom01Stats);
+                thisItem = new Fruits(gameObject, 0.2f, "A green mushroom. Should I eat it?", ItemValues.GreenMushroom, FruitsStatistics.Mushroom01Stats);
                 break;
             #endregion
             #region Rocks

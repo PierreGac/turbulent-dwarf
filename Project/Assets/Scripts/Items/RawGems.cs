@@ -21,9 +21,11 @@ public class RawGems : Item
     {
         this.Name = "Raw gem";
         this.GType = GlobalType.RawGems;
+        this.Type = ItemType.RawGem;
         this.Mass = 1.0f;
         this.Description = "A raw gem. You have to cut it to find if it's valuable";
         this.Count = 1;
+        this.Value = 12;
         this.gameObject = gameObject;
         this.isUsable = false;
         this.ItemValue = ItemValues.RawGem;

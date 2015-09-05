@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &102580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 447948}
+  - 114: {fileID: 11419308}
+  m_Layer: 0
+  m_Name: CrystalResources
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &131132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 425696}
+  - 114: {fileID: 11402950}
+  m_Layer: 0
+  m_Name: FruitResources
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &140994
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,6 +48,46 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!1 &172888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 474654}
+  - 114: {fileID: 11496400}
+  m_Layer: 0
+  m_Name: PowderResources
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &425696
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131132}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 451268}
+  m_RootOrder: 2
+--- !u!4 &447948
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 451268}
+  m_RootOrder: 1
 --- !u!4 &451268
 Transform:
   m_ObjectHideFlags: 1
@@ -25,9 +97,60 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 474654}
+  - {fileID: 447948}
+  - {fileID: 425696}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &474654
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172888}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 451268}
+  m_RootOrder: 0
+--- !u!114 &11402950
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 832949f00125a9740afdf249a7a58a1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  INOrange: {fileID: 21300004, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IGOrange: {fileID: 21300004, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  INApple: {fileID: 21300002, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IGApple: {fileID: 21300002, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  INCoconut: {fileID: 21300008, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IGCoconut: {fileID: 21300008, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  INBanana: {fileID: 21300010, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IGBanana: {fileID: 21300010, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  INPear: {fileID: 21300006, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IGPear: {fileID: 21300006, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  INGreenMushroom: {fileID: 21300014, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IGGreenMushroom: {fileID: 21300014, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+--- !u!114 &11419308
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47bdfed31d993ef40b634ec498c5ad0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  INRawPentanite: {fileID: 21300004, guid: 596447cf36d92f048a40fbf132c49eac, type: 3}
+  IGRawPentanite: {fileID: 21300004, guid: 596447cf36d92f048a40fbf132c49eac, type: 3}
 --- !u!114 &11454288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,8 +177,7 @@ MonoBehaviour:
   IG_Bloc: {fileID: 21300006, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
   IG_RawGem: {fileID: 21300004, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
   IG_Boulders: {fileID: 21300000, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
-  IG_MushroomLog: {fileID: 21300014, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
-  IG_Mushroom01: {fileID: 21300014, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
+  IG_MushroomLog: {fileID: 21300004, guid: 3056f36a333ecb448a761b7edb45154c, type: 3}
   IN_Bag01: {fileID: 21300000, guid: 1930ea0725cc4d24c948244d6978afb1, type: 3}
   IN_WhiteGem: {fileID: 21300000, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
   IN_RedGem: {fileID: 21300004, guid: 86c89512fe21abf4cacd3547630651e8, type: 3}
@@ -66,7 +188,19 @@ MonoBehaviour:
   IN_RawGem: {fileID: 21300004, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
   IN_Boulders: {fileID: 21300000, guid: 0abd1d491e7c95a4a843b12364fb29e2, type: 3}
   IN_MushroomLog: {fileID: 21300004, guid: 3056f36a333ecb448a761b7edb45154c, type: 3}
-  IN_Mushroom01: {fileID: 0}
+--- !u!114 &11496400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 236347feee7b5974e9a9ff6764f5dc51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  INPentanitePowder: {fileID: 21300048, guid: 596447cf36d92f048a40fbf132c49eac, type: 3}
+  IGPentanitePowder: {fileID: 21300048, guid: 596447cf36d92f048a40fbf132c49eac, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

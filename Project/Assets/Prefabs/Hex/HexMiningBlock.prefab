@@ -9,8 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 441364}
   - 212: {fileID: 21231732}
-  - 114: {fileID: 11481342}
   - 82: {fileID: 8214040}
+  - 114: {fileID: 11410220}
   m_Layer: 8
   m_Name: HexMiningBlock
   m_TagString: Untagged
@@ -99,7 +99,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
---- !u!114 &11481342
+--- !u!114 &11410220
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -107,14 +107,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 126908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932d3fcea52fa12469cefb27d798c094, type: 3}
+  m_Script: {fileID: 11500000, guid: fb3e5205149b67441b086b4ab9ee8648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MiningSounds:
+  Type: 0
+  Clips:
   - {fileID: 8300000, guid: 4c2332bc8245b474dad63074059bb755, type: 3}
   - {fileID: 8300000, guid: f6aaac83be9e0493493aace800b76619, type: 3}
-  HealthPoints: 150
-  DamageCoef: 1
 --- !u!212 &21231732
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -148,6 +147,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: Clips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.x
       value: 0

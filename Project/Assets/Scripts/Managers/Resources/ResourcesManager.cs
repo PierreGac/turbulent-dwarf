@@ -24,7 +24,6 @@ public class ResourcesManager : MonoBehaviour
     public Sprite IG_RawGem;
     public Sprite IG_Boulders;
     public Sprite IG_MushroomLog;
-    public Sprite IG_Mushroom01;
     #endregion
     #region INVENTORY
     public Sprite IN_Bag01;
@@ -37,7 +36,6 @@ public class ResourcesManager : MonoBehaviour
     public Sprite IN_RawGem;
     public Sprite IN_Boulders;
     public Sprite IN_MushroomLog;
-    public Sprite IN_Mushroom01;
     #endregion
 
     #endregion

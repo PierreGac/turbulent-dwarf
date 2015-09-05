@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MiningWall : MonoBehaviour, DestructibleTile
+public class MiningWall : DestructibleTile
 {
-    public AudioClip[] MiningSounds;
+    public AudioClip[] Clips { get; set; }
 
 
     public float HealthPoints { get; set; }
@@ -11,9 +11,11 @@ public class MiningWall : MonoBehaviour, DestructibleTile
     public float DamageCoef { get; set; }
 
     public AudioSource Audio { get; set; }
-    void Awake()
+    public MiningWall(AudioSource source, AudioClip[] clips)
     {
-        Audio = GetComponent<AudioSource>();
+        Audio = source;
+        Clips = new AudioClip[clips.Length];
+        clips.CopyTo(Clips,0);
         HealthPoints = Scene.rnd.Next(100, 151);
         DamageCoef = 1.0f;
     }
@@ -22,14 +24,13 @@ public class MiningWall : MonoBehaviour, DestructibleTile
     public bool OnDamage(float damagePoints, int index)
     {
         HealthPoints -= (damagePoints * DamageCoef);
-        Audio.PlayOneShot(MiningSounds[Random.Range(0, MiningSounds.Length)]);
+        Audio.PlayOneShot(Clips[Random.Range(0, Clips.Length)]);
         if(HealthPoints <= 0)
         {
-            //Debug.Log("Destroyed");
             Scene._grid[index].isWalkable = true;
             Scene._grid[index].ItemValue = 0;
             //Spawn boulder:
-            GameObject toInstantiate = Instantiate(HexTileManager.instance.Boulders[Random.Range(0, HexTileManager.instance.Boulders.Length)], Scene._grid[index].position, Quaternion.identity) as GameObject;
+            GameObject toInstantiate = MonoBehaviour.Instantiate(HexTileManager.instance.Boulders[Random.Range(0, HexTileManager.instance.Boulders.Length)], Scene._grid[index].position, Quaternion.identity) as GameObject;
             toInstantiate.transform.SetParent(Scene._grid[index].TileObject.transform); //Set the hex tile as parent
             toInstantiate.GetComponent<MonoItem>().spriteRenderer.enabled = true;
             return true;

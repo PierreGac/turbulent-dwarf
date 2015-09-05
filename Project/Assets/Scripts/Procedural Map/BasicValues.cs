@@ -54,10 +54,13 @@ public class ItemValues
     public const byte MushroomTree = 160;
     public const byte MushroomMucus = 161;
     public const byte MushroomLog = 162;
-    public const byte Mushroom01 = 163;
+    public const byte GreenMushroom = 163;
 
     //Crystal biome
     public const byte HugeCrystal = 170;
+    public const byte SimpleCrystal = 171;
+    public const byte PentanitePowder = 172;
+    public const byte PentaniteRaw = 173;
 
 
 }

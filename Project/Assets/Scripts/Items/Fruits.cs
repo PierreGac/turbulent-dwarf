@@ -32,6 +32,39 @@ public class Fruits : Item
         this.ItemValue = itemValue;
         this._stats = stats;
         this.isStackable = true;
+        switch(itemValue)
+        {
+            case ItemValues.Apple:
+                InventorySprite = FruitResources.IN_Apple;
+                InGameSprite = FruitResources.IG_Apple;
+                this.Type = ItemType.Apple;
+                break;
+            case ItemValues.Banana:
+                InventorySprite = FruitResources.IN_Banana;
+                InGameSprite = FruitResources.IG_Banana;
+                this.Type = ItemType.Banana;
+                break;
+            case ItemValues.Coconut:
+                InventorySprite = FruitResources.IN_Coconut;
+                InGameSprite = FruitResources.IG_Coconut;
+                this.Type = ItemType.Coconut;
+                break;
+            case ItemValues.GreenMushroom:
+                InventorySprite = FruitResources.IN_GreenMushroom;
+                InGameSprite = FruitResources.IG_GreenMushroom;
+                this.Type = ItemType.Mushroom01;
+                break;
+            case ItemValues.Orange:
+                InventorySprite = FruitResources.IN_Orange;
+                InGameSprite = FruitResources.IG_Orange;
+                this.Type = ItemType.Orange;
+                break;
+            case ItemValues.Pear:
+                InventorySprite = FruitResources.IN_Pear;
+                InGameSprite = FruitResources.IG_Pear;
+                this.Type = ItemType.Pear;
+                break;
+        }
     }
 
     public void PickupItem()

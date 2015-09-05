@@ -21,7 +21,7 @@ public class Fog : MonoBehaviour
         _thisTransform = transform;
         _spriteRenderer = _thisTransform.GetComponent<SpriteRenderer>();
 
-        //_spriteRenderer.enabled = false; //Enable to disable the fog
+        _spriteRenderer.enabled = false; //Enable to disable the fog
     }
 
 
@@ -97,7 +97,12 @@ public class Fog : MonoBehaviour
     {
         Scene._grid[index].FogScript.UpdateFogTile(TileFogState.Active);
         if (Scene._grid[index].TileItem != null)
-            Scene._grid[index].TileItem.GetComponent<MonoItem>().spriteRenderer.enabled = true;
+        {
+            if (Scene._grid[index].TileItem.GetComponent<MonoItem>() != null)
+                Scene._grid[index].TileItem.GetComponent<MonoItem>().spriteRenderer.enabled = true;
+            else if (Scene._grid[index].TileItem.GetComponent<MonoDestructibleTile>() != null)
+                Scene._grid[index].TileItem.GetComponent<MonoDestructibleTile>().spriteRenderer.enabled = true;
+        }
         Scene._grid[index].FogScript.State = TileFogState.Active;
     }
 

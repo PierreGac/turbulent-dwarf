@@ -310,6 +310,22 @@
                 mushroomBiome.SpawnBiome(center);
             }
             #endregion
+            #region Crystal
+            CrystalBiome crystalBiome;
+            max = _rnd.Next(2, 4); //Get the max number of crystal biomes
+            for (int i = 0; i < max; i++)
+            {
+                //Get a random starting point for the biome:
+                center = _validIndexes[_rnd.Next(0, _validIndexes.Length)];
+                if (Scene._grid[center].BasicValue == BasicValues.CrystalBiome || Scene._grid[center].BasicValue == BasicValues.MushroomBiome)
+                    max++;
+                else
+                {
+                    crystalBiome = new CrystalBiome(_rnd);
+                    crystalBiome.SpawnBiome(center);
+                }
+            }
+            #endregion
         }
         #endregion
 
@@ -1072,6 +1088,10 @@
                             toInstantiate = MushroomBiomeTileManager.GroundTiles[_rnd.Next(0, MushroomBiomeTileManager.GroundTiles.Length)];
                             Scene._grid[i].isWalkable = true; 
                             break;
+                        case BasicValues.CrystalBiome:
+                            toInstantiate = CrystalBiomeTileManager.GroundTiles[_rnd.Next(0, CrystalBiomeTileManager.GroundTiles.Length)];
+                            Scene._grid[i].isWalkable = true;
+                            break;
                     }
                     if (toInstantiate != null)
                     {
@@ -1103,8 +1123,19 @@
                 {
                     case ItemValues.ExitDoor: toInstantiate = HexTileManager.instance.ExitDoor; break;
                     case ItemValues.MiningBlock: toInstantiate = HexTileManager.instance.MiningBlock; Scene._grid[_validIndexes[i]].isWalkable = false; break;
-                    case ItemValues.MushroomTree: toInstantiate = MushroomBiomeTileManager.TreeTiles[_rnd.Next(0, MushroomBiomeTileManager.TreeTiles.Length)]; Scene._grid[_validIndexes[i]].isWalkable = false; break;
-                    case ItemValues.Mushroom01: toInstantiate = MushroomBiomeTileManager.MushroomTiles[_rnd.Next(0, MushroomBiomeTileManager.MushroomTiles.Length)]; break;
+                    case ItemValues.MushroomTree:
+                        toInstantiate = MushroomBiomeTileManager.TreeTiles[_rnd.Next(0, MushroomBiomeTileManager.TreeTiles.Length)]; 
+                        Scene._grid[_validIndexes[i]].isWalkable = false;
+                        break;
+                    case ItemValues.GreenMushroom: toInstantiate = MushroomBiomeTileManager.MushroomTiles[_rnd.Next(0, MushroomBiomeTileManager.MushroomTiles.Length)]; break;
+                    case ItemValues.HugeCrystal:
+                        toInstantiate = CrystalBiomeTileManager.HugeCrystalTiles[_rnd.Next(0, CrystalBiomeTileManager.HugeCrystalTiles.Length)]; 
+                        Scene._grid[_validIndexes[i]].isWalkable = false;
+                        break;
+                    case ItemValues.SimpleCrystal:
+                        toInstantiate = CrystalBiomeTileManager.SimpleCrystalTiles[_rnd.Next(0, CrystalBiomeTileManager.SimpleCrystalTiles.Length)];
+                        Scene._grid[_validIndexes[i]].isWalkable = false;
+                        break;
                 }
                 if (toInstantiate != null)
                 {

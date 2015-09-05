@@ -103,7 +103,7 @@ public class MushroomBiome : IBiome
 
                         result = rnd.Next(101);
                         if (result <= MushroomPercentage)
-                            surrHex[i].ItemValue = ItemValues.Mushroom01;
+                            surrHex[i].ItemValue = ItemValues.GreenMushroom;
                     }
                     if (surrHex[i].Strength < 0)
                         surrHex[i].Strength = 0;

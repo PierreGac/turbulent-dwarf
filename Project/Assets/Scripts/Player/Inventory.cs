@@ -19,9 +19,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-
-    private float _totalMass = 0;
-
     void Awake()
     {
         InventoryCaneva = GameObject.FindGameObjectWithTag("Inventory").GetComponent<InventoryUI>();

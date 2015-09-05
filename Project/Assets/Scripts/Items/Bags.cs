@@ -82,7 +82,11 @@ public class Bag01 : ItemContainer
             SetContent(items);
 
         }
-
+        else
+        {
+            for (int i = 0; i < Content.Length; i++)
+                Debug.Log(Content[i].Count);
+        }
         if (Inventory.AddItemToInventory(this))
             MonoBehaviour.Destroy(gameObject);
     }
@@ -94,12 +98,26 @@ public class Bag01 : ItemContainer
 
     public void SetContent(params Item[] items)
     {
-        Content = new Item[items.Length];
-        this.Mass = 0;
+        int count = 0;
         for(int i = 0; i < items.Length; i++)
         {
-            Content[i] = items[i];
-            this.Mass += items[i].Mass;
+            if(items[i] != null)
+                count++;
+        }
+        if (count == 0)
+            return;
+        Content = new Item[count];
+
+        this.Mass = 0;
+        count = 0;
+        for(int i = 0; i < items.Length; i++)
+        {
+            if (items[i] != null)
+            {
+                Content[count] = (Item)items[i].Clone();
+                this.Mass += items[i].Mass;
+                count++;
+            }
         }
     }
 

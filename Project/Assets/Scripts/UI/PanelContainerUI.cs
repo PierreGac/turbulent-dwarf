@@ -64,7 +64,6 @@ public class PanelContainerUI : MonoBehaviour
     public void SelectedItem(int index)
     {
         int contentIndex = _buttons.Length * _actualPage + index;
-        Debug.Log(contentIndex);
         if (_itemContainer.Content[contentIndex].Name != "Money")
             Inventory.AddItemToInventory(_itemContainer.Content[contentIndex]);
         else
@@ -75,7 +74,6 @@ public class PanelContainerUI : MonoBehaviour
         }
         _itemContainer.Content[contentIndex] = null;
         
-        Debug.Log("Removed item n°" + contentIndex);
         _images[index].sprite = null;
         _buttons[index].SetActive(false);
 
@@ -83,10 +81,7 @@ public class PanelContainerUI : MonoBehaviour
         for (int i = 0; i < _buttons.Length; i++)
         {
             if (_buttons[i].activeInHierarchy)
-            {
-                Debug.Log("This page still containing items");
                 return;
-            }
         }
         //Actual page empty !
         //If we aren't at the page 0
@@ -105,7 +100,6 @@ public class PanelContainerUI : MonoBehaviour
                         UpdateButtonAtPage(_actualPage);
                         if (_actualPage == 0)
                             _previousButton.SetActive(false);
-                        Debug.Log("Switch to page " + _actualPage);
                         return;
                     }
                 }
@@ -123,7 +117,6 @@ public class PanelContainerUI : MonoBehaviour
                 //Checking if we can keep the next button on:
                 if ((_actualPage + 1) * _buttons.Length >= _itemContainer.Content.Length)
                     _nextButton.SetActive(false);
-                Debug.Log("Moving to the page " + _actualPage);
                 return;
             }
         }
@@ -132,7 +125,6 @@ public class PanelContainerUI : MonoBehaviour
         Inventory.RemoveItemFromInventory(_itemContainer);
         InventoryUI.OnHoovering = false;
         InventoryPopupInfos.Hide();
-        Debug.Log("Container is empty");
         Exit();
     }
 

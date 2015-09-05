@@ -20,9 +20,6 @@ public class RecipePopupInfos : MonoBehaviour
     private static GameObject[] _resultsButtons;
     private static Image[] _resultsImages;
 
-
-    private static Vector2 _dimensions;
-
     void Awake()
     {
         _gameObject = gameObject;
@@ -57,8 +54,6 @@ public class RecipePopupInfos : MonoBehaviour
             Recipe recipe = Craft.Recipes[index];
             _gameObject.SetActive(true);
             Vector2 pos;
-
-            _dimensions = new Vector2(_rectTransform.GetWidth() / 1.9f, -_rectTransform.GetHeight() / 1.9f);
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(_parentCanevas.transform as RectTransform, Input.mousePosition, _parentCanevas.worldCamera, out pos);
 
